@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { LoadingPlugin } from 'vue-loading-overlay';
+import { getBrowserLocales } from './mixins/GetBrowserLocales'
 
 import router from './router'
 import App from './App.vue'
@@ -8,9 +9,24 @@ import App from './App.vue'
 import './index.css'
 import 'vue-loading-overlay/dist/css/index.css';
 
+
+// import translations
+import en from "./locales/en.json";
+
+// configure i18n
+import { createI18n } from "vue-i18n";
+// console.log("getBrowserLocales: ", getBrowserLocales({ languageCodeOnly: true })[0]);
+export const i18n = createI18n({
+    // legacy: false,
+    locale: getBrowserLocales({ languageCodeOnly: true })[0] || "en",
+    fallbackLocale: "en",
+    messages: { en },
+});
+
 const pinia = createPinia();
 const app = createApp(App);
 app.use(pinia);
+app.use(i18n);
 app.use(LoadingPlugin);
 app.use(router);
 app.mount('#app');

@@ -1,0 +1,23 @@
+{
+  "sitewide": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "update": "Update",
+    "edit": "Edit",
+    "save": "Save",
+    "warning": "Warning",
+    "unused": "Unused",
+    "unknown": "Unknown",
+    "close_sidebar": "Close Sidebar",
+    "open_sidebar": "Open Sidebar",
+    "validation_error": "Validation Error",
+    "translation_message": "This application is translated by users like you! If you see items that are not translated (or have suggestions for improvements!) please suggest improvements on GitHub.",
+    "brewpi_modes": {
+      "off": "Off",
+      "beer_constant": "Beer Constant",
+      "fridge_constant": "Fridge Constant",
+      "beer_profile": "Beer Profile",
+      "test": "Test Mode"
+    }
+  }
+}
