@@ -5,7 +5,7 @@
 
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            TiltBridge General Settings
+            {{ $t('device_config.general_settings_header') }}
           </h3>
         </div>
 
@@ -14,49 +14,42 @@
           <div class="px-4 py-5">
             <!-- mDNS ID Field -->
             <TextField v-model="mdnsID" placeholder="tiltbridge">
-              <template #FieldName>mDNS ID</template>
-              <template #FieldDescription>Host name (the xxxx in http://xxxx.local/). Must be 8-31 characters.</template>
+              <template #FieldName>{{$t('device_config.mDNS_id_name') }}</template>
+              <template #FieldDescription>{{$t('device_config.mDNS_id_desc') }}</template>
             </TextField>
 
             <!-- Time Zone Offset Field -->
             <!-- TODO - Move this to google sheets config -->
             <TextField v-model="TZoffset" placeholder="-5">
-              <template #FieldName>Time Zone Offset</template>
-              <template #FieldDescription>Time Zone Offset from GMT (in hours). Used for Google Sheets.</template>
+              <template #FieldName>{{$t('device_config.tz_offset_name') }}</template>
+              <template #FieldDescription>{{$t('device_config.tz_offset_desc') }}</template>
             </TextField>
 
 
             <!-- Temperature Default Unit Selector -->
             <SelectField v-model="tempUnit">
-              <template #FieldName>Default Temperature Units</template>
-              <template #FieldDescription>Default temperature units to display</template>
+              <template #FieldName>{{ $t('device_config.temp_unit_name') }}</template>
+              <template #FieldDescription>{{ $t('device_config.temp_unit_desc') }}</template>
               <template #FieldOptions>
-                <option value="C">Celsius</option>
-                <option value="F">Fahrenheit</option>
+                <option value="C">{{ $t('sitewide.celsius') }}</option>
+                <option value="F">{{ $t('sitewide.fahrenheit') }}</option>
               </template>
             </SelectField>
 
 
             <!-- Specific Gravity Averaging Field -->
             <TextField v-model="smoothFactor" placeholder="60">
-              <template #FieldName>Specific Gravity Averaging</template>
-              <template #FieldDescription>
-                Valid range is 0 to 99. Setting affects time constant of exponentially weighted
-                moving average filter applied to specific gravity reading. In response to a step
-                change, the filtered value should reach steady state after ~ 5 time constants.
-                A setting of 0 gives no smoothing (filtering off) while higher values mean more
-                smoothing.  A setting of 60 gives time constant of just over 5 seconds while 99
-                results in ~ 5 minutes.
-              </template>
+              <template #FieldName>{{ $t('device_config.smooth_factor_name') }}</template>
+              <template #FieldDescription>{{ $t('device_config.smooth_factor_desc') }}</template>
             </TextField>
 
 
             <!-- Invert TFT Selector -->
             <fieldset class="space-y-5" v-if="configStore.have_lcd">
-              <legend class="sr-only">Hardware Options</legend>
+              <legend class="sr-only">{{ $t('device_config.hardware_options_header') }}</legend>
               <CheckboxField v-model="invertTFT">
-                <template #FieldName>Invert TFT Display</template>
-                <template #FieldDescription> - Use if the screen is upside-down</template>
+                <template #FieldName>{{ $t('device_config.invert_tft_name') }}</template>
+                <template #FieldDescription>{{ $t('device_config.invert_tft_desc') }}</template>
               </CheckboxField>
             </fieldset>
 
@@ -67,7 +60,7 @@
           <!-- Card Footer -->
           <div class="bg-white px-4 py-5 border-t border-gray-200 sm:px-6 sm:flex sm:flex-row-reverse">
               <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" >
-                Update
+                {{ $t('sitewide.update') }}
               </button>
           </div>
 
@@ -90,6 +83,7 @@ import SelectField from "@/components/config/form_elements/SelectField.vue";
 import CheckboxField from "@/components/config/form_elements/CheckboxField.vue";
 import UpdateSuccessfulModal from "@/components/config/UpdateSuccessfulModal.vue";
 import { ref } from "vue";
+import { i18n } from "@/main.js";
 
 const $loading = useLoading({
   // options
@@ -123,22 +117,22 @@ async function submitForm() {
   let mdns_re = new RegExp("^[a-zA-Z0-9]+[-a-zA-Z0-9]*$");
 
   if(!mdnsID.match(mdns_re)) {
-    form_error_message = "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start with a hyphen";
+    form_error_message = i18n.global.t('device_config.errors.mdns_invalid_chars');
     return;
   }
 
   if(mdnsID.length > 31 || mdnsID.length < 8) {
-    form_error_message = "mDNS ID must be between 8 and 31 characters";
+    form_error_message = i18n.global.t('device_config.errors.mdns_invalid_length');
     return;
   }
 
   if(parseInt(smoothFactor) > 99 || parseInt(smoothFactor) < 0) {
-    form_error_message = "Specific gravity smoothing factor must be between 0 and 99";
+    form_error_message = i18n.global.t('device_config.errors.invalid_smoothing_factor');
     return;
   }
 
   if(parseInt(TZoffset) > 14 || parseInt(TZoffset) < -12) {
-    form_error_message = "Timezone offset must be between -12 and 14";
+    form_error_message = i18n.global.t('device_config.errors.invalid_tz_offset');
     return;
   }
 

@@ -11,13 +11,34 @@
     "close_sidebar": "Close Sidebar",
     "open_sidebar": "Open Sidebar",
     "validation_error": "Validation Error",
+    "celsius": "Celsius",
+    "fahrenheit": "Fahrenheit",
     "translation_message": "This application is translated by users like you! If you see items that are not translated (or have suggestions for improvements!) please suggest improvements on GitHub.",
-    "brewpi_modes": {
-      "off": "Off",
-      "beer_constant": "Beer Constant",
-      "fridge_constant": "Fridge Constant",
-      "beer_profile": "Beer Profile",
-      "test": "Test Mode"
+    "sidebar_options": {
+      "tilts": "Tilts",
+      "configure": "Configure",
+      "cloud_target": "Cloud Targets"
+    }
+  },
+  "device_config": {
+    "configure_tiltbridge_header": "Configure TiltBridge",
+    "general_settings_header": "TiltBridge General Settings",
+    "mDNS_id_name": "mDNS ID",
+    "mDNS_id_desc": "Host name (the xxxx in http://xxxx.local/). Must be 8-31 characters.",
+    "tz_offset_name": "Time Zone Offset",
+    "tz_offset_desc": "Time Zone Offset from GMT (in hours). Used for Google Sheets.",
+    "temp_unit_name": "Default Temperature Units",
+    "temp_unit_desc": "Default temperature units to display",
+    "smooth_factor_name": "Specific Gravity Averaging",
+    "smooth_factor_desc": "Valid range is 0 to 99. Setting affects time constant of exponentially weighted moving average filter applied to specific gravity reading. In response to a step change, the filtered value should reach steady state after ~ 5 time constants. A setting of 0 gives no smoothing (filtering off) while higher values mean more smoothing.  A setting of 60 gives time constant of just over 5 seconds while 99 results in ~ 5 minutes.",
+    "hardware_options_header": "Hardware Options",
+    "invert_tft_name": "Invert TFT Display",
+    "invert_tft_desc": " - Use if the screen is upside-down",
+    "errors": {
+      "mdns_invalid_chars": "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start with a hyphen",
+      "mdns_invalid_length": "mDNS ID must be between 8 and 31 characters",
+      "invalid_smoothing_factor": "Specific gravity smoothing factor must be between 0 and 99",
+      "invalid_tz_offset": "Timezone offset must be between -12 and 14"
     }
   }
 }
