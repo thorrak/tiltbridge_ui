@@ -42,79 +42,82 @@
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-<!--    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">-->
-<!--      &lt;!&ndash; Sidebar component, swap this element with another sidebar if you like &ndash;&gt;-->
-<!--      <div class="flex min-h-0 flex-1 flex-col bg-indigo-700">-->
-<!--        <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">-->
-<!--          <div class="flex flex-shrink-0 items-center px-4">-->
-<!--            <img class="h-8 w-auto" src="/logo.svg" alt="TiltBridge" />-->
-<!--          </div>-->
-<!--          <nav class="mt-5 flex-1 space-y-1 px-2">-->
-<!--            &lt;!&ndash; Desktop (big) sidebar navigation &ndash;&gt;-->
-<!--            <router-link v-for="item in navigation" :key="item.name" :to="{name: item.route_name}" v-slot="{ href, navigate, isActive }" custom>-->
-<!--              <a :href="href" :class="[isActive ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">-->
-<!--                <component :is="item.icon" class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />-->
-<!--                {{ item.name }}-->
-<!--              </a>-->
-<!--            </router-link>-->
-<!--          </nav>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+      <!-- Sidebar component, swap this element with another sidebar if you like -->
+      <div class="flex min-h-0 flex-1 flex-col bg-indigo-700">
+        <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
+          <div class="flex flex-shrink-0 items-center px-4">
+            <img class="h-8 w-auto" src="/logo.svg" alt="TiltBridge" />
+          </div>
+          <nav class="mt-5 flex-1 space-y-1 px-2">
+            <!-- Desktop (big) sidebar navigation -->
+            <router-link v-for="item in navigation" :key="item.name" :to="{name: item.route_name}" v-slot="{ href, navigate, isActive }" custom>
+              <a :href="href" :class="[isActive ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                <component :is="item.icon" class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
+                {{ item.name }}
+              </a>
+            </router-link>
+          </nav>
+        </div>
+      </div>
+    </div>
 
     <!-- begin collapsable navbar -->
-    <div class="hidden md:fixed md:flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 md:w-64 md:inset-y-0">
-      <div class="flex h-16 shrink-0 items-center">
-        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
+    <div class="hidden">
+      <div class="hidden md:fixed md:flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 md:w-64 md:inset-y-0">
+        <div class="flex h-16 shrink-0 items-center">
+          <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
+        </div>
+        <nav class="flex flex-1 flex-col">
+          <ul role="list" class="flex flex-1 flex-col gap-y-7">
+            <li>
+              <ul role="list" class="-mx-2 space-y-1">
+                <li v-for="item in navigation" :key="item.name">
+
+                  <router-link v-if="!item.children" :to="{name: item.route_name}" v-slot="{ href, navigate, isActive }" custom>
+                    <a :href="href" :class="[isActive ? 'bg-gray-50' : 'hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700']">
+                      <component :is="item.icon" class="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
+                      {{ item.name }}
+                    </a>
+                  </router-link>
+
+                  <Disclosure as="div" v-else v-slot="{ open }">
+                    <DisclosureButton :class="[item.current ? 'bg-gray-50' : 'hover:bg-gray-50', 'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700']">
+                      <component :is="item.icon" class="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
+                      {{ item.name }}
+                      <ChevronRightIcon :class="[open ? 'rotate-90 text-gray-500' : 'text-gray-400', 'ml-auto h-5 w-5 shrink-0']" aria-hidden="true" />
+                    </DisclosureButton>
+                    <DisclosurePanel as="ul" class="mt-1 px-2">
+                      <li v-for="subItem in item.children" :key="subItem.name">
+                        <!-- 44px -->
+                        <!--                      <DisclosureButton as="a" :href="subItem.href" :class="[subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50', 'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700']">{{ subItem.name }}</DisclosureButton>-->
+
+                        <router-link :to="{name: subItem.route_name}" v-slot="{ href, navigate, isActive }" custom>
+                          <DisclosureButton as="a" :href="href" :class="[isActive ? 'bg-gray-50' : 'hover:bg-gray-50', 'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700']">{{ subItem.name }}</DisclosureButton>
+                          <!--                        <a :href="href" :class="[isActive ? 'bg-gray-50' : 'hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700']">-->
+                          <!--                          <component :is="item.icon" class="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />-->
+                          <!--                          {{ item.name }}-->
+                          <!--                        </a>-->
+                        </router-link>
+
+                      </li>
+                    </DisclosurePanel>
+                  </Disclosure>
+                </li>
+              </ul>
+            </li>
+            <li class="-mx-6 mt-auto">
+              <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
+                <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                <span class="sr-only">Your profile</span>
+                <span aria-hidden="true">Tom Cook</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <nav class="flex flex-1 flex-col">
-        <ul role="list" class="flex flex-1 flex-col gap-y-7">
-          <li>
-            <ul role="list" class="-mx-2 space-y-1">
-              <li v-for="item in navigation" :key="item.name">
-
-                <router-link v-if="!item.children" :to="{name: item.route_name}" v-slot="{ href, navigate, isActive }" custom>
-                  <a :href="href" :class="[isActive ? 'bg-gray-50' : 'hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700']">
-                    <component :is="item.icon" class="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
-                    {{ item.name }}
-                  </a>
-                </router-link>
-
-                <Disclosure as="div" v-else v-slot="{ open }">
-                  <DisclosureButton :class="[item.current ? 'bg-gray-50' : 'hover:bg-gray-50', 'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700']">
-                    <component :is="item.icon" class="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
-                    {{ item.name }}
-                    <ChevronRightIcon :class="[open ? 'rotate-90 text-gray-500' : 'text-gray-400', 'ml-auto h-5 w-5 shrink-0']" aria-hidden="true" />
-                  </DisclosureButton>
-                  <DisclosurePanel as="ul" class="mt-1 px-2">
-                    <li v-for="subItem in item.children" :key="subItem.name">
-                      <!-- 44px -->
-<!--                      <DisclosureButton as="a" :href="subItem.href" :class="[subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50', 'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700']">{{ subItem.name }}</DisclosureButton>-->
-
-                      <router-link :to="{name: subItem.route_name}" v-slot="{ href, navigate, isActive }" custom>
-                        <DisclosureButton as="a" :href="href" :class="[isActive ? 'bg-gray-50' : 'hover:bg-gray-50', 'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700']">{{ subItem.name }}</DisclosureButton>
-<!--                        <a :href="href" :class="[isActive ? 'bg-gray-50' : 'hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700']">-->
-<!--                          <component :is="item.icon" class="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />-->
-<!--                          {{ item.name }}-->
-<!--                        </a>-->
-                      </router-link>
-
-                    </li>
-                  </DisclosurePanel>
-                </Disclosure>
-              </li>
-            </ul>
-          </li>
-          <li class="-mx-6 mt-auto">
-            <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50">
-              <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-              <span class="sr-only">Your profile</span>
-              <span aria-hidden="true">Tom Cook</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
     </div>
+
     <!-- End Collapsable Navbar -->
     <div class="flex flex-1 flex-col md:pl-64">
       <div class="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
