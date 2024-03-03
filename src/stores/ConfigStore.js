@@ -1,171 +1,224 @@
 import { defineStore } from 'pinia';
-import { mande } from 'mande'
+import { mande } from 'mande';
 import { genCSRFOptions } from './CSRF';
+import { ref } from "vue";
 
-import { TiltDevice, TiltColors } from "@/mixins/TiltDevice";
+export const useConfigStore = defineStore("ConfigStore", () => {
 
-export const useConfigStore = defineStore("ConfigStore", {
-    state: () => {
-        return {
-            mdnsID: "",
-            guid: "",
-            invertTFT: false,
-            cloudEnabled: false,
-            cloudURL: "",
-            cloudAppID: "",
-            cloudClientKey: "",
-            update_spiffs: false,
-            TZoffset: 0,
-            tempUnit: "F",
-            smoothFactor: 0,
-            applyCalibration: false,
-            tempCorrect: false,
-            localTargetURL: "",
-            localTargetPushEvery: 0,
-            brewstatusURL: "",
-            brewstatusPushEvery: 0,
-            taplistioURL: "",
-            taplistioPushEvery: 0,
-            scriptsURL: "",
-            scriptsEmail: "",
-            brewersFriendKey: "",
-            brewfatherKey: "",
-            userTargetURL: "",
-            mqttBrokerHost: "",
-            mqttBrokerPort: 0,
-            mqttUsername: "",
-            mqttPassword: "",
-            mqttTopic: "",
-            mqttPushEvery: 0,
-            have_lcd: false,
-            have_led: false,
+    const mdnsID = ref("");
+    const guid = ref("");
+    const invertTFT = ref(false);
+    const cloudEnabled = ref(false);
+    const cloudURL = ref("");
+    const cloudAppID = ref("");
+    const cloudClientKey = ref("");
+    const update_spiffs = ref(false);
+    const TZoffset = ref(0);
+    const tempUnit = ref("F");
+    const smoothFactor = ref(0);
+    const applyCalibration = ref(false);
+    const tempCorrect = ref(false);
 
-            tiltConfig: [],
+    const localTargetURL = ref("");
+    const localTargetPushEvery = ref(0);
 
-            loaded: false,
-            configError: false,
-            configUpdateError: false,
-        };
-    },
-    actions: {
-        async getConfig() {
-            const remote_api = mande("/settings/json/", genCSRFOptions());  // TODO - Change this to an /api/ endpoint
-            const response = await remote_api.get();
-            if (response) {
-                this.mdnsID = response.mdnsID;
-                this.guid = response.guid;
-                this.invertTFT = response.invertTFT;
-                this.cloudEnabled = response.cloudEnabled;
-                this.cloudURL = response.cloudURL;
-                this.cloudAppID = response.cloudAppID;
-                this.cloudClientKey = response.cloudClientKey;
-                this.update_spiffs = response.update_spiffs;
-                this.TZoffset = response.TZoffset;
-                this.tempUnit = response.tempUnit;
-                this.smoothFactor = response.smoothFactor;
-                this.applyCalibration = response.applyCalibration;
-                this.tempCorrect = response.tempCorrect;
-                this.localTargetURL = response.localTargetURL;
-                this.localTargetPushEvery = response.localTargetPushEvery;
-                this.brewstatusURL = response.brewstatusURL;
-                this.brewstatusPushEvery = response.brewstatusPushEvery;
-                this.taplistioURL = response.taplistioURL;
-                this.taplistioPushEvery = response.taplistioPushEvery;
-                this.scriptsURL = response.scriptsURL;
-                this.scriptsEmail = response.scriptsEmail;
-                this.brewersFriendKey = response.brewersFriendKey;
-                this.brewfatherKey = response.brewfatherKey;
-                this.userTargetURL = response.userTargetURL;
-                this.mqttBrokerHost = response.mqttBrokerHost;
-                this.mqttBrokerPort = response.mqttBrokerPort;
-                this.mqttUsername = response.mqttUsername;
-                this.mqttPassword = response.mqttPassword;
-                this.mqttTopic = response.mqttTopic;
-                this.mqttPushEvery = response.mqttPushEvery;
-                this.have_lcd = response.have_lcd;
-                this.have_led = response.have_led;
+    const brewstatusURL = ref("");
+    const brewstatusPushEvery = ref(0);
+    const taplistioURL = ref("");
+    const taplistioPushEvery = ref(0);
+    const scriptsURL = ref("");
+    const scriptsEmail = ref("");
+    const brewersFriendKey = ref("");
+    const brewfatherKey = ref("");
+    const userTargetURL = ref("");
+    const mqttBrokerHost = ref("");
+    const mqttBrokerPort = ref(0);
+    const mqttUsername = ref("");
+    const mqttPassword = ref("");
+    const mqttTopic = ref("");
+    const mqttPushEvery = ref(0);
+    const have_lcd = ref(false);
+    const have_led = ref(false);
 
-                // We got a response. Parse the list of Tilts (which are sent by color)
-                // for (const tiltColorsKey in TiltColors) {
-                //     const tiltColor = TiltColors[tiltColorsKey];
-                //     if (tiltColor in response) {
-                //         const tiltData = response[tiltColor];
-                //         const tilt = new TiltDevice(tiltColor, tiltData.temp, tiltData.temp_unit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
-                //         this.tilts.push(tilt);
-                //     }
-                // }
-                this.loaded = true;
-                this.configError = false;
-            } else {
-                // We weren't able to get a response.
-                // TODO - Figure out what I want to do here
-                this.clearConfig();
-                this.configError = true;
-            }
-        },
-        async clearConfig() {
-            this.mdnsID = "";
-            this.guid = "";
-            this.invertTFT = false;
-            this.cloudEnabled = false;
-            this.cloudURL = "";
-            this.cloudAppID = "";
-            this.cloudClientKey = "";
-            this.update_spiffs = false;
-            this.TZoffset = 0;
-            this.tempUnit = "F";
-            this.smoothFactor = 0;
-            this.applyCalibration = false;
-            this.tempCorrect = false;
-            this.localTargetURL = "";
-            this.localTargetPushEvery = 0;
-            this.brewstatusURL = "";
-            this.brewstatusPushEvery = 0;
-            this.taplistioURL = "";
-            this.taplistioPushEvery = 0;
-            this.scriptsURL = "";
-            this.scriptsEmail = "";
-            this.brewersFriendKey = "";
-            this.brewfatherKey = "";
-            this.userTargetURL = "";
-            this.mqttBrokerHost = "";
-            this.mqttBrokerPort = 0;
-            this.mqttUsername = "";
-            this.mqttPassword = "";
-            this.mqttTopic = "";
-            this.mqttPushEvery = 0;
-            this.have_lcd = false;
-            this.have_led = false;
+    const fermentrackTargetType = ref("none"); // none, legacy, ft2, or bpr
+    const fermentrackHost = ref("");
+    const fermentrackPort = ref("");
+    const fermentrackHTTPS = ref(false);
+    const fermentrackPushFrequency = ref(30);
+
+    const tiltConfig = ref([]);
+
+    const loaded = ref(false);
+    const configError = ref(false);
+    const configUpdateError = ref(false);
 
 
+    async function getConfig() {
+        const remote_api = mande("/settings/json/", genCSRFOptions());  // TODO - Change this to an /api/ endpoint
+        const response = await remote_api.get();
+        if (response) {
+            mdnsID.value = response.mdnsID;
+            guid.value = response.guid;
+            invertTFT.value = response.invertTFT;
+            cloudEnabled.value = response.cloudEnabled;
+            cloudURL.value = response.cloudURL;
+            cloudAppID.value = response.cloudAppID;
+            cloudClientKey.value = response.cloudClientKey;
+            update_spiffs.value = response.update_spiffs;
+            TZoffset.value = response.TZoffset;
+            tempUnit.value = response.tempUnit;
+            smoothFactor.value = response.smoothFactor;
+            applyCalibration.value = response.applyCalibration;
+            tempCorrect.value = response.tempCorrect;
+            localTargetURL.value = response.localTargetURL;
+            localTargetPushEvery.value = response.localTargetPushEvery;
+            brewstatusURL.value = response.brewstatusURL;
+            brewstatusPushEvery.value = response.brewstatusPushEvery;
+            taplistioURL.value = response.taplistioURL;
+            taplistioPushEvery.value = response.taplistioPushEvery;
+            scriptsURL.value = response.scriptsURL;
+            scriptsEmail.value = response.scriptsEmail;
+            brewersFriendKey.value = response.brewersFriendKey;
+            brewfatherKey.value = response.brewfatherKey;
+            userTargetURL.value = response.userTargetURL;
+            mqttBrokerHost.value = response.mqttBrokerHost;
+            mqttBrokerPort.value = response.mqttBrokerPort;
+            mqttUsername.value = response.mqttUsername;
+            mqttPassword.value = response.mqttPassword;
+            mqttTopic.value = response.mqttTopic;
+            mqttPushEvery.value = response.mqttPushEvery;
+            have_lcd.value = response.have_lcd;
+            have_led.value = response.have_led;
 
-
-            this.tilts = [];
-            this.loaded = false;
-            this.configUpdateError = false;
-        },
-        async updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT) {
-            try {
-                const remote_api = mande("/api/settings/controller/", genCSRFOptions());
-                const response = await remote_api.put({
-                    mdnsID: mdnsID,
-                    tzOffset: TZoffset,
-                    tempUnit: tempUnit,
-                    smoothFactor: smoothFactor,
-                    invertTFT: invertTFT,
-                });
-                if (response && response.message) {
-                    // TODO - Check response.message
-                    await this.getConfig();  // TODO - Decide if I want to await this here
-                    this.configUpdateError = false;
-                } else {
-                    // await this.clearConfig();
-                    this.configUpdateError = true;
-                }
-            } catch (error) {
-                await this.clearConfig();
-                this.configUpdateError = true;
-            }
+            // We got a response. Parse the list of Tilts (which are sent by color)
+            // for (const tiltColorsKey in TiltColors) {
+            //     const tiltColor = TiltColors[tiltColorsKey];
+            //     if (tiltColor in response) {
+            //         const tiltData = response[tiltColor];
+            //         const tilt = new TiltDevice(tiltColor, tiltData.temp, tiltData.temp_unit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
+            //         tilts.value.push(tilt);
+            //     }
+            // }
+            loaded.value = true;
+            configError.value = false;
+        } else {
+            // We weren't able to get a response.
+            // TODO - Figure out what I want to do here
+            await clearConfig();
+            configError.value = true;
         }
-    },
+    }
+
+
+    async function clearConfig() {
+        mdnsID.value = "";
+        guid.value = "";
+        invertTFT.value = false;
+        cloudEnabled.value = false;
+        cloudURL.value = "";
+        cloudAppID.value = "";
+        cloudClientKey.value = "";
+        update_spiffs.value = false;
+        TZoffset.value = 0;
+        tempUnit.value = "F";
+        smoothFactor.value = 0;
+        applyCalibration.value = false;
+        tempCorrect.value = false;
+        localTargetURL.value = "";
+        localTargetPushEvery.value = 0;
+        brewstatusURL.value = "";
+        brewstatusPushEvery.value = 0;
+        taplistioURL.value = "";
+        taplistioPushEvery.value = 0;
+        scriptsURL.value = "";
+        scriptsEmail.value = "";
+        brewersFriendKey.value = "";
+        brewfatherKey.value = "";
+        userTargetURL.value = "";
+        mqttBrokerHost.value = "";
+        mqttBrokerPort.value = 0;
+        mqttUsername.value = "";
+        mqttPassword.value = "";
+        mqttTopic.value = "";
+        mqttPushEvery.value = 0;
+        have_lcd.value = false;
+        have_led.value = false;
+
+        loaded.value = false;
+        configUpdateError.value = false;
+    }
+
+    async function updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT) {
+        try {
+            const remote_api = mande("/api/settings/controller/", genCSRFOptions());
+            const response = await remote_api.put({
+                mdnsID: mdnsID,
+                tzOffset: TZoffset,
+                tempUnit: tempUnit,
+                smoothFactor: smoothFactor,
+                invertTFT: invertTFT,
+            });
+            if (response && response.message) {
+                // TODO - Check response.message
+                await getConfig();  // TODO - Decide if I want to await this here
+                configUpdateError.value = false;
+            } else {
+                // await clearConfig();
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            await clearConfig();
+            configUpdateError.value = true;
+        }
+    }
+
+
+
+    return {
+        mdnsID,
+        guid,
+        invertTFT,
+        cloudEnabled,
+        cloudURL,
+        cloudAppID,
+        cloudClientKey,
+        update_spiffs,
+        TZoffset,
+        tempUnit,
+        smoothFactor,
+        applyCalibration,
+        tempCorrect,
+        localTargetURL,
+        localTargetPushEvery,
+        brewstatusURL,
+        brewstatusPushEvery,
+        taplistioURL,
+        taplistioPushEvery,
+        scriptsURL,
+        scriptsEmail,
+        brewersFriendKey,
+        brewfatherKey,
+        userTargetURL,
+        mqttBrokerHost,
+        mqttBrokerPort,
+        mqttUsername,
+        mqttPassword,
+        mqttTopic,
+        mqttPushEvery,
+        have_lcd,
+        have_led,
+        fermentrackTargetType,
+        fermentrackHost,
+        fermentrackPort,
+        fermentrackHTTPS,
+        fermentrackPushFrequency,
+        tiltConfig,
+        loaded,
+        configError,
+        configUpdateError,
+
+        getConfig,
+        clearConfig,
+        updateDeviceConfig
+    };
 });
