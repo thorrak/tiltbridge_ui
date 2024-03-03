@@ -19,9 +19,6 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const applyCalibration = ref(false);
     const tempCorrect = ref(false);
 
-    const localTargetURL = ref("");
-    const localTargetPushEvery = ref(0);
-
     const brewstatusURL = ref("");
     const brewstatusPushEvery = ref(0);
     const taplistioURL = ref("");
@@ -41,9 +38,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const have_led = ref(false);
 
     const fermentrackTargetType = ref("none"); // none, legacy, ft2, or bpr
-    const fermentrackHost = ref("");
-    const fermentrackPort = ref("");
-    const fermentrackHTTPS = ref(false);
+    const fermentrackUrl = ref("");
     const fermentrackPushFrequency = ref(30);
 
     const tiltConfig = ref([]);
@@ -70,8 +65,9 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             smoothFactor.value = response.smoothFactor;
             applyCalibration.value = response.applyCalibration;
             tempCorrect.value = response.tempCorrect;
-            localTargetURL.value = response.localTargetURL;
-            localTargetPushEvery.value = response.localTargetPushEvery;
+            // TODO - Update the below when the keys change
+            fermentrackUrl.value = response.localTargetURL;
+            fermentrackPushFrequency.value = response.localTargetPushEvery;
             brewstatusURL.value = response.brewstatusURL;
             brewstatusPushEvery.value = response.brewstatusPushEvery;
             taplistioURL.value = response.taplistioURL;
@@ -124,8 +120,6 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         smoothFactor.value = 0;
         applyCalibration.value = false;
         tempCorrect.value = false;
-        localTargetURL.value = "";
-        localTargetPushEvery.value = 0;
         brewstatusURL.value = "";
         brewstatusPushEvery.value = 0;
         taplistioURL.value = "";
@@ -173,6 +167,28 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     }
 
 
+    async function updateFermentrackConfig(targetType, ft_url, pushFrequency) {
+        try {
+            const remote_api = mande("/api/settings/controller/", genCSRFOptions());
+            const response = await remote_api.put({
+                fermentrackURL: ft_url,
+                fermentrackPushEvery: pushFrequency
+            });
+            if (response && response.message) {
+                // TODO - Check response.message
+                fermentrackUrl.value = ft_url;
+                fermentrackPushFrequency.value = pushFrequency;
+                configUpdateError.value = false;
+            } else {
+                // await clearConfig();
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            await clearConfig();
+            configUpdateError.value = true;
+        }
+    }
+
 
     return {
         mdnsID,
@@ -188,8 +204,6 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         smoothFactor,
         applyCalibration,
         tempCorrect,
-        localTargetURL,
-        localTargetPushEvery,
         brewstatusURL,
         brewstatusPushEvery,
         taplistioURL,
@@ -208,9 +222,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         have_lcd,
         have_led,
         fermentrackTargetType,
-        fermentrackHost,
-        fermentrackPort,
-        fermentrackHTTPS,
+        fermentrackUrl,
         fermentrackPushFrequency,
         tiltConfig,
         loaded,
@@ -219,6 +231,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
 
         getConfig,
         clearConfig,
-        updateDeviceConfig
+        updateDeviceConfig,
+        updateFermentrackConfig
     };
 });

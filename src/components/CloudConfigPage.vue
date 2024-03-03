@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- The configuration landing page just wraps other elements which are shown when the configuration data loads -->
-    <TabContainer :tabs="tabs" v-if="configStore.loaded">
+    <TablessContainer v-if="configStore.loaded">
       <template v-slot:header>
         {{ $t('device_config.configure_tiltbridge_header') }}
       </template>
-    </TabContainer>
+    </TablessContainer>
     <div v-else>
       <!-- TODO - Add an error message here if the config fails to load -->
     </div>
@@ -17,15 +17,23 @@
 import { onMounted, onBeforeUnmount } from "vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
-import TabContainer from "@/components/sitewide/TabContainer.vue";
+import TablessContainer from "@/components/sitewide/TablessContainer.vue";
 
 const $loading = useLoading({
   // options
 });
 
-// TODO - Internationalize tab names
+
 const tabs = [
-  { name: 'General Settings', route_name: 'TiltBridgeConfig' },
+  { name: 'Fermentrack/BrewPi-Remix', route_name: 'FermentrackConfig' },
+  { name: 'Google Sheets', route_name: 'FermentrackConfig' },
+  { name: 'Brewers Friend', route_name: 'FermentrackConfig' },
+  { name: 'Brewfather', route_name: 'FermentrackConfig' },
+  { name: 'Grainfather', route_name: 'FermentrackConfig' },
+  { name: 'Brewstatus', route_name: 'FermentrackConfig' },
+  { name: 'Taplist.io', route_name: 'FermentrackConfig' },
+  { name: 'MQTT', route_name: 'FermentrackConfig' },
+  { name: 'Generic Target', route_name: 'FermentrackConfig' },
   // { name: 'Data Target Settings', route_name: 'KegtronConfig' },
   // { name: 'KegScreen TV Settings', route_name: 'KSTVConfig' },
 ];
