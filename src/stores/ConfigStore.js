@@ -294,6 +294,35 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateMQTTConfig(host, port, username, password, topic, pushEvery) {
+        try {
+            const remote_api = mande('/api/settings/mqtt/', genCSRFOptions());
+            const response = await remote_api.put({
+                mqttBrokerHost: host,
+                mqttBrokerPort: port,
+                mqttUsername: username,
+                mqttPassword: password,
+                mqttTopic: topic,
+                mqttPushEvery: pushEvery,
+            });
+            if (response && response.message) {
+                mqttBrokerHost.value = host;
+                mqttBrokerPort.value = port;
+                mqttUsername.value = username;
+                mqttPassword.value = password;
+                mqttTopic.value = topic;
+                mqttPushEvery.value = pushEvery;
+
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
+
 
     return {
         mdnsID,
@@ -348,6 +377,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateFermentrackConfig,
         updateGoogleSheetsConfig,
         updateBrewersFriendConfig,
-        updateBrewfatherConfig
+        updateBrewfatherConfig,
+        updateMQTTConfig
     };
 });

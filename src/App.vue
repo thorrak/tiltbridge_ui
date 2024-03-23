@@ -194,7 +194,7 @@ const navigation = [
       { name: 'Grainfather', route_name: 'FermentrackConfig' },
       { name: 'Brewstatus', route_name: 'FermentrackConfig' },
       { name: 'Taplist.io', route_name: 'FermentrackConfig' },
-      { name: 'MQTT', route_name: 'FermentrackConfig' },
+      { name: 'MQTT', route_name: 'MQTTConfig' },
       { name: 'Generic Target', route_name: 'FermentrackConfig' }
     ]},
   { name: 'Calibration', icon: HomeIcon, route_name: 'Home'},

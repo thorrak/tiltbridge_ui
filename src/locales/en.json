@@ -92,6 +92,23 @@
       "api_key": "Stream Key",
       "api_key_desc": "Stream key from your Brewfather account settings",
       "error_missing_api_key": "Stream key cannot be empty"
+    },
+    "mqtt": {
+      "header": "Configure MQTT",
+      "about_header": "About MQTT",
+      "about_text": "xxxxxxxx",
+      "broker_address": "MQTT Broker Address",
+      "broker_address_desc": "Enter the MQTT broker server address (Hostname or IP)",
+      "broker_port": "MQTT Broker Port",
+      "broker_port_desc": "MQTT broker server port number (usually 1883)",
+      "broker_username": "MQTT Broker Username",
+      "broker_username_desc": "Username for MQTT broker authentication (Optional)",
+      "broker_password": "MQTT Broker Password",
+      "broker_password_desc": "Password for MQTT broker authentication (Optional)",
+      "mqtt_topic": "MQTT Topic",
+      "mqtt_topic_desc": "The MQTT topic to publish data to",
+      "mqtt_push_every": "Push Frequency (seconds)",
+      "mqtt_push_every_desc": "How often to push data to MQTT (in seconds)"
     }
   }
 }
