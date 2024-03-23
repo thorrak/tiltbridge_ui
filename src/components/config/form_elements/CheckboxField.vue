@@ -6,7 +6,7 @@
       </div>
       <div class="ml-3 text-sm">
         <label :for="uid" class="font-medium text-gray-700"><slot name="FieldName"></slot></label>
-        <span :id="uid + '-desc'" class="text-gray-500"><slot name="FieldDescription"></slot></span>
+        <span :id="uid + '-desc'" class="text-gray-500 ml-3"><slot name="FieldDescription"></slot></span>
       </div>
     </div>
   </div>
