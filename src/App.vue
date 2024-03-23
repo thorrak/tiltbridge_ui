@@ -192,7 +192,7 @@ const navigation = [
       { name: 'Brewers Friend', route_name: 'BrewersFriendConfig' },
       { name: 'Brewfather', route_name: 'BrewfatherConfig' },
       { name: 'Grainfather', route_name: 'GrainfatherConfig' },
-      { name: 'Brewstatus', route_name: 'FermentrackConfig' },
+      { name: 'Brewstatus', route_name: 'BrewstatusConfig' },
       { name: 'Taplist.io', route_name: 'FermentrackConfig' },
       { name: 'MQTT', route_name: 'MQTTConfig' },
       { name: 'Generic Target', route_name: 'FermentrackConfig' }

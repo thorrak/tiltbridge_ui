@@ -99,6 +99,15 @@
       "about_text": "These settings control how TiltBridge talks to Grainfather. Grainfather supports logging from gravity sensors such as the Tilt Hydrometer with an account. To find your API url, log into your Grainfather account and go to Equipment > Fermentation Devices. Add a \"Tilt\" fermentation device for each color Tilt you want to log. After adding the Tilt, the URL required below can be found under setup instructions (accessible by clicking the circled \"i\" next to the Tilt in Grainfather).",
       "grainfather_url_desc": "Enter the Grainfather URL for your {color} Tilt Hydrometer"
     },
+    "brewstatus": {
+      "header": "Configure Brewstatus",
+      "about_header": "About Brewstatus",
+      "about_text": "These settings control how TiltBridge talks to BrewStatus. To disable pushing to BrewStatus, delete the BrewStatus URL.",
+      "brewstatus_url": "Brewstatus URL",
+      "brewstatus_url_desc": "Brewstatus URL to push tilt data to for your account",
+      "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
+      "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    },
     "mqtt": {
       "header": "Configure MQTT",
       "about_header": "About MQTT",
@@ -114,7 +123,7 @@
       "mqtt_topic": "MQTT Topic",
       "mqtt_topic_desc": "The MQTT topic to publish data to",
       "mqtt_push_every": "Push Frequency (seconds)",
-      "mqtt_push_every_desc": "How often to push data to MQTT (in seconds)"
+      "mqtt_push_every_desc": "How often to push data (in seconds)"
     }
   }
 }

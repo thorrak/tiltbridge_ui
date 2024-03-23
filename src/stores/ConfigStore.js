@@ -357,6 +357,26 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateBrewstatusConfig(url, pushEvery) {
+        try {
+            const remote_api = mande('/api/settings/brewstatus/');
+            const response = await remote_api.put({
+                brewstatusURL: url,
+                brewstatusPushEvery: pushEvery,
+            });
+
+            if (response && response.message) {
+                brewstatusURL.value = url;
+                brewstatusPushEvery.value = pushEvery;
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
 
     async function updateMQTTConfig(host, port, username, password, topic, pushEvery) {
         try {
@@ -451,6 +471,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateBrewersFriendConfig,
         updateBrewfatherConfig,
         updateGrainfatherUrls,
+        updateBrewstatusConfig,
         updateMQTTConfig
     };
 });
