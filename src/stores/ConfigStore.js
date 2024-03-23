@@ -377,6 +377,25 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateTaplistIoConfig(url, pushEvery) {
+        try {
+            const remote_api = mande('/api/settings/taplistio/');
+            const response = await remote_api.put({
+                taplistioURL: url,
+                taplistioPushEvery: pushEvery,
+            });
+
+            if (response && response.message) {
+                taplistioURL.value = url;
+                taplistioPushEvery.value = pushEvery;
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
 
     async function updateMQTTConfig(host, port, username, password, topic, pushEvery) {
         try {
@@ -472,6 +491,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateBrewfatherConfig,
         updateGrainfatherUrls,
         updateBrewstatusConfig,
+        updateTaplistIoConfig,
         updateMQTTConfig
     };
 });
