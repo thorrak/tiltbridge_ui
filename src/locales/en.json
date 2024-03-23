@@ -49,6 +49,12 @@
       "mdns_invalid_length": "mDNS ID must be between 8 and 31 characters",
       "invalid_smoothing_factor": "Specific gravity smoothing factor must be between 0 and 99",
       "invalid_tz_offset": "Timezone offset must be between -12 and 14"
+    },
+    "update_modal": {
+      "success_header": "Update Successful",
+      "success_message": "TiltBridge updated successfully.",
+      "fail_header": "Update Failed",
+      "fail_message": "Unable to connect to the TiltBridge or the update was rejected. Please recheck the information provided and reattempt."
     }
   },
   "cloud_config": {
