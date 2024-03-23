@@ -35,6 +35,17 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const scriptsBlueSheetName = ref("");
     const scriptsYellowSheetName = ref("");
     const scriptsPinkSheetName = ref("");
+    
+    // Grainfather URLs
+    const grainfatherRedURL = ref("");
+    const grainfatherGreenURL = ref("");
+    const grainfatherBlackURL = ref("");
+    const grainfatherPurpleURL = ref("");
+    const grainfatherOrangeURL = ref("");
+    const grainfatherBlueURL = ref("");
+    const grainfatherYellowURL = ref("");
+    const grainfatherPinkURL = ref("");
+
 
     const brewersFriendKey = ref("");
     const brewfatherKey = ref("");
@@ -95,6 +106,16 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             scriptsBlueSheetName.value = response.Blue.name;
             scriptsYellowSheetName.value = response.Yellow.name;
             scriptsPinkSheetName.value = response.Pink.name;
+            
+            // Grainfather URL Values
+            grainfatherRedURL.value = response.Red.grainfatherURL;
+            grainfatherGreenURL.value = response.Green.grainfatherURL;
+            grainfatherBlackURL.value = response.Black.grainfatherURL;
+            grainfatherPurpleURL.value = response.Purple.grainfatherURL;
+            grainfatherOrangeURL.value = response.Orange.grainfatherURL;
+            grainfatherBlueURL.value = response.Blue.grainfatherURL;
+            grainfatherYellowURL.value = response.Yellow.grainfatherURL;
+            grainfatherPinkURL.value = response.Pink.grainfatherURL;
             
             brewersFriendKey.value = response.brewersFriendKey;
             brewfatherKey.value = response.brewfatherKey;
@@ -157,6 +178,16 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         scriptsBlueSheetName.value = "";
         scriptsYellowSheetName.value = "";
         scriptsPinkSheetName.value = "";
+
+        grainfatherRedURL.value = "";
+        grainfatherGreenURL.value = "";
+        grainfatherBlackURL.value = "";
+        grainfatherPurpleURL.value = "";
+        grainfatherOrangeURL.value = "";
+        grainfatherBlueURL.value = "";
+        grainfatherYellowURL.value = "";
+        grainfatherPinkURL.value = "";
+
         brewersFriendKey.value = "";
         brewfatherKey.value = "";
         userTargetURL.value = "";
@@ -294,6 +325,39 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateGrainfatherUrls(grainfatherUrls) {
+        try {
+            const remote_api = mande('/api/settings/grainfather/', genCSRFOptions());
+            const response = await remote_api.put({
+                grainfatherURL_red: grainfatherUrls.Red,
+                grainfatherURL_green: grainfatherUrls.Green,
+                grainfatherURL_black: grainfatherUrls.Black,
+                grainfatherURL_purple: grainfatherUrls.Purple,
+                grainfatherURL_orange: grainfatherUrls.Orange,
+                grainfatherURL_blue: grainfatherUrls.Blue,
+                grainfatherURL_yellow: grainfatherUrls.Yellow,
+                grainfatherURL_pink: grainfatherUrls.Pink,
+            });
+            if (response && response.message) {
+                grainfatherRedURL.value = grainfatherUrls.Red;
+                grainfatherGreenURL.value = grainfatherUrls.Green;
+                grainfatherBlackURL.value = grainfatherUrls.Black;
+                grainfatherPurpleURL.value = grainfatherUrls.Purple;
+                grainfatherOrangeURL.value = grainfatherUrls.Orange;
+                grainfatherBlueURL.value = grainfatherUrls.Blue;
+                grainfatherYellowURL.value = grainfatherUrls.Yellow;
+                grainfatherPinkURL.value = grainfatherUrls.Pink;
+
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
+
     async function updateMQTTConfig(host, port, username, password, topic, pushEvery) {
         try {
             const remote_api = mande('/api/settings/mqtt/', genCSRFOptions());
@@ -352,6 +416,14 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         scriptsBlueSheetName,
         scriptsYellowSheetName,
         scriptsPinkSheetName,
+        grainfatherRedURL,
+        grainfatherGreenURL,
+        grainfatherBlackURL,
+        grainfatherPurpleURL,
+        grainfatherOrangeURL,
+        grainfatherBlueURL,
+        grainfatherYellowURL,
+        grainfatherPinkURL,
         brewersFriendKey,
         brewfatherKey,
         userTargetURL,
@@ -378,6 +450,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateGoogleSheetsConfig,
         updateBrewersFriendConfig,
         updateBrewfatherConfig,
+        updateGrainfatherUrls,
         updateMQTTConfig
     };
 });

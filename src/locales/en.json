@@ -93,6 +93,12 @@
       "api_key_desc": "Stream key from your Brewfather account settings",
       "error_missing_api_key": "Stream key cannot be empty"
     },
+    "grainfather": {
+      "header": "Configure Grainfather",
+      "about_header": "About Grainfather",
+      "about_text": "These settings control how TiltBridge talks to Grainfather. Grainfather supports logging from gravity sensors such as the Tilt Hydrometer with an account. To find your API url, log into your Grainfather account and go to Equipment > Fermentation Devices. Add a \"Tilt\" fermentation device for each color Tilt you want to log. After adding the Tilt, the URL required below can be found under setup instructions (accessible by clicking the circled \"i\" next to the Tilt in Grainfather).",
+      "grainfather_url_desc": "Enter the Grainfather URL for your {color} Tilt Hydrometer"
+    },
     "mqtt": {
       "header": "Configure MQTT",
       "about_header": "About MQTT",

@@ -191,7 +191,7 @@ const navigation = [
       { name: 'Google Sheets', route_name: 'GoogleSheetsConfig' },
       { name: 'Brewers Friend', route_name: 'BrewersFriendConfig' },
       { name: 'Brewfather', route_name: 'BrewfatherConfig' },
-      { name: 'Grainfather', route_name: 'FermentrackConfig' },
+      { name: 'Grainfather', route_name: 'GrainfatherConfig' },
       { name: 'Brewstatus', route_name: 'FermentrackConfig' },
       { name: 'Taplist.io', route_name: 'FermentrackConfig' },
       { name: 'MQTT', route_name: 'MQTTConfig' },
