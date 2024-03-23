@@ -23,8 +23,19 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const brewstatusPushEvery = ref(0);
     const taplistioURL = ref("");
     const taplistioPushEvery = ref(0);
+
+    // Google Sheets (Google Scripts)
     const scriptsURL = ref("");
     const scriptsEmail = ref("");
+    const scriptsRedSheetName = ref("");
+    const scriptsGreenSheetName = ref("");
+    const scriptsBlackSheetName = ref("");
+    const scriptsPurpleSheetName = ref("");
+    const scriptsOrangeSheetName = ref("");
+    const scriptsBlueSheetName = ref("");
+    const scriptsYellowSheetName = ref("");
+    const scriptsPinkSheetName = ref("");
+
     const brewersFriendKey = ref("");
     const brewfatherKey = ref("");
     const userTargetURL = ref("");
@@ -72,8 +83,19 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             brewstatusPushEvery.value = response.brewstatusPushEvery;
             taplistioURL.value = response.taplistioURL;
             taplistioPushEvery.value = response.taplistioPushEvery;
+            
+            // Google Sheets Values
             scriptsURL.value = response.scriptsURL;
             scriptsEmail.value = response.scriptsEmail;
+            scriptsRedSheetName.value = response.Red.name;
+            scriptsGreenSheetName.value = response.Green.name;
+            scriptsBlackSheetName.value = response.Black.name;
+            scriptsPurpleSheetName.value = response.Purple.name;
+            scriptsOrangeSheetName.value = response.Orange.name;
+            scriptsBlueSheetName.value = response.Blue.name;
+            scriptsYellowSheetName.value = response.Yellow.name;
+            scriptsPinkSheetName.value = response.Pink.name;
+            
             brewersFriendKey.value = response.brewersFriendKey;
             brewfatherKey.value = response.brewfatherKey;
             userTargetURL.value = response.userTargetURL;
@@ -95,6 +117,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             //         tilts.value.push(tilt);
             //     }
             // }
+
             loaded.value = true;
             configError.value = false;
         } else {
@@ -126,6 +149,14 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         taplistioPushEvery.value = 0;
         scriptsURL.value = "";
         scriptsEmail.value = "";
+        scriptsRedSheetName.value = "";
+        scriptsGreenSheetName.value = "";
+        scriptsBlackSheetName.value = "";
+        scriptsPurpleSheetName.value = "";
+        scriptsOrangeSheetName.value = "";
+        scriptsBlueSheetName.value = "";
+        scriptsYellowSheetName.value = "";
+        scriptsPinkSheetName.value = "";
         brewersFriendKey.value = "";
         brewfatherKey.value = "";
         userTargetURL.value = "";
@@ -190,6 +221,46 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     }
 
 
+    async function updateGoogleSheetsConfig(gs_url, gs_email, red_name, green_name, black_name, purple_name, orange_name, blue_name, yellow_name, pink_name) {
+        try {
+            const remote_api = mande("/api/settings/googlesheets/", genCSRFOptions());
+            const response = await remote_api.put({
+                scriptsURL: gs_url,
+                scriptsEmail: gs_email,
+                sheetName_red: red_name,
+                sheetName_green: green_name,
+                sheetName_black: black_name,
+                sheetName_purple: purple_name,
+                sheetName_orange: orange_name,
+                sheetName_blue: blue_name,
+                sheetName_yellow: yellow_name,
+                sheetName_pink: pink_name,
+            });
+            if (response && response.message) {
+                // TODO - Check response.message
+                scriptsURL.value = gs_url;
+                scriptsEmail.value = gs_email;
+                scriptsRedSheetName.value = red_name;
+                scriptsGreenSheetName.value = green_name;
+                scriptsBlackSheetName.value = black_name;
+                scriptsPurpleSheetName.value = purple_name;
+                scriptsOrangeSheetName.value = orange_name;
+                scriptsBlueSheetName.value = blue_name;
+                scriptsYellowSheetName.value = yellow_name;
+                scriptsPinkSheetName.value = pink_name;
+
+                configUpdateError.value = false;
+            } else {
+                // await clearConfig();
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            await clearConfig();
+            configUpdateError.value = true;
+        }
+    }
+
+
     return {
         mdnsID,
         guid,
@@ -210,6 +281,14 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         taplistioPushEvery,
         scriptsURL,
         scriptsEmail,
+        scriptsRedSheetName,
+        scriptsGreenSheetName,
+        scriptsBlackSheetName,
+        scriptsPurpleSheetName,
+        scriptsOrangeSheetName,
+        scriptsBlueSheetName,
+        scriptsYellowSheetName,
+        scriptsPinkSheetName,
         brewersFriendKey,
         brewfatherKey,
         userTargetURL,
@@ -232,6 +311,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         getConfig,
         clearConfig,
         updateDeviceConfig,
-        updateFermentrackConfig
+        updateFermentrackConfig,
+        updateGoogleSheetsConfig
     };
 });

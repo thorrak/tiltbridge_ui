@@ -18,6 +18,16 @@
       "tilts": "Tilts",
       "configure": "Configure",
       "cloud_target": "Cloud Targets"
+    },
+    "tilt_colors": {
+      "red": "Red",
+      "green": "Green",
+      "black": "Black",
+      "purple": "Purple",
+      "orange": "Orange",
+      "blue": "Blue",
+      "yellow": "Yellow",
+      "pink": "Pink"
     }
   },
   "device_config": {
@@ -51,6 +61,15 @@
       "push_frequency": "Push Frequency",
       "push_frequency_desc": "Frequency to send data (in seconds)",
       "push_frequency_out_of_range": "Push frequency must be between 30 and 43200"
+    },
+    "google_sheets": {
+      "header": "Configure Google Sheets",
+      "url": "Google Script URL",
+      "url_desc": "URL of the target Google Script",
+      "email": "Google Script Email Address",
+      "email_desc": "Email address used to create the targeted script",
+      "color_sheet_tilt_name": "{color} Tilt Sheet Name",
+      "color_sheet_tilt_name_desc": "The spreadsheet name to place data for the {color} tilt on"
     }
   }
 }
