@@ -5,28 +5,25 @@
 
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ $t('cloud_config.brewers_friend.header') }}
+            {{ $t('cloud_config.brewfather.header') }}
           </h3>
         </div>
 
-
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h4 class="text-lg leading-6 font-medium text-gray-900">
-            {{ $t('cloud_config.brewers_friend.about_header') }}
+            {{ $t('cloud_config.brewfather.about_header') }}
           </h4>
-
           <p>
-            {{ $t('cloud_config.brewers_friend.about_text') }}
+            {{ $t('cloud_config.brewfather.about_text') }}
           </p>
         </div>
 
         <form @submit.prevent="submitForm">
           <div class="px-4 py-5">
-
-            <!-- API Key Field -->
-            <TextField v-model="brewersFriendKey" placeholder="Your Brewers Friend API Key">
-              <template #FieldName>{{ $t('cloud_config.brewers_friend.api_key') }}</template>
-              <template #FieldDescription>{{ $t('cloud_config.brewers_friend.api_key_desc') }}</template>
+            <!-- Stream Key Field -->
+            <TextField v-model="brewfatherKey" placeholder="Your Brewfather Stream Key">
+              <template #FieldName>{{ $t('cloud_config.brewfather.api_key') }}</template>
+              <template #FieldDescription>{{ $t('cloud_config.brewfather.api_key_desc') }}</template>
             </TextField>
 
             <FormErrorMsg :form_error_message="form_error_message" v-if="form_error_message.length > 0" />
@@ -45,7 +42,6 @@
   </div>
 
   <UpdateSuccessfulModal update-successful="update-successful" v-model="alertOpen" />
-
 </template>
 
 <script setup>
@@ -58,7 +54,7 @@ import {useLoading} from "vue-loading-overlay";
 import {i18n} from "@/main";
 
 const configStore = useConfigStore();
-const brewersFriendKey = ref(configStore.brewersFriendKey);
+const brewfatherKey = ref(configStore.brewfatherKey);
 let form_error_message = ref("");
 
 const updateSuccessful = ref(false);
@@ -69,20 +65,20 @@ const $loading = useLoading({
 });
 
 function updateCachedSettings() {
-  brewersFriendKey.value = configStore.brewersFriendKey;
+  brewfatherKey.value = configStore.brewfatherKey;
 }
 
 async function submitForm() {
   form_error_message.value = "";
 
-  // if (!brewersFriendKey.value) {
-  //   form_error_message.value = i18n.global.t('cloud_config.brewers_friend.error_missing_api_key');
+  // if (!brewfatherKey.value) {
+  //   form_error_message.value = i18n.global.t('cloud_config.brewfather.error_missing_api_key');
   //   return;
   // }
 
   let loader = $loading.show({});
 
-  configStore.updateBrewersFriendConfig(brewersFriendKey.value).then(() => {
+  configStore.updateBrewfatherConfig(brewfatherKey.value).then(() => {
     updateCachedSettings();
     loader.hide();
     updateSuccessful.value = !configStore.configUpdateError;  // configUpdateError is inverted from what we want here

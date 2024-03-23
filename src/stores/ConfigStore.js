@@ -277,6 +277,23 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateBrewfatherConfig(brewfather_key) {
+        try {
+            const remote_api = mande("/api/settings/brewfather/", genCSRFOptions());
+            const response = await remote_api.put({
+                brewfatherKey: brewfather_key,
+            });
+            if (response && response.message) {
+                brewfatherKey.value = brewfather_key;
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
 
     return {
         mdnsID,
@@ -330,6 +347,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateDeviceConfig,
         updateFermentrackConfig,
         updateGoogleSheetsConfig,
-        updateBrewersFriendConfig
+        updateBrewersFriendConfig,
+        updateBrewfatherConfig
     };
 });

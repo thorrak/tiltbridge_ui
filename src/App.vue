@@ -190,7 +190,7 @@ const navigation = [
       { name: 'Fermentrack/BrewPi-Remix', route_name: 'FermentrackConfig' },
       { name: 'Google Sheets', route_name: 'GoogleSheetsConfig' },
       { name: 'Brewers Friend', route_name: 'BrewersFriendConfig' },
-      { name: 'Brewfather', route_name: 'FermentrackConfig' },
+      { name: 'Brewfather', route_name: 'BrewfatherConfig' },
       { name: 'Grainfather', route_name: 'FermentrackConfig' },
       { name: 'Brewstatus', route_name: 'FermentrackConfig' },
       { name: 'Taplist.io', route_name: 'FermentrackConfig' },
