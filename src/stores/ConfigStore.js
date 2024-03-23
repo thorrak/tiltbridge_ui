@@ -63,6 +63,9 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const fermentrackUrl = ref("");
     const fermentrackPushFrequency = ref(30);
 
+    const genericTargetURL = ref("");
+    // const genericTargetPushFrequency = ref(30);
+
     const tiltConfig = ref([]);
 
     const loaded = ref(false);
@@ -90,6 +93,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             // TODO - Update the below when the keys change
             fermentrackUrl.value = response.localTargetURL;
             fermentrackPushFrequency.value = response.localTargetPushEvery;
+            genericTargetURL.value = response.userTargetURL;
             brewstatusURL.value = response.brewstatusURL;
             brewstatusPushEvery.value = response.brewstatusPushEvery;
             taplistioURL.value = response.taplistioURL;
@@ -199,6 +203,10 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mqttPushEvery.value = 0;
         have_lcd.value = false;
         have_led.value = false;
+
+        fermentrackUrl.value = "";
+        fermentrackPushFrequency.value = 30;
+        genericTargetURL.value = "";
 
         loaded.value = false;
         configUpdateError.value = false;
@@ -425,7 +433,22 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
-
+    async function updateGenericTargetConfig(target_url) {
+        try {
+            const remote_api = mande("/api/settings/usertarget/", genCSRFOptions());
+            const response = await remote_api.put({
+                userTargetURL: target_url,
+            });
+            if (response && response.message) {
+                genericTargetURL.value = target_url;
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
 
     return {
         mdnsID,
@@ -477,6 +500,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         fermentrackTargetType,
         fermentrackUrl,
         fermentrackPushFrequency,
+        genericTargetURL,
         tiltConfig,
         loaded,
         configError,
@@ -492,6 +516,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateGrainfatherUrls,
         updateBrewstatusConfig,
         updateTaplistIoConfig,
-        updateMQTTConfig
+        updateMQTTConfig,
+        updateGenericTargetConfig
     };
 });

@@ -195,7 +195,7 @@ const navigation = [
       { name: 'Brewstatus', route_name: 'BrewstatusConfig' },
       { name: 'Taplist.io', route_name: 'TaplistIOConfig' },
       { name: 'MQTT', route_name: 'MQTTConfig' },
-      { name: 'Generic Target', route_name: 'FermentrackConfig' }
+      { name: 'Generic Target', route_name: 'GenericTargetConfig' }
     ]},
   { name: 'Calibration', icon: HomeIcon, route_name: 'Home'},
   { name: 'Help', icon: HomeIcon, route_name: 'Home'},
