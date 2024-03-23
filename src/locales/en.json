@@ -70,6 +70,15 @@
       "email_desc": "Email address used to create the targeted script",
       "color_sheet_tilt_name": "{color} Tilt Sheet Name",
       "color_sheet_tilt_name_desc": "The spreadsheet name to place data for the {color} tilt on"
+    },
+    "brewers_friend": {
+      "header": "Configure Brewers Friend",
+      "about_header": "About Brewers Friend",
+      "about_text": "These settings control how TiltBridge talks to Brewer's Friend. With a premium account, Brewer's Friend supports logging from gravity sensors such as the Tilt Hydrometer. To find your API key, log into your Brewer's Friend account and go to Profile > Account. Your API key will be a string of letters and numbers (not a URL).",
+      "api_key": "API Key",
+      "api_key_desc": "API key from your Brewers Friend account settings.",
+      "error_missing_api_key": "API key cannot be empty"
+
     }
   }
 }

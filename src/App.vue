@@ -189,7 +189,7 @@ const navigation = [
   { name: i18n.global.t('sitewide.sidebar_options.cloud_target'), icon: CloudArrowUpIcon, route_name: 'CloudConfigView', children:[
       { name: 'Fermentrack/BrewPi-Remix', route_name: 'FermentrackConfig' },
       { name: 'Google Sheets', route_name: 'GoogleSheetsConfig' },
-      { name: 'Brewers Friend', route_name: 'FermentrackConfig' },
+      { name: 'Brewers Friend', route_name: 'BrewersFriendConfig' },
       { name: 'Brewfather', route_name: 'FermentrackConfig' },
       { name: 'Grainfather', route_name: 'FermentrackConfig' },
       { name: 'Brewstatus', route_name: 'FermentrackConfig' },

@@ -260,6 +260,23 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateBrewersFriendConfig(brewersFriendApiKey) {
+        try {
+            const remote_api = mande("/api/settings/brewersfriend/", genCSRFOptions());
+            const response = await remote_api.put({
+                brewersFriendKey: brewersFriendApiKey,
+            });
+            if (response && response.message) {
+                brewersFriendKey.value = brewersFriendApiKey;
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
 
     return {
         mdnsID,
@@ -312,6 +329,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         clearConfig,
         updateDeviceConfig,
         updateFermentrackConfig,
-        updateGoogleSheetsConfig
+        updateGoogleSheetsConfig,
+        updateBrewersFriendConfig
     };
 });
