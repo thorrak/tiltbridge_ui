@@ -44,7 +44,6 @@
             <div class="mt-5 sm:mt-6">
               <button type="button" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm" @click="alertOpen = false">
                 {{ $t('sitewide.close') }}
-                Close
               </button>
             </div>
           </div>
@@ -56,8 +55,8 @@
 
 <script setup>
 import { computed, defineProps } from 'vue'
-import {CheckIcon, NoSymbolIcon} from "@heroicons/vue/24/outline";
-import {Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot} from "@headlessui/vue";
+import { CheckIcon, NoSymbolIcon } from "@heroicons/vue/24/outline";
+import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const props = defineProps({
   'modelValue': {
