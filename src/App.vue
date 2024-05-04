@@ -176,7 +176,8 @@ import {
   CpuChipIcon,
   LightBulbIcon,
   Cog8ToothIcon,
-  QuestionMarkCircleIcon
+  QuestionMarkCircleIcon,
+  InformationCircleIcon
 } from '@heroicons/vue/24/outline'
 
 import { i18n } from "@/main.js";
@@ -200,7 +201,7 @@ const navigation = [
     ]},
   { name: 'Calibration', icon: HomeIcon, route_name: 'Home'},
   { name: 'Help', icon: QuestionMarkCircleIcon, route_name: 'Help'},
-  { name: 'About', icon: HomeIcon, route_name: 'Home'},
+  { name: 'About', icon: InformationCircleIcon, route_name: 'About'},
   // { name: 'About', route_name: 'About'},
 ]
 

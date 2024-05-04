@@ -30,6 +30,22 @@
       "pink": "Pink"
     }
   },
+  "about":{
+    "uptime":{
+      "version_and_uptime":"Version & Uptime Information",
+      "firmware_version":"Firmware Version",
+      "uptime_header":"Uptime",
+      "uptime_print":"Days: {days}, Hours: {hours}, Minutes: {minutes}, Seconds: {seconds}",
+      "reset_header":"Reset Information",
+      "reset_print":"Reason: {reason}, Description: {description}",
+      "heap_header":"Heap Information",
+      "heap_print":"Free Heap: {free_heap}, Max: {max_heap}, Frags: {frags}"
+    },
+    "version": {
+      "loading_version": "Loading build/version information...",
+      "error_loading_version": "Error loading build/version information"
+    }
+  },
   "device_config": {
     "configure_tiltbridge_header": "Configure TiltBridge",
     "general_settings_header": "TiltBridge General Settings",
