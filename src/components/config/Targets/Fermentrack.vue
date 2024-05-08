@@ -16,13 +16,13 @@
 
 
             <!-- Target URL Field -->
-            <TextField v-model="ft_url" placeholder="www.fermentrack.net">
+            <TextField v-model="ft_url" placeholder="https://www.fermentrack.net/">
               <template #FieldName>{{ $t('cloud_config.fermentrack.url') }}</template>
               <template #FieldDescription>{{ $t('cloud_config.fermentrack.url_desc') }}</template>
             </TextField>
 
             <!-- Target Push Frequency Field -->
-            <TextField v-model="port" placeholder="30">
+            <TextField v-model="pushFrequency" placeholder="60">
               <template #FieldName>{{ $t('cloud_config.fermentrack.push_frequency') }}</template>
               <template #FieldDescription>{{ $t('cloud_config.fermentrack.push_frequency_desc') }}</template>
             </TextField>
@@ -67,7 +67,7 @@ const updateSuccessful = ref(false);
 const alertOpen = ref(false);
 const configStore = useConfigStore();
 
-let form_error_message = "";
+let form_error_message = ref("");
 
 
 const targetType = ref(configStore.fermentrackTargetType);
@@ -82,11 +82,29 @@ function updateCachedSettings() {
 
 
 async function submitForm() {
-  form_error_message = "";
+  form_error_message.value = "";
 
-  if(parseInt(pushFrequency.value) > 43200 || parseInt(pushFrequency.value) < 30) {
-    form_error_message = i18n.global.t('cloud_config.fermentrack.push_frequency_out_of_range');
+
+
+  if (!ft_url.value) {
+    // If the URL is blank, then we can assume that the user wants to disable the target. Set the pushFrequency to 60
+    // and submit the form.
+    ft_url.value = "";
+    pushFrequency.value = 60;
+  } else if ((!ft_url.value.startsWith("http://") && !ft_url.value.startsWith("https://")) || ft_url.value.length < 12) {
+    // If the URL is not blank, but doesn't start with http:// or https://, or is too short, then it's invalid.
+    form_error_message.value = i18n.global.t('cloud_config.fermentrack.url_invalid');
     return;
+  } else {
+    // We have a valid URL, so we need to make sure that the pushFrequency is set to a valid value.
+    if (!pushFrequency.value || isNaN(parseInt(pushFrequency.value))) {
+      form_error_message.value = i18n.global.t('cloud_config.fermentrack.push_frequency_invalid');
+      return;
+    }
+    if(parseInt(pushFrequency.value) > 43200 || parseInt(pushFrequency.value) < 30) {
+      form_error_message.value = i18n.global.t('cloud_config.fermentrack.push_frequency_out_of_range');
+      return;
+    }
   }
 
   // If there isn't a validation error, submit the form

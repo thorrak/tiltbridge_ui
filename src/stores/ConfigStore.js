@@ -239,7 +239,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
 
     async function updateFermentrackConfig(targetType, ft_url, pushFrequency) {
         try {
-            const remote_api = mande("/api/settings/controller/", genCSRFOptions());
+            const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
             const response = await remote_api.put({
                 fermentrackURL: ft_url,
                 fermentrackPushEvery: pushFrequency
