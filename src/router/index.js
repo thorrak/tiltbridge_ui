@@ -40,6 +40,11 @@ const routes = [
                 name: 'LegacyFermentrackConfig',
             },
             {
+                path: 'fermentrack',
+                component: () => import('@/components/config/Targets/Fermentrack2.vue'),
+                name: 'FermentrackConfig',
+            },
+            {
                 path: 'gsheets',
                 component: () => import('@/components/config/Targets/GoogleSheets.vue'),
                 name: 'GoogleSheetsConfig',

@@ -75,9 +75,9 @@
   },
   "cloud_config": {
     "fermentrack": {
-      "legacy_fermentrack_menu_item": "Legacy Fermentrack/BrewPi-Remix",
+      "legacy_fermentrack_menu_item": "Legacy Fermentrack / BrewPi-Remix",
       "header_legacy": "Configure Legacy Fermentrack Settings",
-      "legacy_desc": "These settings are for Fermentrack 1.x. If you are using Fermentrack 2, please select 'Fermentrack' as the cloud target",
+      "legacy_desc": "These settings are for Fermentrack 1.x. If you are using Fermentrack 2, please select 'Fermentrack 2 / Fermentrack.net' as the cloud target",
       "header": "Configure Fermentrack Settings",
       "target_type": "Target System",
       "target_type_desc": "Select the type of system you want to send to",
@@ -87,7 +87,42 @@
       "push_frequency_desc": "Frequency to send data (in seconds)",
       "push_frequency_out_of_range": "Push frequency must be a number between 30 and 43200",
       "push_frequency_invalid": "@:cloud_config.fermentrack.push_frequency_out_of_range",
-      "url_invalid": "URLs must start with either http:// or https://"
+      "url_invalid": "URLs must start with either http:// or https://",
+      "fermentrack_settings_set_sr": "Select a Fermentrack 2 target type",
+      "hostname": "Hostname",
+      "port": "Port",
+      "username": "Fermentrack Username",
+      "ft_net_username": "Fermentrack.net Username",
+      "api_key": "API Key",
+      "device_id": "Device ID",
+      "not_yet_registered": "(Not yet registered)",
+      "hardware_guid": "Hardware GUID",
+      "reset_device_id": "Reset Device ID",
+      "reset_device_id_msg": "Delete device ID and re-register with upstream. Warning - cannot be undone!",
+      "reset_registration": "Reset Registration",
+      "hostname_too_long_error": "Hostname is invalid. Must be less than 127 characters.",
+      "port_out_of_range_error": "Port number must be between 10 and 65535 (but is typically 80)",
+
+      "presets": {
+        "no_fermentrack": "None",
+        "no_fermentrack_desc": "Do not use TiltBridge with Fermentrack 2",
+        "fermentrack_net": "Fermentrack.net",
+        "fermentrack_net_desc": "Use Fermentrack.net to control this TiltBridge",
+        "fermentrack_local": "Fermentrack 2 (Local/Custom)",
+        "fermentrack_local_desc": "Use a local Fermentrack 2 instance to control this TiltBridge"
+      },
+      "errors": {
+        "error_port_out_of_range": "Port must be a number between 1 and 65535",
+        "missing_data_error": "There was data missing in the registration message which is typically set internally by the TiltBridge. This most likely means that either the TiltBridge firmware or the version of Fermentrack is out of date. Please update the TiltBridge firmware and/or Fermentrack and try again.",
+        "invalid_username_error": "Username is invalid on the targeted Fermentrack install. Please check the username and try again.",
+        "bad_api_key_error": "API Key does not match a valid brewhouse on the targeted Fermentrack install. Please enter a valid username and try again.",
+        "missing_brewhouse_error": "The specified Fermentrack user does not have a brewhouse. Please complete setup of this user in Fermentrack and try again.",
+        "no_username_error": "No username or API key specified.",
+        "waiting_to_register_error": "Device is waiting to register with Fermentrack. Please wait up to 3 minutes and refresh this page.",
+        "unable_to_reach_fermentrack_error": "TiltBridge is unable to reach Fermentrack. Please check that Fermentrack is accessible at the specified hostname/port.",
+        "successful_registration_msg": "TiltBridge is successfully registered with Fermentrack",
+        "unknown error": "An unknown error was sent by Fermentrack. This most likely means that either the TiltBridge firmware or the version of Fermentrack is out of date. Please update the TiltBridge firmware and/or Fermentrack and try again."
+      }
     },
     "google_sheets": {
       "header": "Configure Google Sheets",

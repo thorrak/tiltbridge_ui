@@ -158,14 +158,6 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
-import {
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  UsersIcon,
-} from '@heroicons/vue/24/outline'
-
 
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
@@ -177,7 +169,7 @@ import {
   LightBulbIcon,
   Cog8ToothIcon,
   QuestionMarkCircleIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
 } from '@heroicons/vue/24/outline'
 
 import { i18n } from "@/main.js";
@@ -189,7 +181,7 @@ const navigation = [
   { name: 'Tilts', icon: HomeIcon, route_name: 'Home'},
   { name: i18n.global.t('sitewide.sidebar_options.configure'), icon: Cog8ToothIcon, route_name: 'TiltBridgeConfig'},
   { name: i18n.global.t('sitewide.sidebar_options.cloud_target'), icon: CloudArrowUpIcon, route_name: 'CloudConfigView', children:[
-      // { name: 'Fermentrack 2/Fermentrack.net', route_name: 'FermentrackConfig' },
+      { name: 'Fermentrack 2 / Fermentrack.net', route_name: 'FermentrackConfig' },
       { name: i18n.global.t('cloud_config.fermentrack.legacy_fermentrack_menu_item'), route_name: 'LegacyFermentrackConfig' },
       { name: 'Google Sheets', route_name: 'GoogleSheetsConfig' },
       { name: 'Brewers Friend', route_name: 'BrewersFriendConfig' },
