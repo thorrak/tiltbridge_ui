@@ -189,7 +189,8 @@ const navigation = [
   { name: 'Tilts', icon: HomeIcon, route_name: 'Home'},
   { name: i18n.global.t('sitewide.sidebar_options.configure'), icon: Cog8ToothIcon, route_name: 'TiltBridgeConfig'},
   { name: i18n.global.t('sitewide.sidebar_options.cloud_target'), icon: CloudArrowUpIcon, route_name: 'CloudConfigView', children:[
-      { name: 'Fermentrack/BrewPi-Remix', route_name: 'FermentrackConfig' },
+      // { name: 'Fermentrack 2/Fermentrack.net', route_name: 'FermentrackConfig' },
+      { name: i18n.global.t('cloud_config.fermentrack.legacy_fermentrack_menu_item'), route_name: 'LegacyFermentrackConfig' },
       { name: 'Google Sheets', route_name: 'GoogleSheetsConfig' },
       { name: 'Brewers Friend', route_name: 'BrewersFriendConfig' },
       { name: 'Brewfather', route_name: 'BrewfatherConfig' },

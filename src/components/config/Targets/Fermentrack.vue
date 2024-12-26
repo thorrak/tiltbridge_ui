@@ -5,18 +5,22 @@
 
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ $t('cloud_config.fermentrack.header') }}
+            {{ $t('cloud_config.fermentrack.header_legacy') }}
           </h3>
+        </div>
+
+        <div class="px-4 py-5">
+          <p class="leading-3 font-normal text-gray-600">
+            {{ $t('cloud_config.fermentrack.legacy_desc') }}
+          </p>
         </div>
 
         <form @submit.prevent="submitForm">
 
           <div class="px-4 py-5">
-            <!-- TODO - Add "Target Type" selector here -->
-
 
             <!-- Target URL Field -->
-            <TextField v-model="ft_url" placeholder="https://www.fermentrack.net/">
+            <TextField v-model="ft_url" placeholder="http://192.168.1.x">
               <template #FieldName>{{ $t('cloud_config.fermentrack.url') }}</template>
               <template #FieldDescription>{{ $t('cloud_config.fermentrack.url_desc') }}</template>
             </TextField>
@@ -53,8 +57,6 @@ import FormErrorMsg from "@/components/generic/FormErrorMsg.vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
 import TextField from "@/components/config/form_elements/TextField.vue";
-import SelectField from "@/components/config/form_elements/SelectField.vue";
-import CheckboxField from "@/components/config/form_elements/CheckboxField.vue";
 import UpdateSuccessfulModal from "@/components/config/UpdateSuccessfulModal.vue";
 import { ref } from "vue";
 import { i18n } from "@/main.js";
@@ -70,12 +72,10 @@ const configStore = useConfigStore();
 let form_error_message = ref("");
 
 
-const targetType = ref(configStore.fermentrackTargetType);
-const ft_url = ref(configStore.fermentrackHost);
+const ft_url = ref(configStore.fermentrackUrl);
 const pushFrequency = ref(configStore.fermentrackPushFrequency);
 
 function updateCachedSettings() {
-  targetType.value = configStore.fermentrackTargetType;
   ft_url.value = configStore.fermentrackUrl;
   pushFrequency.value = configStore.fermentrackPushFrequency;
 }
@@ -109,8 +109,7 @@ async function submitForm() {
 
   // If there isn't a validation error, submit the form
   let loader = $loading.show({});
-  configStore.updateFermentrackConfig(
-      targetType.value,
+  configStore.updateLegacyFermentrackConfig(
       ft_url.value,
       parseInt(pushFrequency.value)
   ).then(() => {

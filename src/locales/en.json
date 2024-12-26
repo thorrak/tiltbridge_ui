@@ -75,6 +75,9 @@
   },
   "cloud_config": {
     "fermentrack": {
+      "legacy_fermentrack_menu_item": "Legacy Fermentrack/BrewPi-Remix",
+      "header_legacy": "Configure Legacy Fermentrack Settings",
+      "legacy_desc": "These settings are for Fermentrack 1.x. If you are using Fermentrack 2, please select 'Fermentrack' as the cloud target",
       "header": "Configure Fermentrack Settings",
       "target_type": "Target System",
       "target_type_desc": "Select the type of system you want to send to",

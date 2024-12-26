@@ -59,7 +59,8 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const have_lcd = ref(false);
     const have_led = ref(false);
 
-    const fermentrackTargetType = ref("none"); // none, legacy, ft2, or bpr
+    // Fermentrack Settings
+    // Legacy Options
     const fermentrackUrl = ref("");
     const fermentrackPushFrequency = ref(30);
 
@@ -204,6 +205,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         have_lcd.value = false;
         have_led.value = false;
 
+        // Legacy Fermentrack
         fermentrackUrl.value = "";
         fermentrackPushFrequency.value = 30;
         genericTargetURL.value = "";
@@ -237,7 +239,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     }
 
 
-    async function updateFermentrackConfig(targetType, ft_url, pushFrequency) {
+    async function updateLegacyFermentrackConfig(ft_url, pushFrequency) {
         try {
             const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
             const response = await remote_api.put({
@@ -497,7 +499,6 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mqttPushEvery,
         have_lcd,
         have_led,
-        fermentrackTargetType,
         fermentrackUrl,
         fermentrackPushFrequency,
         genericTargetURL,
@@ -509,7 +510,8 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         getConfig,
         clearConfig,
         updateDeviceConfig,
-        updateFermentrackConfig,
+        updateLegacyFermentrackConfig,
+        // updateFermentrackConfig,
         updateGoogleSheetsConfig,
         updateBrewersFriendConfig,
         updateBrewfatherConfig,

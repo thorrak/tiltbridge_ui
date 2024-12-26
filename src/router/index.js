@@ -35,9 +35,9 @@ const routes = [
         redirect: {"name": "FermentrackConfig"},
         children: [
             {
-                path: 'fermentrack',
+                path: 'legacy_fermentrack',
                 component: () => import('@/components/config/Targets/Fermentrack.vue'),
-                name: 'FermentrackConfig',
+                name: 'LegacyFermentrackConfig',
             },
             {
                 path: 'gsheets',
