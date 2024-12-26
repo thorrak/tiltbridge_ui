@@ -198,7 +198,7 @@ const navigation = [
       { name: 'Brewstatus', route_name: 'BrewstatusConfig' },
       { name: 'Taplist.io', route_name: 'TaplistIOConfig' },
       { name: 'MQTT', route_name: 'MQTTConfig' },
-      { name: 'Generic Target', route_name: 'GenericTargetConfig' }
+      { name: i18n.global.t('cloud_config.generic_target.generic_target_menu_item'), route_name: 'GenericTargetConfig' }
     ]},
   // { name: 'Calibration', icon: HomeIcon, route_name: 'Home'},
   { name: 'Help', icon: QuestionMarkCircleIcon, route_name: 'Help'},

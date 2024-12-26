@@ -156,6 +156,7 @@
       "mqtt_push_every_desc": "How often to push data (in seconds)"
     },
     "generic_target": {
+      "generic_target_menu_item": "Generic Target",
       "header": "Configure Generic JSON Target",
       "about_header": "About Generic JSON Targets",
       "about_text": "This target allows you to send a generic JSON payload containing your Tilt data to a service that TiltBridge otherwise does not support",
