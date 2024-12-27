@@ -71,7 +71,7 @@
               <li v-for="item in navigation" :key="item.name">
 
                 <router-link v-if="!item.children" :to="{name: item.route_name}" v-slot="{ href, navigate, isActive }" custom>
-                  <a :href="href" :class="[isActive ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75', 'group flex items-center p-2 text-sm font-medium rounded-md']">
+                  <a :href="href" :class="[isActive ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75', 'group flex items-center p-2 text-sm font-medium rounded-md']" @click="navigate">
                     <component :is="item.icon" class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
                     {{ item.name }}
                   </a>
@@ -87,7 +87,7 @@
                     <li v-for="subItem in item.children" :key="subItem.name" class="">
                       <!-- 44px -->
                       <router-link :to="{name: subItem.route_name}" v-slot="{ href, navigate, isActive }" custom>
-                        <DisclosureButton as="a" :href="href" :class="[isActive ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75', 'group flex items-center px-4 py-2 text-sm font-medium rounded-md']">{{ subItem.name }}</DisclosureButton>
+                        <DisclosureButton as="a" :href="href" :class="[isActive ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75', 'group flex items-center px-4 py-2 text-sm font-medium rounded-md']" @click="navigate">{{ subItem.name }}</DisclosureButton>
                       </router-link>
                     </li>
                   </DisclosurePanel>
