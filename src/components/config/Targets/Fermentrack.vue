@@ -10,7 +10,7 @@
         </div>
 
         <div class="px-4 py-5">
-          <p class="leading-3 font-normal text-gray-600">
+          <p class="font-normal text-gray-600">
             {{ $t('cloud_config.fermentrack.legacy_desc') }}
           </p>
         </div>
