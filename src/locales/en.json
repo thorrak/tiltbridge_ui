@@ -200,5 +200,16 @@
       "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
       "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
     }
+  },
+  "tilt_list": {
+    "header": "Available Tilt Hydrometers",
+    "detected_tilts": "Detected Tilts",
+    "color_column": "Color",
+    "rssi_column": "RSSI",
+    "battery_age_column": "Battery Age",
+    "gravity_column": "Gravity",
+    "temperature_column": "Temperature",
+    "battery_age_week_count":"{weeks} weeks",
+    "no_tilts_detected": "No Tilts have been detected"
   }
 }
