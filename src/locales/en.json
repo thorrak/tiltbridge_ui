@@ -14,6 +14,7 @@
     "celsius": "Celsius",
     "fahrenheit": "Fahrenheit",
     "translation_message": "This application is translated by users like you! If you see items that are not translated (or have suggestions for improvements!) please suggest improvements on GitHub.",
+    "tab_container_sr_text": "Select a group of settings to edit",
     "sidebar_options": {
       "tilts": "Tilts",
       "configure": "Configure",
@@ -29,6 +30,9 @@
       "yellow": "Yellow",
       "pink": "Pink"
     }
+  },
+  "navigation": {
+    "general_settings": "General Settings"
   },
   "about":{
     "uptime":{
@@ -49,6 +53,7 @@
   "device_config": {
     "configure_tiltbridge_header": "Configure TiltBridge",
     "general_settings_header": "TiltBridge General Settings",
+    "config_failed_error": "Configuration failed to load from TiltBridge. Try refreshing the page, or check your TiltBridge's connection to the network.",
     "mDNS_id_name": "mDNS ID",
     "mDNS_id_desc": "Host name (the xxxx in http://xxxx.local/). Must be 8-31 characters.",
     "tz_offset_name": "Time Zone Offset",
@@ -176,7 +181,11 @@
     "mqtt": {
       "header": "Configure MQTT",
       "about_header": "About MQTT",
-      "about_text": "xxxxxxxx",
+      "about_text_1": "These settings control how TiltBridge publishes data to an MQTT Broker. To disable pushing to the MQTT broker, delete the MQTT Broker IP.",
+      "about_text_hast": "MQTT implementation supports Home Assistant Auto Discovery of temperature and specific gravity sensors.",
+      "about_text_payload_header": "General message payload is JSON and is formatted as follows",
+      "about_text_topic": "Topic",
+      "about_text_payload": "Payload",
       "broker_address": "MQTT Broker Address",
       "broker_address_desc": "Enter the MQTT broker server address (Hostname or IP)",
       "broker_port": "MQTT Broker Port",
@@ -211,5 +220,20 @@
     "temperature_column": "Temperature",
     "battery_age_week_count":"{weeks} weeks",
     "no_tilts_detected": "No Tilts have been detected"
+  },
+  "help_page": {
+    "header": "TiltBridge Support",
+    "contact_text": "For questions, concerns, and bug reports, please reach out to {lf_on_reddit} on Reddit, {thorrak_on_hbt} on the HomeBrewTalk forums, open an issue on {github}, or reach out via one of the links in this {blog_post}.",
+    "blog_post": "blog post",
+    "tiltbridge_docs_intro": "TiltBridge documentation and support can be found at the following links:",
+    "tiltbridge_link": "Visit the {tb_homepage_link}",
+    "tiltbridge_homepage": "TiltBridge Homepage",
+    "documentation_link": "Read the {tb_docs_link}",
+    "documentation": "Documentation",
+    "github_link": "Visit the project on {github_link}",
+    "report_issue_link": "Report an {issue_link}",
+    "issue_bug_feature_request": "issue, bug, or feature request",
+    "homebrewtalk_link": "Get support or chat with other users on the {hbt_link}",
+    "homebrewtalk_thread": "HomeBrewTalk thread"
   }
 }

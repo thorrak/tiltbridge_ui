@@ -7,7 +7,7 @@
       </template>
     </TabContainer>
     <div v-else>
-      <!-- TODO - Add an error message here if the config fails to load -->
+      {{ $t('device_config.config_failed_error') }}
     </div>
   </div>
 
@@ -18,16 +18,14 @@ import { onMounted, onBeforeUnmount } from "vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
 import TabContainer from "@/components/sitewide/TabContainer.vue";
+import { i18n } from "@/main.js";
 
 const $loading = useLoading({
   // options
 });
 
-// TODO - Internationalize tab names
 const tabs = [
-  { name: 'General Settings', route_name: 'TiltBridgeConfig' },
-  // { name: 'Data Target Settings', route_name: 'KegtronConfig' },
-  // { name: 'KegScreen TV Settings', route_name: 'KSTVConfig' },
+  { name: i18n.global.t('navigation.general_settings'), route_name: 'TiltBridgeConfig' },
 ];
 
 let intervalObject = null;

@@ -1,33 +1,71 @@
 <template>
   <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <!-- TODO - Internationalize This -->
     <div class="flex-initial md:container">
       <div class="bg-white overflow-hidden sm:rounded-lg sm:shadow">
 
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            TiltBridge Support
+            {{ $t('help_page.header') }}
           </h3>
         </div>
 
         <div class="px-4 py-5">
-          <p>
-            For questions, concerns, and bug reports, please reach out to
-            <a href="https://www.reddit.com/user/lordfili" class="text-blue-600 hover:text-blue-800">lordfili</a> on Reddit,
-            <a href="https://www.homebrewtalk.com/forum/members/thorrak.221138/" class="text-blue-600 hover:text-blue-800">Thorrak</a>
-            on the HBT forums, or
-            <a href="https://github.com/thorrak" class="text-blue-600 hover:text-blue-800">Thorrak</a> on GitHub.
-          </p>
+
+          <i18n-t keypath="help_page.contact_text" tag="p">
+            <template v-slot:lf_on_reddit>
+              <a href="https://www.reddit.com/user/lordfili" class="text-blue-600 hover:text-blue-800">lordfili</a>
+            </template>
+            <template v-slot:thorrak_on_hbt>
+              <a href="https://www.homebrewtalk.com/forum/members/thorrak.221138/" class="text-blue-600 hover:text-blue-800">Thorrak</a>
+            </template>
+            <template v-slot:github>
+              <a href="https://github.com/thorrak/tiltbridge" class="text-blue-600 hover:text-blue-800">GitHub</a>
+            </template>
+            <template v-slot:blog_post>
+              <a href="https://blog.fermentrack.com/how-to-get-ahold-of-me/" class="text-blue-600 hover:text-blue-800">{{ $t('help_page.blog_post') }}</a>
+            </template>
+          </i18n-t>
+
+
           <p class="pt-3">
-            TiltBridge documentation and support can be found at the following links:
+            {{ $t('help_page.tiltbridge_docs_intro') }}
           </p>
 
           <ul class="list-inside list-disc pt-3 px-3">
-            <li>Visit the <a href="https://www.tiltbridge.com/" class="text-blue-600 hover:text-blue-800">Homepage</a></li>
-            <li>Read the <a href="http://docs.tiltbridge.com/" class="text-blue-600 hover:text-blue-800">Documentation</a></li>
-            <li>Visit project on <a href="https://github.com/thorrak/tiltbridge/" class="text-blue-600 hover:text-blue-800">GitHub</a></li>
-            <li>Report an <a href="https://github.com/thorrak/tiltbridge/issues" class="text-blue-600 hover:text-blue-800">issue, bug, or feature request</a></li>
-            <li>Get support or chat with other users on the <a href="http://homebrewtalk.tiltbridge.com/" class="text-blue-600 hover:text-blue-800">HomeBrewTalk Thread</a></li>
+            <!-- TiltBridge Homepage Link -->
+            <i18n-t keypath="help_page.tiltbridge_link" tag="li">
+              <template v-slot:tb_homepage_link>
+                <a href="https://www.tiltbridge.com/" class="text-blue-600 hover:text-blue-800">{{ $t('help_page.tiltbridge_homepage') }}</a>
+              </template>
+            </i18n-t>
+
+            <!-- TiltBridge Docs Link -->
+            <i18n-t keypath="help_page.documentation_link" tag="li">
+              <template v-slot:tb_docs_link>
+                <a href="http://docs.tiltbridge.com/" class="text-blue-600 hover:text-blue-800">{{ $t('help_page.documentation') }}</a>
+              </template>
+            </i18n-t>
+
+            <!-- TiltBridge GitHub Link -->
+            <i18n-t keypath="help_page.github_link" tag="li">
+              <template v-slot:github_link>
+                <a href="https://github.com/thorrak/tiltbridge/" class="text-blue-600 hover:text-blue-800">GitHub</a>
+              </template>
+            </i18n-t>
+
+            <!-- TiltBridge GitHub Issues Link -->
+            <i18n-t keypath="help_page.report_issue_link" tag="li">
+              <template v-slot:issue_link>
+                <a href="https://github.com/thorrak/tiltbridge/issues" class="text-blue-600 hover:text-blue-800">{{ $t('help_page.issue_bug_feature_request') }}</a>
+              </template>
+            </i18n-t>
+
+            <!-- TiltBridge HBT Thread Link -->
+            <i18n-t keypath="help_page.homebrewtalk_link" tag="li">
+              <template v-slot:hbt_link>
+                <a href="http://homebrewtalk.tiltbridge.com/" class="text-blue-600 hover:text-blue-800">{{ $t('help_page.homebrewtalk_thread') }}</a>
+              </template>
+            </i18n-t>
           </ul>
         </div>
 

@@ -98,8 +98,6 @@ import FormErrorMsg from "@/components/generic/FormErrorMsg.vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
 import TextField from "@/components/config/form_elements/TextField.vue";
-import SelectField from "@/components/config/form_elements/SelectField.vue";
-import CheckboxField from "@/components/config/form_elements/CheckboxField.vue";
 import UpdateSuccessfulModal from "@/components/config/UpdateSuccessfulModal.vue";
 import { ref } from "vue";
 import { i18n } from "@/main.js";

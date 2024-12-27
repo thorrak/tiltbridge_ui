@@ -13,18 +13,25 @@
           <h4 class="text-lg leading-6 font-medium text-gray-900">
             {{ $t('cloud_config.mqtt.about_header') }}
           </h4>
-          <p>
-            <!-- TODO - Internationalize/format This -->
-            These settings control how TiltBridge publishes data to an MQTT Broker. To disable pushing to the MQTT broker, delete the MQTT Broker IP.
+          <p class="mt-2">
+            {{ $t('cloud_config.mqtt.about_text_1') }}
+          </p>
+          <p class="mt-2">
+            {{ $t('cloud_config.mqtt.about_text_hast') }}
+          </p>
 
-            MQTT implementation supports Home Assistant Auto Discovery of temperature and specific gravity sensors.
 
-            General message payload is json and is formatted as follows:
+          <p class="mt-2">
+            {{  $t('cloud_config.mqtt.about_text_payload_header') }}:
+          </p>
+          <p class="mt-1 pl-2">
+            <span>{{  $t('cloud_config.mqtt.about_text_topic') }}:</span><br />
+            <span>topic/tilt_color</span><br />
+          </p>
+          <p class="mt-0.5 pl-2">
 
-            Topic:
-            topic/tilt_color
-            Payload:
-            {"Color":"color","SG":"#.####","Temp":"##.#","fermunits":"SG","tempunits":"F","timeStamp":##########}
+            <span>{{  $t('cloud_config.mqtt.about_text_payload') }}:</span><br />
+            <span>{"Color":"color","SG":"#.####","Temp":"##.#","fermunits":"SG","tempunits":"F","timeStamp":##########}</span>
           </p>
         </div>
 

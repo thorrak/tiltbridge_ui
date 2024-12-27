@@ -303,16 +303,12 @@
 import FormErrorMsg from "@/components/generic/FormErrorMsg.vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
-import TextField from "@/components/config/form_elements/TextField.vue";
-import SelectField from "@/components/config/form_elements/SelectField.vue";
-import CheckboxField from "@/components/config/form_elements/CheckboxField.vue";
 import UpdateSuccessfulModal from "@/components/config/UpdateSuccessfulModal.vue";
 import {onMounted, ref} from "vue";
 import { i18n } from "@/main.js";
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from "@headlessui/vue";
 import {CheckIcon, ChevronDownIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 import { ExclamationTriangleIcon, InformationCircleIcon } from "@heroicons/vue/24/outline";
-import config from "tailwindcss/defaultConfig";
 
 // selectedSettingSet is one of three values:
 //   0 - "No Fermentack" (or legacy FT target)

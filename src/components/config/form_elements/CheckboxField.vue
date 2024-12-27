@@ -2,7 +2,7 @@
   <div>
     <div class="relative flex items-start">
       <div class="flex items-center h-5">
-        <input :id="uid" v-model="value" :aria-describedby="uid + '-desc'" name="invertTFT" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+        <input :id="uid" v-model="value" :aria-describedby="uid + '-desc'" :name="uid" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
       </div>
       <div class="ml-3 text-sm">
         <label :for="uid" class="font-medium text-gray-700"><slot name="FieldName"></slot></label>
