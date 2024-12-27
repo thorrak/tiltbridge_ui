@@ -34,8 +34,6 @@ const $loading = useLoading({
 //   { name: 'Taplist.io', route_name: 'FermentrackConfig' },
 //   { name: 'MQTT', route_name: 'FermentrackConfig' },
 //   { name: 'Generic Target', route_name: 'FermentrackConfig' },
-//   // { name: 'Data Target Settings', route_name: 'KegtronConfig' },
-//   // { name: 'KegScreen TV Settings', route_name: 'KSTVConfig' },
 // ];
 
 let intervalObject = null;

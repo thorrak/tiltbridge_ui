@@ -59,9 +59,18 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const have_lcd = ref(false);
     const have_led = ref(false);
 
-    const fermentrackTargetType = ref("none"); // none, legacy, ft2, or bpr
+    // Fermentrack Settings
+    // Legacy Options
     const fermentrackUrl = ref("");
     const fermentrackPushFrequency = ref(30);
+    // FT2 Options
+    const fermentrackHostname = ref("");
+    const fermentrackPort = ref(80);
+    const fermentrackUser = ref("");  // Only used during registration
+    const fermentrackDeviceID = ref("");
+    const fermentrackAPIKey = ref("");
+    const fermentrackRegistrationError = ref(8);  // "Not attempted registration"
+
 
     const genericTargetURL = ref("");
     // const genericTargetPushFrequency = ref(30);
@@ -93,6 +102,14 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             // TODO - Update the below when the keys change
             fermentrackUrl.value = response.localTargetURL;
             fermentrackPushFrequency.value = response.localTargetPushEvery;
+            // Fermentrack 2
+            fermentrackHostname.value = response.fermentrackHostname;
+            fermentrackPort.value = response.fermentrackPort;
+            fermentrackUser.value = response.fermentrackUsername;
+            fermentrackDeviceID.value = response.fermentrackDeviceID;
+            fermentrackAPIKey.value = response.fermentrackAPIKey;
+            fermentrackRegistrationError.value = response.fermentrackRegistrationError;
+            // Others
             genericTargetURL.value = response.userTargetURL;
             brewstatusURL.value = response.brewstatusURL;
             brewstatusPushEvery.value = response.brewstatusPushEvery;
@@ -204,8 +221,18 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         have_lcd.value = false;
         have_led.value = false;
 
+        // Legacy Fermentrack
         fermentrackUrl.value = "";
         fermentrackPushFrequency.value = 30;
+
+        // Fermentrack 2
+        fermentrackHostname.value = "";
+        fermentrackPort.value = 80;
+        fermentrackUser.value = "";
+        fermentrackDeviceID.value = "";
+        fermentrackAPIKey.value = "";
+        fermentrackRegistrationError.value = 8; // "Not attempted registration" - not sure whether to do 8 or 9 here
+
         genericTargetURL.value = "";
 
         loaded.value = false;
@@ -237,7 +264,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     }
 
 
-    async function updateFermentrackConfig(targetType, ft_url, pushFrequency) {
+    async function updateLegacyFermentrackConfig(ft_url, pushFrequency) {
         try {
             const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
             const response = await remote_api.put({
@@ -248,6 +275,32 @@ export const useConfigStore = defineStore("ConfigStore", () => {
                 // TODO - Check response.message
                 fermentrackUrl.value = ft_url;
                 fermentrackPushFrequency.value = pushFrequency;
+                configUpdateError.value = false;
+            } else {
+                // await clearConfig();
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            await clearConfig();
+            configUpdateError.value = true;
+        }
+    }
+
+    async function updateFermentrackConfig(ftHostname, ftPort, ftUser) {
+        try {
+            // Fermentrack and Fermentrack 2 are the same endpoint
+            const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
+            const response = await remote_api.put({
+                fermentrackHostname: ftHostname,
+                fermentrackPort: ftPort,
+                fermentrackUsername: ftUser
+            });
+            if (response && response.status) {
+                // TODO - Check response.status
+                fermentrackHostname.value = ftHostname;
+                fermentrackPort.value = ftPort;
+                fermentrackUser.value = ftUser;
+                fermentrackRegistrationError.value = 8; // "Not attempted registration"
                 configUpdateError.value = false;
             } else {
                 // await clearConfig();
@@ -497,9 +550,14 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mqttPushEvery,
         have_lcd,
         have_led,
-        fermentrackTargetType,
         fermentrackUrl,
         fermentrackPushFrequency,
+        fermentrackHostname,
+        fermentrackPort,
+        fermentrackUser,
+        fermentrackDeviceID,
+        fermentrackAPIKey,
+        fermentrackRegistrationError,
         genericTargetURL,
         tiltConfig,
         loaded,
@@ -509,6 +567,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         getConfig,
         clearConfig,
         updateDeviceConfig,
+        updateLegacyFermentrackConfig,
         updateFermentrackConfig,
         updateGoogleSheetsConfig,
         updateBrewersFriendConfig,
