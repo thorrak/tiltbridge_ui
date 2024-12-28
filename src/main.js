@@ -12,6 +12,10 @@ import 'vue-loading-overlay/dist/css/index.css';
 
 // import translations
 import en from "./locales/en.json";
+import es from "./locales/es.json";
+import pt from "./locales/pt.json";
+import de from "./locales/de.json";
+import nl from "./locales/nl.json";
 
 // configure i18n
 import { createI18n } from "vue-i18n";
@@ -20,7 +24,7 @@ export const i18n = createI18n({
     legacy: false,
     locale: getBrowserLocales({ languageCodeOnly: true })[0] || "en",
     fallbackLocale: "en",
-    messages: { en },
+    messages: { en, es, pt, de, nl },
 });
 
 const pinia = createPinia();

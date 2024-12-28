@@ -1,0 +1,238 @@
+{
+  "sitewide": {
+    "cancel": "Annuleren",
+    "close": "Sluiten",
+    "update": "Bijwerken",
+    "edit": "Bewerken",
+    "save": "Opslaan",
+    "warning": "Waarschuwing",
+    "unused": "Niet gebruikt",
+    "unknown": "Onbekend",
+    "close_sidebar": "Sidebar Sluiten",
+    "open_sidebar": "Sidebar Openen",
+    "validation_error": "Validatiefout",
+    "celsius": "Celsius",
+    "fahrenheit": "Fahrenheit",
+    "translation_message": "Deze applicatie is vertaald door gebruikers zoals jij! Als je items ziet die niet zijn vertaald (of suggesties voor verbeteringen hebt!) stel dan verbeteringen voor op GitHub.",
+    "tab_container_sr_text": "Selecteer een groep instellingen om te bewerken",
+    "sidebar_options": {
+      "tilts": "Tilts",
+      "configure": "Configureren",
+      "cloud_target": "Clouddoelen"
+    },
+    "tilt_colors": {
+      "red": "Rood",
+      "green": "Groen",
+      "black": "Zwart",
+      "purple": "Paars",
+      "orange": "Oranje",
+      "blue": "Blauw",
+      "yellow": "Geel",
+      "pink": "Roze"
+    }
+  },
+  "navigation": {
+    "general_settings": "Algemene instellingen"
+  },
+  "about": {
+    "uptime": {
+      "version_and_uptime": "Versie & Uptime Informatie",
+      "firmware_version": "Firmware Versie",
+      "uptime_header": "Uptime",
+      "uptime_print": "Dagen: {days}, Uren: {hours}, Minuten: {minutes}, Seconden: {seconds}",
+      "reset_header": "Reset Informatie",
+      "reset_print": "Reden: {reason}, Beschrijving: {description}",
+      "heap_header": "Heap Informatie",
+      "heap_print": "Vrije Heap: {free_heap}, Max: {max_heap}, Fragmenten: {frags}"
+    },
+    "version": {
+      "loading_version": "Laad build/versie informatie...",
+      "error_loading_version": "Fout bij het laden van build/versie informatie"
+    }
+  },
+  "device_config": {
+    "configure_tiltbridge_header": "Configureer TiltBridge",
+    "general_settings_header": "Algemene instellingen voor TiltBridge",
+    "config_failed_error": "Configuratie kon niet worden geladen vanuit TiltBridge. Probeer de pagina te verversen of controleer de verbinding van je TiltBridge met het netwerk.",
+    "mDNS_id_name": "mDNS ID",
+    "mDNS_id_desc": "Hostnaam (de xxxx in http://xxxx.local/). Moet 8-31 tekens zijn.",
+    "tz_offset_name": "Tijdzone-offset",
+    "tz_offset_desc": "Tijdzone-offset ten opzichte van GMT (in uren). Gebruikt voor Google Sheets.",
+    "temp_unit_name": "Standaard Temperatuur Eenheden",
+    "temp_unit_desc": "Standaard temperatuur eenheden om weer te geven",
+    "smooth_factor_name": "Averaging van specifieke zwaartekracht",
+    "smooth_factor_desc": "Geldige waarde is 0 tot 99. Instelling heeft invloed op de tijdconstante van het exponentieel gewogen voortschrijdend gemiddelde dat wordt toegepast op de meting van de specifieke zwaartekracht. Als reactie op een stapverandering, zou de gefilterde waarde na ongeveer 5 tijdconstanten in steady state moeten komen. Een instelling van 0 geeft geen smoothing (filtering uit) terwijl hogere waarden meer smoothing betekenen. Een instelling van 60 geeft een tijdconstante van iets meer dan 5 seconden terwijl 99 resulteert in ongeveer 5 minuten.",
+    "hardware_options_header": "Hardware-opties",
+    "invert_tft_name": "TFT-display omkeren",
+    "invert_tft_desc": " - Gebruik als het scherm ondersteboven is",
+    "errors": {
+      "mdns_invalid_chars": "mDNS ID kan alleen bestaan uit de letters a-z, een koppelteken of cijfers, en mag niet met een koppelteken beginnen",
+      "mdns_invalid_length": "mDNS ID moet tussen de 8 en 31 tekens zijn",
+      "invalid_smoothing_factor": "De smoothing factor van de specifieke zwaartekracht moet tussen 0 en 99 zijn",
+      "invalid_tz_offset": "Tijdzone-offset moet tussen -12 en 14 liggen"
+    },
+    "update_modal": {
+      "success_header": "Update Succesvol",
+      "success_message": "TiltBridge succesvol bijgewerkt",
+      "fail_header": "Update Mislukt",
+      "fail_message": "Kan geen verbinding maken met de TiltBridge of de update werd afgewezen. Controleer de geleverde informatie en probeer opnieuw."
+    }
+  },
+  "cloud_config": {
+    "fermentrack": {
+      "legacy_fermentrack_menu_item": "Legacy Fermentrack / BrewPi-Remix",
+      "header_legacy": "Configureer Legacy Fermentrack-instellingen",
+      "legacy_desc": "Deze instellingen zijn voor Fermentrack 1.x. Als je Fermentrack 2 gebruikt, kies dan 'Fermentrack 2 / Fermentrack.net' als de clouddoel.",
+      "header": "Configureer Fermentrack-instellingen",
+      "target_type": "Doelsysteem",
+      "target_type_desc": "Selecteer het type systeem waaraan je gegevens wilt verzenden",
+      "url": "Doel-URL",
+      "url_desc": "URL van het doelsysteem",
+      "push_frequency": "Verzendfrequentie",
+      "push_frequency_desc": "Frequentie om gegevens te verzenden (in seconden)",
+      "push_frequency_out_of_range": "Verzendfrequentie moet een getal zijn tussen 30 en 43200",
+      "push_frequency_invalid": "@:cloud_config.fermentrack.push_frequency_out_of_range",
+      "url_invalid": "URLs moeten beginnen met http:// of https://",
+      "fermentrack_settings_set_sr": "Selecteer een Fermentrack 2 doeltype",
+      "hostname": "Hostnaam",
+      "port": "Poort",
+      "username": "Fermentrack-gebruikersnaam",
+      "ft_net_username": "Fermentrack.net-gebruikersnaam",
+      "api_key": "API-sleutel",
+      "device_id": "Apparaat-ID",
+      "not_yet_registered": "(Nog niet geregistreerd)",
+      "hardware_guid": "Hardware GUID",
+      "reset_device_id": "Reset Apparaat-ID",
+      "reset_device_id_msg": "Verwijder apparaat-ID en registreer opnieuw met upstream. Waarschuwing - kan niet ongedaan worden gemaakt!",
+      "reset_registration": "Reset Registratie",
+      "hostname_too_long_error": "Hostnaam is ongeldig. Moet minder dan 127 tekens zijn.",
+      "port_out_of_range_error": "Poortnummer moet tussen 10 en 65535 liggen (maar is meestal 80)",
+      "presets": {
+        "no_fermentrack": "Geen",
+        "no_fermentrack_desc": "Gebruik TiltBridge niet met Fermentrack 2",
+        "fermentrack_net": "Fermentrack.net",
+        "fermentrack_net_desc": "Gebruik Fermentrack.net om deze TiltBridge te bedienen",
+        "fermentrack_local": "Fermentrack 2 (Lokaal/Aangepast)",
+        "fermentrack_local_desc": "Gebruik een lokale Fermentrack 2-instantie om deze TiltBridge te bedienen"
+      },
+      "errors": {
+        "error_port_out_of_range": "Poort moet een getal zijn tussen 1 en 65535",
+        "missing_data_error": "Er ontbrak gegevens in het registratiebericht dat doorgaans intern door de TiltBridge is ingesteld. Dit betekent waarschijnlijk dat ofwel de TiltBridge-firmware of de versie van Fermentrack verouderd is. Gelieve de TiltBridge-firmware en/of Fermentrack bij te werken en het opnieuw te proberen.",
+        "invalid_username_error": "Gebruikersnaam is ongeldig op de gerichte Fermentrack-installatie. Controleer de gebruikersnaam en probeer het opnieuw.",
+        "bad_api_key_error": "API-sleutel komt niet overeen met een geldige brouwerij op de gerichte Fermentrack-installatie. Voer een geldige gebruikersnaam in en probeer het opnieuw.",
+        "missing_brewhouse_error": "De gespecificeerde Fermentrack-gebruiker heeft geen brouwerij. Voltooi de setup van deze gebruiker in Fermentrack en probeer het opnieuw.",
+        "no_username_error": "Geen gebruikersnaam of API-sleutel opgegeven.",
+        "waiting_to_register_error": "Apparaat wacht om zich te registreren bij Fermentrack. Wacht tot 3 minuten en vernieuw deze pagina.",
+        "unable_to_reach_fermentrack_error": "TiltBridge kan Fermentrack niet bereiken. Controleer of Fermentrack toegankelijk is op de gespecificeerde hostnaam/poort.",
+        "successful_registration_msg": "TiltBridge is succesvol geregistreerd bij Fermentrack",
+        "unknown error": "Een onbekende fout werd verzonden door Fermentrack. Dit betekent waarschijnlijk dat ofwel de TiltBridge-firmware of de versie van Fermentrack verouderd is. Gelieve de TiltBridge-firmware en/of Fermentrack bij te werken en het opnieuw te proberen."
+      }
+    },
+    "google_sheets": {
+      "header": "Configureer Google Sheets",
+      "url": "Google Script URL",
+      "url_desc": "URL van het doel Google Script",
+      "email": "Google Script E-mailadres",
+      "email_desc": "E-mailadres dat werd gebruikt om het gerichte script te maken",
+      "color_sheet_tilt_name": "{color} Tilt Sheet Naam",
+      "color_sheet_tilt_name_desc": "De naam van het spreadsheet om gegevens voor de {color} tilt op te plaatsen"
+    },
+    "brewers_friend": {
+      "header": "Configureer Brewers Friend",
+      "about_header": "Over Brewers Friend",
+      "about_text": "Deze instellingen regelen hoe TiltBridge communiceert met Brewer's Friend. Met een premiumaccount ondersteunt Brewer's Friend logging van graviteitssensoren zoals de Tilt Hydrometer. Om je API-sleutel te vinden, log in op je Brewer's Friend-account en ga naar Profiel > Account. Je API-sleutel is een reeks letters en cijfers (geen URL).",
+      "api_key": "API-sleutel",
+      "api_key_desc": "API-sleutel uit je Brewers Friend accountinstellingen",
+      "error_missing_api_key": "API-sleutel mag niet leeg zijn"
+    },
+    "brewfather": {
+      "header": "Configureer Brewfather",
+      "about_header": "Over Brewfather",
+      "about_text": "Deze instellingen regelen hoe TiltBridge communiceert met Brewfather. Met een premiumaccount ondersteunt Brewfather logging van graviteitssensoren zoals de Tilt Hydrometer. Om je API-sleutel te vinden, log in op je Brewfather-account en ga naar Instellingen > Aangepaste Stream. Je streamsleutel is een reeks letters en cijfers (geen URL).",
+      "api_key": "Stream Sleutel",
+      "api_key_desc": "Streamsleutel uit je Brewfather accountinstellingen",
+      "error_missing_api_key": "Streamsleutel mag niet leeg zijn"
+    },
+    "grainfather": {
+      "header": "Configureer Grainfather",
+      "about_header": "Over Grainfather",
+      "about_text": "Deze instellingen regelen hoe TiltBridge communiceert met Grainfather. Grainfather ondersteunt logging van graviteitssensoren zoals de Tilt Hydrometer met een account. Om je API-URL te vinden, log in op je Grainfather-account en ga naar Apparatuur > Fermentatieapparaten. Voeg een \"Tilt\" fermentatieapparaat toe voor elke kleur Tilt die je wilt loggen. Na het toevoegen van de Tilt kan de benodigde URL hieronder gevonden worden onder de setup-instructies (toegankelijk door op de omcirkelde \"i\" naast de Tilt in Grainfather te klikken).",
+      "grainfather_url_desc": "Voer de Grainfather-URL in voor je {color} Tilt Hydrometer"
+    },
+    "brewstatus": {
+      "header": "Configureer Brewstatus",
+      "about_header": "Over Brewstatus",
+      "about_text": "Deze instellingen regelen hoe TiltBridge communiceert met BrewStatus. Om het pushen naar BrewStatus uit te schakelen, verwijder de BrewStatus-URL.",
+      "brewstatus_url": "Brewstatus URL",
+      "brewstatus_url_desc": "Brewstatus-URL om tilt gegevens naar te pushen voor jouw account",
+      "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
+      "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    },
+    "taplist_io": {
+      "header": "Configureer Taplist.IO",
+      "about_header": "Over Taplist.IO",
+      "about_text": "Deze instellingen regelen hoe TiltBridge communiceert met Taplist.io. Om het pushen naar Taplist.io uit te schakelen, verwijder de Taplist.io URL.",
+      "taplistio_url": "Taplist.IO URL",
+      "taplistio_url_desc": "Taplist.IO URL om tilt gegevens naar te pushen voor jouw account",
+      "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
+      "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    },
+    "mqtt": {
+      "header": "Configureer MQTT",
+      "about_header": "Over MQTT",
+      "about_text_1": "Deze instellingen regelen hoe TiltBridge gegevens publiceert naar een MQTT-broker. Om het pushen naar de MQTT-broker uit te schakelen, verwijder het IP van de MQTT-broker.",
+      "about_text_hast": "MQTT-implementatie ondersteunt Home Assistant Auto Discovery van temperatuur- en graviteitssensoren.",
+      "about_text_payload_header": "Algemene berichten_payload is JSON en is als volgt opgemaakt",
+      "about_text_topic": "Onderwerp",
+      "about_text_payload": "Payload",
+      "broker_address": "MQTT-brokeradres",
+      "broker_address_desc": "Voer het serveradres van de MQTT-broker in (Hostnaam of IP)",
+      "broker_port": "MQTT-brokerpoort",
+      "broker_port_desc": "Poortnummer van de MQTT-broker (meestal 1883)",
+      "broker_username": "MQTT-broker gebruikersnaam",
+      "broker_username_desc": "Gebruikersnaam voor authenticatie van de MQTT-broker (Optioneel)",
+      "broker_password": "MQTT-brokerwachtwoord",
+      "broker_password_desc": "Wachtwoord voor authenticatie van de MQTT-broker (Optioneel)",
+      "mqtt_topic": "MQTT Onderwerp",
+      "mqtt_topic_desc": "Het MQTT-onderwerp om gegevens naar te publiceren",
+      "mqtt_push_every": "Verzendfrequentie (seconden)",
+      "mqtt_push_every_desc": "Hoe vaak gegevens te verzenden (in seconden)"
+    },
+    "generic_target": {
+      "generic_target_menu_item": "Generiek Doel",
+      "header": "Configureer Generiek JSON Doel",
+      "about_header": "Over Generiek JSON Doelen",
+      "about_text": "Dit doel stelt je in staat om een generieke JSON-payload met je Tilt-gegevens naar een dienst te verzenden die TiltBridge anders niet ondersteunt.",
+      "generic_target_url": "Generiek Doel URL",
+      "generic_target_url_desc": "De URL waarheen een payload met JSON-gegevens van je Tilts moet worden gepusht",
+      "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
+      "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    }
+  },
+  "tilt_list": {
+    "header": "Beschikbare Tilt Hydrometers",
+    "detected_tilts": "Gedeclareerde Tilts",
+    "color_column": "Kleur",
+    "rssi_column": "RSSI",
+    "battery_age_column": "Batterij Leeftijd",
+    "gravity_column": "Specific Gravity",
+    "temperature_column": "Temperatuur",
+    "battery_age_week_count": "{weeks} weken",
+    "no_tilts_detected": "Er zijn geen Tilts gedetecteerd"
+  },
+  "help_page": {
+    "header": "TiltBridge Ondersteuning",
+    "contact_text": "Voor vragen, opmerkingen en bugmeldingen, neem contact op met {lf_on_reddit} op Reddit, {thorrak_on_hbt} op de HomeBrewTalk forums, open een issue op {github}, of neem contact op via een van de links in deze {blog_post}.",
+    "blog_post": "blogbericht",
+    "tiltbridge_docs_intro": "TiltBridge documentatie en ondersteuning zijn te vinden op de volgende links:",
+    "tiltbridge_link": "Bezoek de {tb_homepage_link}",
+    "tiltbridge_homepage": "TiltBridge Homepage",
+    "documentation_link": "Lees de {tb_docs_link}",
+    "documentation": "Documentatie",
+    "github_link": "Bezoek het project op {github_link}",
+    "report_issue_link": "Rapporteer een {issue_link}",
+    "issue_bug_feature_request": "issue, bug of functieaanvraag",
+    "homebrewtalk_link": "Krijg ondersteuning of chat met andere gebruikers op de {hbt_link}",
+    "homebrewtalk_thread": "HomeBrewTalk draad"
+  }
+}
