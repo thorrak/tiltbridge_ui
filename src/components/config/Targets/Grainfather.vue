@@ -22,7 +22,6 @@
           <div class="px-4 py-5">
             <!-- Dynamic fields for each Tilt color -->
             <div v-for="color in tiltColors" :key="color.name" class="mb-4">
-              <!-- TODO - Internationalize This -->
               <TextField v-model="grainfatherUrls[color.name]" placeholder="https://community.grainfather.com/iot/xxxx-xxxx/tilt">
                 <template #FieldName>{{ color.displayName }}</template>
                 <template #FieldDescription>

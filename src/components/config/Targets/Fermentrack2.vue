@@ -56,7 +56,7 @@
 <!--                    <p class="text-sm font-semibold">{{ selectedSettingSet.title }}</p>-->
 <!--                  </div>-->
 <!--                  <ListboxButton class="inline-flex items-center rounded-l-none rounded-r-md bg-indigo-600 p-2 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:ring-offset-gray-50">-->
-<!--                    <span class="sr-only">Change Fermentrack 2 contact setting</span>&lt;!&ndash; TODO - Translate &ndash;&gt;-->
+<!--                    <span class="sr-only">{{ $t('cloud_config.fermentrack.fermentrack_settings_set_sr') }}</span>-->
 <!--                    <ChevronDownIcon class="size-5 text-white forced-colors:text-[Highlight]" aria-hidden="true" />-->
 <!--                  </ListboxButton>-->
 <!--                </div>-->

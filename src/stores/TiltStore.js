@@ -12,8 +12,7 @@ export const useTiltStore = defineStore("TiltStore", () => {
     const tiltUpdateError = ref(false);
 
     async function getTilts() {
-        // TODO - Change this to an /api/ endpoint
-        const remote_api = mande("/json/", genCSRFOptions());
+        const remote_api = mande("/api/json/", genCSRFOptions());
         const response = await remote_api.get();
         if (response) {
             await clearTilts();

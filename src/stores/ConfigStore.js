@@ -83,7 +83,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
 
 
     async function getConfig() {
-        const remote_api = mande("/settings/json/", genCSRFOptions());  // TODO - Change this to an /api/ endpoint
+        const remote_api = mande("/api/settings/json/", genCSRFOptions());
         const response = await remote_api.get();
         if (response) {
             mdnsID.value = response.mdnsID;
@@ -99,9 +99,8 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             smoothFactor.value = response.smoothFactor;
             applyCalibration.value = response.applyCalibration;
             tempCorrect.value = response.tempCorrect;
-            // TODO - Update the below when the keys change
-            fermentrackUrl.value = response.localTargetURL;
-            fermentrackPushFrequency.value = response.localTargetPushEvery;
+            fermentrackUrl.value = response.legacyFermentrackURL;
+            fermentrackPushFrequency.value = response.legacyFermentrackPushEvery;
             // Fermentrack 2
             fermentrackHostname.value = response.fermentrackHostname;
             fermentrackPort.value = response.fermentrackPort;
@@ -268,8 +267,8 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         try {
             const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
             const response = await remote_api.put({
-                fermentrackURL: ft_url,
-                fermentrackPushEvery: pushFrequency
+                legacyFermentrackURL: ft_url,
+                legacyFermentrackPushEvery: pushFrequency
             });
             if (response && response.message) {
                 // TODO - Check response.message

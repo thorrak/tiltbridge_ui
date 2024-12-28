@@ -7,7 +7,7 @@
       </template>
     </TablessContainer>
     <div v-else>
-      <!-- TODO - Add an error message here if the config fails to load -->
+      {{ $t('device_config.config_failed_error') }}
     </div>
   </div>
 
