@@ -16,15 +16,14 @@ export const useTiltStore = defineStore("TiltStore", () => {
         const response = await remote_api.get();
         if (response) {
             await clearTilts();
-            // We got a response. Parse the list of Tilts (which are sent by color)
-            for (const tiltColorsKey in TiltColors) {
-                const tiltColor = TiltColors[tiltColorsKey];
-                if (tiltColor in response) {
-                    const tiltData = response[tiltColor];
-                    const tilt = new TiltDevice(tiltColor, tiltData.temp, tiltData.temp_unit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
-                    tilts.value.push(tilt);
-                }
+            // We got a response. Parse the list of Tilts
+            // Response is a JSON Array. Loop over it.
+            for (const tiltKey in response) {
+                const tiltData = response[tiltKey];
+                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.temp_unit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
+                tilts.value.push(tilt);
             }
+
             loaded.value = true;
             tiltsError.value = false;
         } else {
