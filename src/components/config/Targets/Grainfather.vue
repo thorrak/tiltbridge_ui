@@ -96,6 +96,12 @@ async function submitForm() {
 
   let loader = $loading.show({});
 
+  // Trim grainfather URLs, as their UI appends a space to the end for some reason
+  Object.keys(grainfatherUrls.value).forEach(key => {
+    grainfatherUrls.value[key] = grainfatherUrls.value[key].trim();
+  });
+
+
   configStore.updateGrainfatherUrls(grainfatherUrls.value).then(() => {
     // updateCachedSettings();
     loader.hide();

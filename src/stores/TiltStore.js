@@ -20,7 +20,7 @@ export const useTiltStore = defineStore("TiltStore", () => {
             // Response is a JSON Array. Loop over it.
             for (const tiltKey in response) {
                 const tiltData = response[tiltKey];
-                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.temp_unit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
+                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.tempUnit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
                 tilts.value.push(tilt);
             }
 

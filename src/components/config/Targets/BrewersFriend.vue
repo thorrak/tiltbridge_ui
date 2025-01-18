@@ -83,7 +83,7 @@ async function submitForm() {
   let loader = $loading.show({});
 
   configStore.updateBrewersFriendConfig(brewersFriendKey.value).then(() => {
-    updateCachedSettings();
+    // updateCachedSettings();
     loader.hide();
     updateSuccessful.value = !configStore.configUpdateError;  // configUpdateError is inverted from what we want here
     alertOpen.value = true;

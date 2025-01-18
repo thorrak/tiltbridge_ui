@@ -152,7 +152,8 @@
       "about_text": "These settings control how TiltBridge talks to Brewfather. With a premium account, Brewfather supports logging from gravity sensors such as the Tilt Hydrometer. To find your API key, log into your Brewfather account and go to Settings > Custom Stream. Your Stream key will be a string of letters and numbers (not a URL).",
       "api_key": "Stream Key",
       "api_key_desc": "Stream key from your Brewfather account settings",
-      "error_missing_api_key": "Stream key cannot be empty"
+      "error_missing_api_key": "Stream key cannot be empty",
+      "error_invalid_stream_key": "Stream key is a series of letters and numbers - not a URL. Please check the key and try again."
     },
     "grainfather": {
       "header": "Configure Grainfather",

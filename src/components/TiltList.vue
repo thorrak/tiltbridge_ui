@@ -51,7 +51,7 @@
               <span v-else>--</span>
             </td>
             <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.gravity }}</td>
-            <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.temp }} {{ tilt.temp_unit }}</td>
+            <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.temp }}&deg; {{ tilt.temp_unit }}</td>
 
   <!--          <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">-->
   <!--          </td>-->

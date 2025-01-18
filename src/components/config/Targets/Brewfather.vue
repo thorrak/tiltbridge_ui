@@ -76,10 +76,26 @@ async function submitForm() {
   //   return;
   // }
 
+  // Check if brewfatherKey.value is a URL (starts with http:// or https://)
+  if (brewfatherKey.value.match(/^https?:\/\//)) {
+    // The user is supposed to have extracted the ID from the URL, but if they didn't, we can try to extract it for them
+    const urlParams = new URLSearchParams(brewfatherKey.value.split('?')[1]);
+    const id = urlParams.get('id');
+    if (id) {
+      // If the ID is found, set brewfatherKey.value to the ID
+      brewfatherKey.value = id;
+    } else {
+      // If the ID is not found, show an error message
+      form_error_message.value = i18n.global.t('cloud_config.brewfather.error_invalid_stream_key');
+      return;
+    }
+  }
+
+
   let loader = $loading.show({});
 
   configStore.updateBrewfatherConfig(brewfatherKey.value).then(() => {
-    updateCachedSettings();
+    // updateCachedSettings();
     loader.hide();
     updateSuccessful.value = !configStore.configUpdateError;  // configUpdateError is inverted from what we want here
     alertOpen.value = true;
