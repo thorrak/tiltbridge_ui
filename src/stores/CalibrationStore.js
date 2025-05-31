@@ -1,0 +1,186 @@
+import { defineStore } from 'pinia';
+import { mande } from 'mande';
+import { genCSRFOptions } from './CSRF';
+import { ref } from "vue";
+import { PolynomialRegression } from 'ml-regression-polynomial';
+
+export const useCalibrationStore = defineStore("CalibrationStore", () => {
+    
+    const calibrationPoints = ref([]);
+    const calibrationCoefficients = ref({
+        x0: 0,
+        x1: 1,
+        x2: 0,
+        x3: 0
+    });
+    const calibrationError = ref(false);
+    const loaded = ref(false);
+
+    async function loadCalibrationPoints(color) {
+        try {
+            const response = await fetch(`/conf/${color}-cal.json`);
+            if (response.ok) {
+                const data = await response.json();
+                calibrationPoints.value = data || [];
+                loaded.value = true;
+                calibrationError.value = false;
+            } else {
+                calibrationPoints.value = [];
+                loaded.value = true;
+                calibrationError.value = false;
+            }
+        } catch (error) {
+            calibrationPoints.value = [];
+            loaded.value = false;
+            calibrationError.value = true;
+        }
+    }
+
+    async function addCalibrationPoint(color, rawGravity, actualGravity) {
+        try {
+            const remote_api = mande("/api/calibration/datapoint/", genCSRFOptions());
+            const response = await remote_api.post({
+                color: color,
+                rawGravity: rawGravity,
+                actualGravity: actualGravity
+            });
+            if (response) {
+                await loadCalibrationPoints(color);
+                calibrationError.value = false;
+                return true;
+            } else {
+                calibrationError.value = true;
+                return false;
+            }
+        } catch (error) {
+            calibrationError.value = true;
+            return false;
+        }
+    }
+
+    async function deleteCalibrationPoint(color, rawGravity) {
+        try {
+            const remote_api = mande("/api/calibration/datapoint/", genCSRFOptions());
+            const response = await remote_api.delete({
+                color: color,
+                rawGravity: rawGravity
+            });
+            if (response) {
+                await loadCalibrationPoints(color);
+                calibrationError.value = false;
+                return true;
+            } else {
+                calibrationError.value = true;
+                return false;
+            }
+        } catch (error) {
+            calibrationError.value = true;
+            return false;
+        }
+    }
+
+    function calculateCalibrationCoefficients(points, degree) {
+        try {
+            if (!points || points.length === 0) {
+                return null;
+            }
+
+            if (points.length === 1) {
+                const offset = points[0][1] - points[0][0];
+                return {
+                    x0: offset,
+                    x1: 1,
+                    x2: 0,
+                    x3: 0
+                };
+            }
+
+            const x = points.map(point => point[0]);
+            const y = points.map(point => point[1]);
+            
+            const regression = new PolynomialRegression(x, y, degree);
+            const coefficients = regression.coefficients;
+            
+            return {
+                x0: coefficients[0] || 0,
+                x1: coefficients[1] || 1,
+                x2: coefficients[2] || 0,
+                x3: 0
+            };
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async function saveCalibrationCoefficients(color, coefficients) {
+        try {
+            const remote_api = mande("/api/calibration/coefficients/", genCSRFOptions());
+            const response = await remote_api.put({
+                color: color,
+                x0: coefficients.x0,
+                x1: coefficients.x1,
+                x2: coefficients.x2,
+                x3: coefficients.x3
+            });
+            if (response) {
+                calibrationCoefficients.value = coefficients;
+                calibrationError.value = false;
+                return true;
+            } else {
+                calibrationError.value = true;
+                return false;
+            }
+        } catch (error) {
+            calibrationError.value = true;
+            return false;
+        }
+    }
+
+    function getCalibrationCoefficients(color) {
+        return {
+            color: color,
+            x0: 0.01,
+            x1: 1.001,
+            x2: -0.001,
+            x3: 0
+        };
+    }
+
+    function clearStore() {
+        calibrationPoints.value = [];
+        calibrationCoefficients.value = {
+            x0: 0,
+            x1: 1,
+            x2: 0,
+            x3: 0
+        };
+        calibrationError.value = false;
+        loaded.value = false;
+    }
+
+    async function clearCalibrationCoefficients(color) {
+        const defaultCoefficients = {
+            x0: 0,
+            x1: 1,
+            x2: 0,
+            x3: 0
+        };
+        return await saveCalibrationCoefficients(color, defaultCoefficients);
+    }
+
+    return {
+        calibrationPoints,
+        calibrationCoefficients,
+        calibrationError,
+        loaded,
+        
+        loadCalibrationPoints,
+        addCalibrationPoint,
+        deleteCalibrationPoint,
+        calculateCalibrationCoefficients,
+        saveCalibrationCoefficients,
+        getCalibrationCoefficients,
+        clearStore,
+        clearCalibrationCoefficients
+    };
+});
