@@ -300,25 +300,52 @@ const combinedChartData = computed(() => {
     });
   }
   
-  // Add calibration equation line if coefficients are set
-  const coeffs = calibrationStore.calibrationCoefficients;
-  if (coeffs.x1 !== 1 || coeffs.x0 !== 0 || coeffs.x2 !== 0) {
+  // Add current (original) calibration equation line
+  const origCoeffs = originalCoeffs.value;
+  if (origCoeffs.x1 !== 1 || origCoeffs.x0 !== 0 || origCoeffs.x2 !== 0 || origCoeffs.x3 !== 0) {
     const points = [];
     for (let x = 1.000; x <= 1.125; x += 0.005) {
-      const y = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x;
+      const y = origCoeffs.x0 + origCoeffs.x1 * x + origCoeffs.x2 * x * x + origCoeffs.x3 * x * x * x;
       points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
     }
     
     datasets.push({
-      label: 'Calibration Equation',
+      label: 'Current Calibration',
       data: points,
-      backgroundColor: 'rgb(34, 197, 94)',
-      borderColor: 'rgb(34, 197, 94)',
+      backgroundColor: 'rgb(239, 68, 68)',
+      borderColor: 'rgb(239, 68, 68)',
       showLine: true,
       pointRadius: 0,
       tension: 0.1,
       fill: false
     });
+  }
+  
+  // Add new calibration equation line if we have points
+  if (calibrationStore.calibrationPoints.length > 0) {
+    const newCoeffs = calibrationStore.calculateCalibrationCoefficients(
+      calibrationStore.calibrationPoints, 
+      selectedDegree.value
+    );
+    
+    if (newCoeffs) {
+      const points = [];
+      for (let x = 1.000; x <= 1.125; x += 0.005) {
+        const y = newCoeffs.x0 + newCoeffs.x1 * x + newCoeffs.x2 * x * x + newCoeffs.x3 * x * x * x;
+        points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
+      }
+      
+      datasets.push({
+        label: 'New Calibration',
+        data: points,
+        backgroundColor: 'rgb(34, 197, 94)',
+        borderColor: 'rgb(34, 197, 94)',
+        showLine: true,
+        pointRadius: 0,
+        tension: 0.1,
+        fill: false
+      });
+    }
   }
   
   return datasets.length > 0 ? { datasets } : null;
