@@ -151,14 +151,43 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
         }
     }
 
-    function getCalibrationCoefficients(color) {
-        return {
-            color: color,
-            x0: 0.01,
-            x1: 1.001,
-            x2: -0.001,
-            x3: 0
-        };
+    async function getCalibrationCoefficients(color) {
+        try {
+            const remote_api = mande("/api/settings/json/", genCSRFOptions());
+            const response = await remote_api.get();
+            if (response) {
+                const colorNames = ['Red', 'Green', 'Black', 'Purple', 'Orange', 'Blue', 'Yellow', 'Pink'];
+                const colorName = colorNames[color];
+                
+                if (response[colorName]) {
+                    const colorData = response[colorName];
+                    calibrationCoefficients.value = {
+                        x0: colorData.x0 || 0,
+                        x1: colorData.x1 || 1,
+                        x2: colorData.x2 || 0,
+                        x3: colorData.x3 || 0
+                    };
+                    return calibrationCoefficients.value;
+                }
+            }
+            // Return default coefficients if not found
+            calibrationCoefficients.value = {
+                x0: 0,
+                x1: 1,
+                x2: 0,
+                x3: 0
+            };
+            return calibrationCoefficients.value;
+        } catch (error) {
+            // Return default coefficients on error
+            calibrationCoefficients.value = {
+                x0: 0,
+                x1: 1,
+                x2: 0,
+                x3: 0
+            };
+            return calibrationCoefficients.value;
+        }
     }
 
     function clearStore() {
