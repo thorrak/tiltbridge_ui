@@ -229,16 +229,28 @@ const chartOptions = {
   maintainAspectRatio: false,
   scales: {
     x: {
+      type: 'linear',
+      position: 'bottom',
       title: {
         display: true,
         text: 'Raw Gravity'
-      }
+      },
+      min: 0.990,
+      max: 1.130
     },
     y: {
+      type: 'linear',
       title: {
         display: true,
         text: 'Actual Gravity'
-      }
+      },
+      min: 0.990,
+      max: 1.130
+    }
+  },
+  plugins: {
+    legend: {
+      display: true
     }
   }
 };
@@ -255,7 +267,8 @@ const pointsChartData = computed(() => {
       })),
       backgroundColor: 'rgb(59, 130, 246)',
       borderColor: 'rgb(59, 130, 246)',
-      showLine: false
+      showLine: false,
+      pointRadius: 5
     }]
   };
 });
@@ -267,7 +280,7 @@ const equationChartData = computed(() => {
   const points = [];
   for (let x = 1.000; x <= 1.125; x += 0.005) {
     const y = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x;
-    points.push({ x: x.toFixed(3), y: y.toFixed(3) });
+    points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
   }
   
   return {
@@ -277,7 +290,8 @@ const equationChartData = computed(() => {
       backgroundColor: 'rgb(34, 197, 94)',
       borderColor: 'rgb(34, 197, 94)',
       showLine: true,
-      pointRadius: 1
+      pointRadius: 0,
+      tension: 0.1
     }]
   };
 });
@@ -319,6 +333,7 @@ watch(() => calibrationStore.calibrationPoints.length, (newLength) => {
 
 onMounted(async () => {
   await calibrationStore.loadCalibrationPoints(colorNumber.value);
+  await calibrationStore.getCalibrationCoefficients(colorNumber.value);
   await tiltStore.getTilts();
 });
 </script>
