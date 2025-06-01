@@ -269,6 +269,7 @@
     "chart_actual_gravity_axis": "Actual Gravity",
     "chart_calibration_points": "Calibration Points",
     "chart_current_calibration": "Current Calibration",
-    "chart_new_calibration": "New Calibration"
+    "chart_new_calibration": "New Calibration",
+    "chart_placeholder_message": "Chart will be displayed as calibration points are added"
   }
 }
