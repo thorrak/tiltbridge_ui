@@ -39,6 +39,25 @@ export const useTiltStore = defineStore("TiltStore", () => {
         tiltUpdateError.value = false;
     }
 
+    function getColorNumber(colorName) {
+        const colorMap = {
+            'red': 0,
+            'green': 1,
+            'black': 2,
+            'purple': 3,
+            'orange': 4,
+            'blue': 5,
+            'yellow': 6,
+            'pink': 7
+        };
+        return colorMap[colorName.toLowerCase()];
+    }
+
+    function getColorName(colorNumber) {
+        const colorNames = ['Red', 'Green', 'Black', 'Purple', 'Orange', 'Blue', 'Yellow', 'Pink'];
+        return colorNames[colorNumber] || 'Unknown';
+    }
+
     return {
         tilts,
         loaded,
@@ -46,6 +65,8 @@ export const useTiltStore = defineStore("TiltStore", () => {
         tiltUpdateError,
 
         getTilts,
-        clearTilts
+        clearTilts,
+        getColorNumber,
+        getColorName
     };
 });

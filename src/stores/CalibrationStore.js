@@ -60,8 +60,8 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
 
     async function deleteCalibrationPoint(color, rawGravity) {
         try {
-            const remote_api = mande("/api/calibration/datapoint/", genCSRFOptions());
-            const response = await remote_api.delete({
+            const remote_api = mande("/api/calibration/datapoint/delete/", genCSRFOptions());
+            const response = await remote_api.post({
                 color: color,
                 rawGravity: rawGravity
             });
@@ -85,7 +85,22 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
                 return null;
             }
 
-            if (points.length === 1) {
+            if (degree === 0) {
+                // Constant offset - average difference between actual and raw
+                const totalDifference = points.reduce((sum, point) => {
+                    return sum + (point[1] - point[0]);
+                }, 0);
+                const averageOffset = totalDifference / points.length;
+                
+                return {
+                    x0: averageOffset,
+                    x1: 1,
+                    x2: 0,
+                    x3: 0
+                };
+            }
+
+            if (points.length === 1 && degree === 1) {
                 const offset = points[0][1] - points[0][0];
                 return {
                     x0: offset,
