@@ -31,17 +31,17 @@
             <div class="text-sm font-medium text-gray-500">Raw Tilt Gravity</div>
             <div class="text-lg font-bold text-gray-900">{{ currentRawGravity }}</div>
           </div>
-          <div class="bg-gray-50 px-4 py-3 rounded-lg">
+          <div class="bg-gray-50 px-4 py-3 rounded-lg hidden md:block">
             <div class="text-sm font-medium text-gray-500">Current Calibration Function</div>
             <div class="text-lg font-bold text-gray-900">{{ origCalibrationFunction }}</div>
           </div>
-          <div class="bg-gray-50 px-4 py-3 rounded-lg">
+          <div class="bg-gray-50 px-4 py-3 rounded-lg hidden md:block">
             <div class="text-sm font-medium text-gray-500">Current Calibrated Gravity</div>
             <div class="text-lg font-bold text-gray-900">{{ origCalibratedGravity }}</div>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
             <div class="text-sm font-medium text-gray-500">
               <label for="polynomial-degree" class="block text-sm font-medium text-gray-500">
@@ -61,7 +61,7 @@
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
             <div class="text-sm font-medium text-gray-500">New Calibration Function</div>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between flex-wrap">
               <div class="text-lg font-bold text-gray-900 flex-1 pr-4">{{ calibrationFunction }}</div>
               <button @click="saveCalibration" :disabled="calibrationStore.calibrationPoints.length === 0" class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded text-xs whitespace-nowrap">
                 Save Equation
@@ -82,7 +82,7 @@
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             Calibration Points
           </h3>
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="openAddPointModal">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" @click="openAddPointModal">
             Add Calibration Point
           </button>
         </div>
@@ -91,8 +91,8 @@
             <tr>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Raw Tilt Gravity</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actual Gravity</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Calibrated</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">New Calibrated</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Current Calibrated</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">New Calibrated</th>
               <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
@@ -100,8 +100,8 @@
             <tr v-for="(point, index) in calibrationStore.calibrationPoints" :key="index">
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ point[0] }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ point[1] }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">{{ getOrigCalibratedGravity(point[0]) }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">{{ getNewCalibratedGravity(point[0]) }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400 hidden lg:table-cell">{{ getOrigCalibratedGravity(point[0]) }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400 hidden md:table-cell">{{ getNewCalibratedGravity(point[0]) }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <button 
                   @click="deletePoint(point[0])"
@@ -421,11 +421,6 @@ async function onPointSaved() {
       calibrationStore.calibrationCoefficients = newCoeffs;
     }
   }
-}
-
-async function calculateCalibration() {
-  // Just calculate the coefficients based on the current points and selected degree
-  calibrationStore.calculateCalibrationCoefficients(calibrationStore.calibrationPoints, selectedDegree.value);
 }
 
 async function saveCalibration() {
