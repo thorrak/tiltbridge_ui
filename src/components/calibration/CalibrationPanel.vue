@@ -188,7 +188,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useTiltStore } from '@/stores/TiltStore';
@@ -224,6 +224,7 @@ const calibrationStore = useCalibrationStore();
 
 const showAddPointModal = ref(false);
 const selectedDegree = ref(1);
+let intervalObject = null;
 
 const originalCoeffs = ref({
   x0: 0,
@@ -564,6 +565,15 @@ onMounted(async () => {
     }
   });
   await tiltStore.getTilts();
+  
+  // Set up periodic refresh for Tilt values
+  intervalObject = window.setInterval(() => {
+    tiltStore.getTilts();
+  }, 5000);  // Refresh every 5 seconds to match TiltList component
+});
+
+onBeforeUnmount(() => {
+  clearInterval(intervalObject);
 });
 </script>
 
