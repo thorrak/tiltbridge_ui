@@ -32,14 +32,48 @@
             <div class="text-lg font-bold text-gray-900">{{ currentRawGravity }}</div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">Calibration Function</div>
-            <div class="text-lg font-bold text-gray-900">{{ calibrationFunction }}</div>
+            <div class="text-sm font-medium text-gray-500">Orig Calibration Function</div>
+            <div class="text-lg font-bold text-gray-900">{{ origCalibrationFunction }}</div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">Calibrated Gravity</div>
+            <div class="text-sm font-medium text-gray-500">Orig Calibrated Gravity</div>
+            <div class="text-lg font-bold text-gray-900">{{ origCalibratedGravity }}</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="bg-gray-50 px-4 py-3 rounded-lg">
+            <div class="text-sm font-medium text-gray-500">
+              <label for="polynomial-degree" class="block text-sm font-medium text-gray-500">
+                Polynomial Degree
+              </label>
+            </div>
+            <div class="text-lg font-bold text-gray-900">
+              <div>
+                <!-- TODO - As the user changes the polynomial degree, we should automatically update the calibration function and calibrated gravity -->
+                <select id="polynomial-degree" v-model="selectedDegree" class="text-xs mt-0.5 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" :disabled="calibrationStore.calibrationPoints.length === 0">
+                  <option v-for="degree in availableDegrees" :key="degree" :value="degree">
+                    {{ degree === 0 ? 'Constant Offset' : `${degree}${degree === 1 ? 'st' : degree === 2 ? 'nd' : 'th'} Degree Polynomial` }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 rounded-lg">
+            <div class="text-sm font-medium text-gray-500">New Calibration Function</div>
+            <div class="flex items-center justify-between">
+              <div class="text-lg font-bold text-gray-900 flex-1 pr-4">{{ calibrationFunction }}</div>
+              <button @click="saveCalibration" :disabled="calibrationStore.calibrationPoints.length === 0" class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded text-xs whitespace-nowrap">
+                Save Equation
+              </button>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 rounded-lg">
+            <div class="text-sm font-medium text-gray-500">New Calibrated Gravity</div>
             <div class="text-lg font-bold text-gray-900">{{ calibratedGravity }}</div>
           </div>
         </div>
+
       </div>
 
       <!-- Calibration Points Table -->
@@ -48,10 +82,7 @@
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             Calibration Points
           </h3>
-          <button 
-            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            @click="openAddPointModal"
-          >
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="openAddPointModal">
             Add Calibration Point
           </button>
         </div>
@@ -83,37 +114,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <!-- Calibration Controls -->
-      <div class="bg-white px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-          Generate Calibration Equation
-        </h3>
-        <div class="flex items-center space-x-4">
-          <div>
-            <label for="polynomial-degree" class="block text-sm font-medium text-gray-700">Polynomial Degree</label>
-            <select 
-              id="polynomial-degree" 
-              v-model="selectedDegree"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              :disabled="calibrationStore.calibrationPoints.length === 0"
-            >
-              <option v-for="degree in availableDegrees" :key="degree" :value="degree">
-                {{ degree === 0 ? 'Constant Offset' : `${degree}${degree === 1 ? 'st' : degree === 2 ? 'nd' : 'th'} Degree Polynomial` }}
-              </option>
-            </select>
-          </div>
-          <div class="pt-6">
-            <button 
-              @click="calculateCalibration"
-              :disabled="calibrationStore.calibrationPoints.length === 0"
-              class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded"
-            >
-              Calculate Calibration Equation
-            </button>
-          </div>
-        </div>
       </div>
 
     </main>
@@ -165,6 +165,13 @@ const calibrationStore = useCalibrationStore();
 const showAddPointModal = ref(false);
 const selectedDegree = ref(1);
 
+const originalCoeffs = ref({
+  x0: 0,
+  x1: 1,
+  x2: 0,
+  x3: 0
+});
+
 const colorName = computed(() => {
   return props.color.charAt(0).toUpperCase() + props.color.slice(1);
 });
@@ -198,7 +205,29 @@ const currentRawGravity = computed(() => {
 });
 
 const calibrationFunction = computed(() => {
-  const coeffs = calibrationStore.calibrationCoefficients;
+  if (calibrationStore.calibrationPoints.length === 0) {
+    return 'No calibration points';
+  }
+  
+  const tempCoeffs = calibrationStore.calculateCalibrationCoefficients(
+    calibrationStore.calibrationPoints, 
+    selectedDegree.value
+  );
+  
+  if (!tempCoeffs) {
+    return 'Calculation error';
+  }
+  
+  if (tempCoeffs.x2 !== 0) {
+    return `${tempCoeffs.x0.toFixed(4)} + ${tempCoeffs.x1.toFixed(4)}x + ${tempCoeffs.x2.toFixed(6)}x²`;
+  } else if (tempCoeffs.x1 !== 1 || tempCoeffs.x0 !== 0) {
+    return `${tempCoeffs.x0.toFixed(4)} + ${tempCoeffs.x1.toFixed(4)}x`;
+  }
+  return 'No calibration applied';
+});
+
+const origCalibrationFunction = computed(() => {
+  const coeffs = originalCoeffs.value;
   if (coeffs.x2 !== 0) {
     return `${coeffs.x0.toFixed(4)} + ${coeffs.x1.toFixed(4)}x + ${coeffs.x2.toFixed(6)}x²`;
   } else if (coeffs.x1 !== 1 || coeffs.x0 !== 0) {
@@ -208,9 +237,24 @@ const calibrationFunction = computed(() => {
 });
 
 const calibratedGravity = computed(() => {
+  if (!currentTilt.value || calibrationStore.calibrationPoints.length === 0) return '--';
+  
+  const tempCoeffs = calibrationStore.calculateCalibrationCoefficients(
+    calibrationStore.calibrationPoints, 
+    selectedDegree.value
+  );
+  
+  if (!tempCoeffs) return '--';
+  
+  const x = parseFloat(currentTilt.value.gravity);
+  const result = tempCoeffs.x0 + tempCoeffs.x1 * x + tempCoeffs.x2 * x * x;
+  return result.toFixed(3);
+});
+
+const origCalibratedGravity = computed(() => {
   if (!currentTilt.value) return '--';
   const x = parseFloat(currentTilt.value.gravity);
-  const coeffs = calibrationStore.calibrationCoefficients;
+  const coeffs = originalCoeffs.value;
   const result = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x;
   return result.toFixed(3);
 });
@@ -291,6 +335,28 @@ const combinedChartData = computed(() => {
 
 async function deletePoint(rawGravity) {
   await calibrationStore.deleteCalibrationPoint(colorNumber.value, rawGravity);
+  
+  // If we no longer have enough points to support the selected degree, lower it to the largest supported degree
+  const newMaxDegree = Math.max(0, calibrationStore.calibrationPoints.length - 1);
+  if (selectedDegree.value > newMaxDegree && selectedDegree.value !== 0) {
+    // If constant offset is available, use it, otherwise use the max polynomial degree
+    if (calibrationStore.calibrationPoints.length >= 1) {
+      selectedDegree.value = 0; // Default to constant offset
+    } else {
+      selectedDegree.value = Math.max(0, newMaxDegree);
+    }
+  }
+  
+  // Automatically recalculate the calibration coefficients after deleting a point
+  if (calibrationStore.calibrationPoints.length > 0) {
+    const newCoeffs = calibrationStore.calculateCalibrationCoefficients(
+      calibrationStore.calibrationPoints, 
+      selectedDegree.value
+    );
+    if (newCoeffs) {
+      calibrationStore.calibrationCoefficients = newCoeffs;
+    }
+  }
 }
 
 function openAddPointModal() {
@@ -299,16 +365,43 @@ function openAddPointModal() {
 
 async function onPointSaved() {
   // Modal will automatically reload points through the store
-  // No additional action needed
+  
+  // If the currently selected degree is "Constant Offset" and we have more than 1 point, change it to 1st degree polynomial
+  if (selectedDegree.value === 0 && calibrationStore.calibrationPoints.length > 1) {
+    selectedDegree.value = 1;
+  }
+  
+  // Auto-recalculate the calibration coefficients after adding a point
+  if (calibrationStore.calibrationPoints.length > 0) {
+    const newCoeffs = calibrationStore.calculateCalibrationCoefficients(
+      calibrationStore.calibrationPoints, 
+      selectedDegree.value
+    );
+    if (newCoeffs) {
+      calibrationStore.calibrationCoefficients = newCoeffs;
+    }
+  }
 }
 
 async function calculateCalibration() {
+  // Just calculate the coefficients based on the current points and selected degree
+  calibrationStore.calculateCalibrationCoefficients(calibrationStore.calibrationPoints, selectedDegree.value);
+}
+
+async function saveCalibration() {
   const coefficients = calibrationStore.calculateCalibrationCoefficients(
-    calibrationStore.calibrationPoints, 
-    selectedDegree.value
+      calibrationStore.calibrationPoints,
+      selectedDegree.value
   );
   if (coefficients) {
-    await calibrationStore.saveCalibrationCoefficients(colorNumber.value, coefficients);
+    await calibrationStore.saveCalibrationCoefficients(colorNumber.value, coefficients).then(() => {
+      // Once we've saved the coefficients, update the "original" coefficients to match what is on the device
+      // (hopefully, what we just saved)
+      calibrationStore.getCalibrationCoefficients(colorNumber.value).then((coeffs) => {
+        originalCoeffs.value = { ...coeffs }; // Store original coefficients for comparison
+      });
+      tiltStore.getTilts(); // Refresh tilts to apply new calibration
+    });
   }
 }
 
@@ -326,7 +419,23 @@ watch(() => calibrationStore.calibrationPoints.length, (newLength) => {
 
 onMounted(async () => {
   await calibrationStore.loadCalibrationPoints(colorNumber.value);
-  await calibrationStore.getCalibrationCoefficients(colorNumber.value);
+  await calibrationStore.getCalibrationCoefficients(colorNumber.value).then((coeffs) => {
+    originalCoeffs.value = { ...coeffs }; // Store original coefficients for comparison
+    
+    // Impute the degree from the loaded coefficients and set it if we have enough points
+    const imputedDegree = calibrationStore.imputeDegreeFromCoefficients(coeffs);
+    const maxAvailableDegree = Math.max(0, calibrationStore.calibrationPoints.length - 1);
+    
+    // Set the selected degree to the imputed degree if we have enough points to support it
+    if (calibrationStore.calibrationPoints.length >= 1) {
+      if (imputedDegree === 0 || imputedDegree <= maxAvailableDegree) {
+        selectedDegree.value = imputedDegree;
+      } else {
+        // If imputed degree is too high, default to constant offset
+        selectedDegree.value = 0;
+      }
+    }
+  });
   await tiltStore.getTilts();
 });
 </script>

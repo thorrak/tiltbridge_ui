@@ -82,7 +82,14 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
     function calculateCalibrationCoefficients(points, degree) {
         try {
             if (!points || points.length === 0) {
-                return null;
+                // If we have no points, return default coefficients
+                // (that is, actual gravity = raw gravity)
+                return {
+                    x0: 0,
+                    x1: 1,
+                    x2: 0,
+                    x3: 0
+                };
             }
 
             if (degree === 0) {
@@ -212,6 +219,13 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
         return await saveCalibrationCoefficients(color, defaultCoefficients);
     }
 
+    function imputeDegreeFromCoefficients(coefficients) {
+        if (coefficients.x3 !== 0) return 3;
+        if (coefficients.x2 !== 0) return 2;
+        if (coefficients.x1 !== 1) return 1;
+        return 0;
+    }
+
     return {
         calibrationPoints,
         calibrationCoefficients,
@@ -225,6 +239,7 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
         saveCalibrationCoefficients,
         getCalibrationCoefficients,
         clearStore,
-        clearCalibrationCoefficients
+        clearCalibrationCoefficients,
+        imputeDegreeFromCoefficients
     };
 });
