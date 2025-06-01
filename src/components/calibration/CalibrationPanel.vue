@@ -12,20 +12,11 @@
       <!-- Charts Section -->
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-          Calibration Charts
+          Calibration Chart
         </h3>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div>
-            <h4 class="text-md font-medium text-gray-700 mb-2">Calibration Points</h4>
-            <div class="h-64">
-              <Line v-if="pointsChartData" :data="pointsChartData" :options="chartOptions" />
-            </div>
-          </div>
-          <div>
-            <h4 class="text-md font-medium text-gray-700 mb-2">Calibration Equation</h4>
-            <div class="h-64">
-              <Line v-if="equationChartData" :data="equationChartData" :options="chartOptions" />
-            </div>
+        <div class="w-full flex flex-col">
+          <div class="w-full max-w-2xl aspect-square">
+            <Line v-if="combinedChartData" :data="combinedChartData" :options="chartOptions" />
           </div>
         </div>
       </div>
@@ -255,11 +246,12 @@ const chartOptions = {
   }
 };
 
-const pointsChartData = computed(() => {
-  if (calibrationStore.calibrationPoints.length === 0) return null;
+const combinedChartData = computed(() => {
+  const datasets = [];
   
-  return {
-    datasets: [{
+  // Add calibration points if they exist
+  if (calibrationStore.calibrationPoints.length > 0) {
+    datasets.push({
       label: 'Calibration Points',
       data: calibrationStore.calibrationPoints.map(point => ({
         x: point[0],
@@ -268,32 +260,33 @@ const pointsChartData = computed(() => {
       backgroundColor: 'rgb(59, 130, 246)',
       borderColor: 'rgb(59, 130, 246)',
       showLine: false,
-      pointRadius: 5
-    }]
-  };
-});
-
-const equationChartData = computed(() => {
-  const coeffs = calibrationStore.calibrationCoefficients;
-  if (coeffs.x1 === 1 && coeffs.x0 === 0 && coeffs.x2 === 0) return null;
-  
-  const points = [];
-  for (let x = 1.000; x <= 1.125; x += 0.005) {
-    const y = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x;
-    points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
+      pointRadius: 6,
+      pointHoverRadius: 8
+    });
   }
   
-  return {
-    datasets: [{
+  // Add calibration equation line if coefficients are set
+  const coeffs = calibrationStore.calibrationCoefficients;
+  if (coeffs.x1 !== 1 || coeffs.x0 !== 0 || coeffs.x2 !== 0) {
+    const points = [];
+    for (let x = 1.000; x <= 1.125; x += 0.005) {
+      const y = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x;
+      points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
+    }
+    
+    datasets.push({
       label: 'Calibration Equation',
       data: points,
       backgroundColor: 'rgb(34, 197, 94)',
       borderColor: 'rgb(34, 197, 94)',
       showLine: true,
       pointRadius: 0,
-      tension: 0.1
-    }]
-  };
+      tension: 0.1,
+      fill: false
+    });
+  }
+  
+  return datasets.length > 0 ? { datasets } : null;
 });
 
 async function deletePoint(rawGravity) {
