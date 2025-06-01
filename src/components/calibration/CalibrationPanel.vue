@@ -3,7 +3,7 @@
     <header class="bg-white shadow">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-gray-900">
-          Calibrating {{ colorName }} Tilt
+          {{ $t('calibration.header', { color: colorName }) }}
         </h1>
       </div>
     </header>
@@ -12,7 +12,7 @@
       <!-- Charts Section -->
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-          Calibration Chart
+          {{ $t('calibration.chart_section_title') }}
         </h3>
         <div class="w-full flex flex-col">
           <div class="w-full max-w-2xl aspect-square">
@@ -24,19 +24,19 @@
       <!-- Current Values Section -->
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-          Current Values
+          {{ $t('calibration.current_values_title') }}
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">Raw Tilt Gravity</div>
+            <div class="text-sm font-medium text-gray-500">{{ $t('calibration.raw_tilt_gravity') }}</div>
             <div class="text-lg font-bold text-gray-900">{{ currentRawGravity }}</div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg hidden md:block">
-            <div class="text-sm font-medium text-gray-500">Current Calibration Function</div>
+            <div class="text-sm font-medium text-gray-500">{{ $t('calibration.current_calibration_function') }}</div>
             <div class="text-lg font-bold text-gray-900">{{ origCalibrationFunction }}</div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg hidden md:block">
-            <div class="text-sm font-medium text-gray-500">Current Calibrated Gravity</div>
+            <div class="text-sm font-medium text-gray-500">{{ $t('calibration.current_calibrated_gravity') }}</div>
             <div class="text-lg font-bold text-gray-900">{{ origCalibratedGravity }}</div>
           </div>
         </div>
@@ -45,31 +45,30 @@
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
             <div class="text-sm font-medium text-gray-500">
               <label for="polynomial-degree" class="block text-sm font-medium text-gray-500">
-                Polynomial Degree
+                {{ $t('calibration.polynomial_degree') }}
               </label>
             </div>
             <div class="text-lg font-bold text-gray-900">
               <div>
-                <!-- TODO - As the user changes the polynomial degree, we should automatically update the calibration function and calibrated gravity -->
                 <select id="polynomial-degree" v-model="selectedDegree" class="text-xs mt-0.5 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" :disabled="calibrationStore.calibrationPoints.length === 0">
                   <option v-for="degree in availableDegrees" :key="degree" :value="degree">
-                    {{ degree === 0 ? 'Constant Offset' : `${degree}${degree === 1 ? 'st' : degree === 2 ? 'nd' : 'th'} Degree Polynomial` }}
+                    {{ getDegreeDisplayText(degree) }}
                   </option>
                 </select>
               </div>
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">New Calibration Function</div>
+            <div class="text-sm font-medium text-gray-500">{{ $t('calibration.new_calibration_function') }}</div>
             <div class="flex items-center justify-between flex-wrap">
               <div class="text-lg font-bold text-gray-900 flex-1 pr-4">{{ calibrationFunction }}</div>
               <button @click="saveCalibration" :disabled="calibrationStore.calibrationPoints.length === 0" class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded text-xs whitespace-nowrap">
-                Save Equation
+                {{ $t('calibration.save_equation') }}
               </button>
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">New Calibrated Gravity</div>
+            <div class="text-sm font-medium text-gray-500">{{ $t('calibration.new_calibrated_gravity') }}</div>
             <div class="text-lg font-bold text-gray-900">{{ calibratedGravity }}</div>
           </div>
         </div>
@@ -80,20 +79,20 @@
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Calibration Points
+            {{ $t('calibration.calibration_points_title') }}
           </h3>
           <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" @click="openAddPointModal">
-            Add Calibration Point
+            {{ $t('calibration.add_calibration_point') }}
           </button>
         </div>
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Raw Tilt Gravity</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actual Gravity</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Current Calibrated</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">New Calibrated</th>
-              <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('calibration.table_raw_gravity') }}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('calibration.table_actual_gravity') }}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">{{ $t('calibration.table_current_calibrated') }}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">{{ $t('calibration.table_new_calibrated') }}</th>
+              <th scope="col" class="relative px-6 py-3"><span class="sr-only">{{ $t('calibration.table_actions') }}</span></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -107,13 +106,13 @@
                   @click="deletePoint(point[0])"
                   class="text-red-600 hover:text-red-900"
                 >
-                  Delete
+                  {{ $t('calibration.delete') }}
                 </button>
               </td>
             </tr>
             <tr v-if="calibrationStore.calibrationPoints.length === 0">
               <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                No calibration points added yet
+                {{ $t('calibration.no_calibration_points') }}
               </td>
             </tr>
           </tbody>
@@ -136,6 +135,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useTiltStore } from '@/stores/TiltStore';
 import { useCalibrationStore } from '@/stores/CalibrationStore';
 import { Line } from 'vue-chartjs';
@@ -163,6 +163,7 @@ ChartJS.register(
 
 const props = defineProps(['color']);
 const route = useRoute();
+const { t: $t } = useI18n();
 const tiltStore = useTiltStore();
 const calibrationStore = useCalibrationStore();
 
@@ -177,7 +178,7 @@ const originalCoeffs = ref({
 });
 
 const colorName = computed(() => {
-  return props.color.charAt(0).toUpperCase() + props.color.slice(1);
+  return $t(`sitewide.tilt_colors.${props.color.toLowerCase()}`);
 });
 
 const colorNumber = computed(() => {
@@ -210,7 +211,7 @@ const currentRawGravity = computed(() => {
 
 const calibrationFunction = computed(() => {
   if (calibrationStore.calibrationPoints.length === 0) {
-    return 'No calibration points';
+    return $t('calibration.function_no_points');
   }
   
   const tempCoeffs = calibrationStore.calculateCalibrationCoefficients(
@@ -219,7 +220,7 @@ const calibrationFunction = computed(() => {
   );
   
   if (!tempCoeffs) {
-    return 'Calculation error';
+    return $t('calibration.function_calculation_error');
   }
   
   if (tempCoeffs.x2 !== 0) {
@@ -227,7 +228,7 @@ const calibrationFunction = computed(() => {
   } else if (tempCoeffs.x1 !== 1 || tempCoeffs.x0 !== 0) {
     return `${tempCoeffs.x0.toFixed(4)} + ${tempCoeffs.x1.toFixed(4)}x`;
   }
-  return 'No calibration applied';
+  return $t('calibration.function_no_calibration');
 });
 
 const origCalibrationFunction = computed(() => {
@@ -237,7 +238,7 @@ const origCalibrationFunction = computed(() => {
   } else if (coeffs.x1 !== 1 || coeffs.x0 !== 0) {
     return `${coeffs.x0.toFixed(4)} + ${coeffs.x1.toFixed(4)}x`;
   }
-  return 'No calibration applied';
+  return $t('calibration.function_no_calibration');
 });
 
 const calibratedGravity = computed(() => {
@@ -259,7 +260,7 @@ const chartOptions = {
       position: 'bottom',
       title: {
         display: true,
-        text: 'Raw Gravity'
+        text: $t('calibration.chart_raw_gravity_axis')
       },
       min: 0.990,
       max: 1.130
@@ -268,7 +269,7 @@ const chartOptions = {
       type: 'linear',
       title: {
         display: true,
-        text: 'Actual Gravity'
+        text: $t('calibration.chart_actual_gravity_axis')
       },
       min: 0.990,
       max: 1.130
@@ -287,7 +288,7 @@ const combinedChartData = computed(() => {
   // Add calibration points if they exist
   if (calibrationStore.calibrationPoints.length > 0) {
     datasets.push({
-      label: 'Calibration Points',
+      label: $t('calibration.chart_calibration_points'),
       data: calibrationStore.calibrationPoints.map(point => ({
         x: point[0],
         y: point[1]
@@ -310,7 +311,7 @@ const combinedChartData = computed(() => {
     }
     
     datasets.push({
-      label: 'Current Calibration',
+      label: $t('calibration.chart_current_calibration'),
       data: points,
       backgroundColor: 'rgb(239, 68, 68)',
       borderColor: 'rgb(239, 68, 68)',
@@ -336,7 +337,7 @@ const combinedChartData = computed(() => {
       }
       
       datasets.push({
-        label: 'New Calibration',
+        label: $t('calibration.chart_new_calibration'),
         data: points,
         backgroundColor: 'rgb(34, 197, 94)',
         borderColor: 'rgb(34, 197, 94)',
@@ -379,6 +380,14 @@ async function deletePoint(rawGravity) {
 
 function openAddPointModal() {
   showAddPointModal.value = true;
+}
+
+function getDegreeDisplayText(degree) {
+  if (degree === 0) return $t('calibration.degree_constant_offset');
+  if (degree === 1) return $t('calibration.degree_1st_polynomial');
+  if (degree === 2) return $t('calibration.degree_2nd_polynomial');
+  if (degree === 3) return $t('calibration.degree_3rd_polynomial');
+  return `${degree}th Degree Polynomial`;
 }
 
 function getOrigCalibratedGravity(rawGravity) {
