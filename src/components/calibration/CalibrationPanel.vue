@@ -28,15 +28,15 @@
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">Raw Gravity</div>
+            <div class="text-sm font-medium text-gray-500">Raw Tilt Gravity</div>
             <div class="text-lg font-bold text-gray-900">{{ currentRawGravity }}</div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">Orig Calibration Function</div>
+            <div class="text-sm font-medium text-gray-500">Current Calibration Function</div>
             <div class="text-lg font-bold text-gray-900">{{ origCalibrationFunction }}</div>
           </div>
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
-            <div class="text-sm font-medium text-gray-500">Orig Calibrated Gravity</div>
+            <div class="text-sm font-medium text-gray-500">Current Calibrated Gravity</div>
             <div class="text-lg font-bold text-gray-900">{{ origCalibratedGravity }}</div>
           </div>
         </div>
@@ -89,8 +89,10 @@
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Raw Gravity</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Raw Tilt Gravity</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actual Gravity</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Calibrated</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">New Calibrated</th>
               <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
@@ -98,6 +100,8 @@
             <tr v-for="(point, index) in calibrationStore.calibrationPoints" :key="index">
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ point[0] }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ point[1] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">{{ getOrigCalibratedGravity(point[0]) }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">{{ getNewCalibratedGravity(point[0]) }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <button 
                   @click="deletePoint(point[0])"
@@ -108,7 +112,7 @@
               </td>
             </tr>
             <tr v-if="calibrationStore.calibrationPoints.length === 0">
-              <td colspan="3" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+              <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                 No calibration points added yet
               </td>
             </tr>
@@ -237,26 +241,13 @@ const origCalibrationFunction = computed(() => {
 });
 
 const calibratedGravity = computed(() => {
-  if (!currentTilt.value || calibrationStore.calibrationPoints.length === 0) return '--';
-  
-  const tempCoeffs = calibrationStore.calculateCalibrationCoefficients(
-    calibrationStore.calibrationPoints, 
-    selectedDegree.value
-  );
-  
-  if (!tempCoeffs) return '--';
-  
-  const x = parseFloat(currentTilt.value.gravity);
-  const result = tempCoeffs.x0 + tempCoeffs.x1 * x + tempCoeffs.x2 * x * x;
-  return result.toFixed(3);
+  if (!currentTilt.value) return '--';
+  return getNewCalibratedGravity(currentTilt.value.gravity);
 });
 
 const origCalibratedGravity = computed(() => {
   if (!currentTilt.value) return '--';
-  const x = parseFloat(currentTilt.value.gravity);
-  const coeffs = originalCoeffs.value;
-  const result = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x;
-  return result.toFixed(3);
+  return getOrigCalibratedGravity(currentTilt.value.gravity);
 });
 
 const chartOptions = {
@@ -361,6 +352,28 @@ async function deletePoint(rawGravity) {
 
 function openAddPointModal() {
   showAddPointModal.value = true;
+}
+
+function getOrigCalibratedGravity(rawGravity) {
+  const x = parseFloat(rawGravity);
+  const coeffs = originalCoeffs.value;
+  const result = coeffs.x0 + coeffs.x1 * x + coeffs.x2 * x * x + coeffs.x3 * x * x * x;
+  return result.toFixed(3);
+}
+
+function getNewCalibratedGravity(rawGravity) {
+  if (calibrationStore.calibrationPoints.length === 0) return '--';
+  
+  const tempCoeffs = calibrationStore.calculateCalibrationCoefficients(
+    calibrationStore.calibrationPoints, 
+    selectedDegree.value
+  );
+  
+  if (!tempCoeffs) return '--';
+  
+  const x = parseFloat(rawGravity);
+  const result = tempCoeffs.x0 + tempCoeffs.x1 * x + tempCoeffs.x2 * x * x + tempCoeffs.x3 * x * x * x;
+  return result.toFixed(3);
 }
 
 async function onPointSaved() {
