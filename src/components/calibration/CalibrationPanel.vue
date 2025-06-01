@@ -10,7 +10,7 @@
     <main>
       
       <!-- Charts and Current Values Section -->
-      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 2xl:border-b-0">
         <div class="xl:flex xl:gap-8">
           <!-- Charts Section -->
           <div class="xl:flex-1">
@@ -30,8 +30,9 @@
             </div>
           </div>
 
-          <!-- Current Values Section -->
+          <!-- Current Values and Calibration Points Section -->
           <div class="xl:flex-grow xl:ml-0 mt-8 xl:mt-0">
+            <!-- Current Values Section -->
         <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
           {{ $t('calibration.current_values_title') }}
         </h3>
@@ -81,12 +82,56 @@
             <div class="text-lg font-bold text-gray-900">{{ calibratedGravity }}</div>
           </div>
         </div>
+
+            <!-- Calibration Points Table (on 2xl+ screens) -->
+            <div class="2xl:block hidden mt-8">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  {{ $t('calibration.calibration_points_title') }}
+                </h3>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" @click="openAddPointModal">
+                  {{ $t('calibration.add_calibration_point') }}
+                </button>
+              </div>
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('calibration.table_raw_gravity') }}</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('calibration.table_actual_gravity') }}</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('calibration.table_current_calibrated') }}</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('calibration.table_new_calibrated') }}</th>
+                    <th scope="col" class="relative px-6 py-3"><span class="sr-only">{{ $t('calibration.table_actions') }}</span></th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr v-for="(point, index) in calibrationStore.calibrationPoints" :key="index">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ point[0] }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ point[1] }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">{{ getOrigCalibratedGravity(point[0]) }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">{{ getNewCalibratedGravity(point[0]) }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button 
+                        @click="deletePoint(point[0])"
+                        class="text-red-600 hover:text-red-900"
+                      >
+                        {{ $t('calibration.delete') }}
+                      </button>
+                    </td>
+                  </tr>
+                  <tr v-if="calibrationStore.calibrationPoints.length === 0">
+                    <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                      {{ $t('calibration.no_calibration_points') }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Calibration Points Table -->
-      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+      <!-- Calibration Points Table (original position for smaller screens) -->
+      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 2xl:hidden">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             {{ $t('calibration.calibration_points_title') }}
