@@ -248,6 +248,7 @@
     "new_calibration_function": "New Calibration Function",
     "new_calibrated_gravity": "New Calibrated Gravity",
     "save_equation": "Save Equation",
+    "clear_equation": "Clear Equation",
     "calibration_points_title": "Calibration Points",
     "add_calibration_point": "Add Calibration Point",
     "table_raw_gravity": "Raw Tilt Gravity",

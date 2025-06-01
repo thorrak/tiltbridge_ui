@@ -62,8 +62,8 @@
             <div class="text-sm font-medium text-gray-500">{{ $t('calibration.new_calibration_function') }}</div>
             <div class="flex items-center justify-between flex-wrap">
               <div class="text-lg font-bold text-gray-900 flex-1 pr-4">{{ calibrationFunction }}</div>
-              <button @click="saveCalibration" :disabled="calibrationStore.calibrationPoints.length === 0" class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded text-xs whitespace-nowrap">
-                {{ $t('calibration.save_equation') }}
+              <button @click="saveCalibration" :disabled="!canSaveOrClear" class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded text-xs whitespace-nowrap">
+                {{ saveButtonLabel }}
               </button>
             </div>
           </div>
@@ -251,6 +251,22 @@ const origCalibratedGravity = computed(() => {
   return getOrigCalibratedGravity(currentTilt.value.gravity);
 });
 
+const hasCurrentCalibration = computed(() => {
+  const coeffs = originalCoeffs.value;
+  return coeffs.x1 !== 1 || coeffs.x0 !== 0 || coeffs.x2 !== 0 || coeffs.x3 !== 0;
+});
+
+const canSaveOrClear = computed(() => {
+  return calibrationStore.calibrationPoints.length > 0 || hasCurrentCalibration.value;
+});
+
+const saveButtonLabel = computed(() => {
+  if (calibrationStore.calibrationPoints.length === 0 && hasCurrentCalibration.value) {
+    return $t('calibration.clear_equation');
+  }
+  return $t('calibration.save_equation');
+});
+
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -433,19 +449,31 @@ async function onPointSaved() {
 }
 
 async function saveCalibration() {
-  const coefficients = calibrationStore.calculateCalibrationCoefficients(
-      calibrationStore.calibrationPoints,
-      selectedDegree.value
-  );
-  if (coefficients) {
-    await calibrationStore.saveCalibrationCoefficients(colorNumber.value, coefficients).then(() => {
-      // Once we've saved the coefficients, update the "original" coefficients to match what is on the device
-      // (hopefully, what we just saved)
+  if (calibrationStore.calibrationPoints.length === 0 && hasCurrentCalibration.value) {
+    // Clear calibration by setting coefficients to default (no calibration)
+    const defaultCoeffs = { x0: 0, x1: 1, x2: 0, x3: 0 };
+    await calibrationStore.saveCalibrationCoefficients(colorNumber.value, defaultCoeffs).then(() => {
       calibrationStore.getCalibrationCoefficients(colorNumber.value).then((coeffs) => {
-        originalCoeffs.value = { ...coeffs }; // Store original coefficients for comparison
+        originalCoeffs.value = { ...coeffs };
       });
-      tiltStore.getTilts(); // Refresh tilts to apply new calibration
+      tiltStore.getTilts();
     });
+  } else {
+    // Save new calibration from points
+    const coefficients = calibrationStore.calculateCalibrationCoefficients(
+        calibrationStore.calibrationPoints,
+        selectedDegree.value
+    );
+    if (coefficients) {
+      await calibrationStore.saveCalibrationCoefficients(colorNumber.value, coefficients).then(() => {
+        // Once we've saved the coefficients, update the "original" coefficients to match what is on the device
+        // (hopefully, what we just saved)
+        calibrationStore.getCalibrationCoefficients(colorNumber.value).then((coeffs) => {
+          originalCoeffs.value = { ...coeffs }; // Store original coefficients for comparison
+        });
+        tiltStore.getTilts(); // Refresh tilts to apply new calibration
+      });
+    }
   }
 }
 
