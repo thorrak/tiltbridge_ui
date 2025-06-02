@@ -32,18 +32,25 @@
           <tr v-for="(tilt, tiltIdx) in tiltStore.tilts" :key="tilt.color" :class="tiltIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'">
             <td class="relative px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
               <div class="absolute inset-y-0 left-0 w-1.5 bg-indigo-600" :style="tilt.colorStyle"></div>
-                <span v-if="tilt.color === 'Red'">{{ $t('sitewide.tilt_colors.red') }}</span>
-                <span v-else-if="tilt.color === 'Green'">{{ $t('sitewide.tilt_colors.green') }}</span>
-                <span v-else-if="tilt.color === 'Black'">{{ $t('sitewide.tilt_colors.black') }}</span>
-                <span v-else-if="tilt.color === 'Purple'">{{ $t('sitewide.tilt_colors.purple') }}</span>
-                <span v-else-if="tilt.color === 'Orange'">{{ $t('sitewide.tilt_colors.orange') }}</span>
-                <span v-else-if="tilt.color === 'Blue'">{{ $t('sitewide.tilt_colors.blue') }}</span>
-                <span v-else-if="tilt.color === 'Yellow'">{{ $t('sitewide.tilt_colors.yellow') }}</span>
-                <span v-else-if="tilt.color === 'Pink'">{{ $t('sitewide.tilt_colors.pink') }}</span>
-              <span v-if="tilt.gsheets_name.length > 0">
-                <!-- TODO - Fix the link below -->
-                <a :href="tilt.gsheets_link"><DocumentChartBarIcon class="h-4 w-4 text-green-700 inline" aria-hidden="true" /></a>
-              </span>
+              <div class="flex items-center gap-2">
+                <span>
+                  <span v-if="tilt.color === 'Red'">{{ $t('sitewide.tilt_colors.red') }}</span>
+                  <span v-else-if="tilt.color === 'Green'">{{ $t('sitewide.tilt_colors.green') }}</span>
+                  <span v-else-if="tilt.color === 'Black'">{{ $t('sitewide.tilt_colors.black') }}</span>
+                  <span v-else-if="tilt.color === 'Purple'">{{ $t('sitewide.tilt_colors.purple') }}</span>
+                  <span v-else-if="tilt.color === 'Orange'">{{ $t('sitewide.tilt_colors.orange') }}</span>
+                  <span v-else-if="tilt.color === 'Blue'">{{ $t('sitewide.tilt_colors.blue') }}</span>
+                  <span v-else-if="tilt.color === 'Yellow'">{{ $t('sitewide.tilt_colors.yellow') }}</span>
+                  <span v-else-if="tilt.color === 'Pink'">{{ $t('sitewide.tilt_colors.pink') }}</span>
+                </span>
+                <button @click="router.push(`/calibrate/${tilt.color.toLowerCase()}`)" class="text-gray-500 hover:text-gray-700">
+                  <AdjustmentsHorizontalIcon class="h-4 w-4" aria-hidden="true" />
+                </button>
+                <span v-if="tilt.gsheets_name.length > 0">
+                  <!-- TODO - Fix the link below -->
+                  <a :href="tilt.gsheets_link"><DocumentChartBarIcon class="h-4 w-4 text-green-700 inline" aria-hidden="true" /></a>
+                </span>
+              </div>
             </td>
             <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 hidden lg:table-cell">{{ tilt.rssi }}</td>
             <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 hidden md:table-cell">
@@ -75,11 +82,13 @@
 <script setup>
 import { useTiltStore } from "@/stores/TiltStore";
 // import { ExclamationTriangleIcon } from "@heroicons/vue/20/solid";
-import { DocumentChartBarIcon, ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import { DocumentChartBarIcon, ExclamationTriangleIcon, AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
 import { onMounted, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
 
 let intervalObject = null;
 const tiltStore = useTiltStore();
+const router = useRouter();
 
 onMounted(() => {
   // Retrieve initial data

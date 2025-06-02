@@ -96,6 +96,12 @@ const routes = [
         name: "About",
         component: () => import('@/components/about/About.vue'),
     },
+    {
+        path: "/calibrate/:color",
+        name: "Calibration",
+        component: () => import('@/components/calibration/CalibrationPanel.vue'),
+        props: true
+    },
 ];
 
 const router = createRouter({

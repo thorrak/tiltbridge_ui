@@ -47,6 +47,11 @@ export default defineConfig({
                 changeOrigin: true,
                 // rewrite: (path) => path.replace(/^\/fallback/, '')
             },
+            '^/conf/.*.json': {
+                target: localServer,
+                changeOrigin: true,
+                // rewrite: (path) => path.replace(/^\/fallback/, '')
+            },
         }
     }
 })

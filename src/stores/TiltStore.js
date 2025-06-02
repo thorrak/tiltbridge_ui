@@ -20,7 +20,8 @@ export const useTiltStore = defineStore("TiltStore", () => {
             // Response is a JSON Array. Loop over it.
             for (const tiltKey in response) {
                 const tiltData = response[tiltKey];
-                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.tempUnit, tiltData.gravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link);
+                // TODO - Fix this if I implement temperature calibration
+                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.tempUnit, tiltData.calibratedGravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link, 0, tiltData.latestGravity);
                 tilts.value.push(tilt);
             }
 
@@ -39,6 +40,25 @@ export const useTiltStore = defineStore("TiltStore", () => {
         tiltUpdateError.value = false;
     }
 
+    function getColorNumber(colorName) {
+        const colorMap = {
+            'red': 0,
+            'green': 1,
+            'black': 2,
+            'purple': 3,
+            'orange': 4,
+            'blue': 5,
+            'yellow': 6,
+            'pink': 7
+        };
+        return colorMap[colorName.toLowerCase()];
+    }
+
+    function getColorName(colorNumber) {
+        const colorNames = ['Red', 'Green', 'Black', 'Purple', 'Orange', 'Blue', 'Yellow', 'Pink'];
+        return colorNames[colorNumber] || 'Unknown';
+    }
+
     return {
         tilts,
         loaded,
@@ -46,6 +66,8 @@ export const useTiltStore = defineStore("TiltStore", () => {
         tiltUpdateError,
 
         getTilts,
-        clearTilts
+        clearTilts,
+        getColorNumber,
+        getColorName
     };
 });
