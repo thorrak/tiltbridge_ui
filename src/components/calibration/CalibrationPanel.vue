@@ -273,7 +273,7 @@ const currentTilt = computed(() => {
 });
 
 const currentRawGravity = computed(() => {
-  return currentTilt.value ? currentTilt.value.gravity : '--';
+  return currentTilt.value ? currentTilt.value.raw_gravity : '--';
 });
 
 const calibrationFunction = computed(() => {
@@ -310,12 +310,12 @@ const origCalibrationFunction = computed(() => {
 
 const calibratedGravity = computed(() => {
   if (!currentTilt.value) return '--';
-  return getNewCalibratedGravity(currentTilt.value.gravity);
+  return getNewCalibratedGravity(currentTilt.value.raw_gravity);
 });
 
 const origCalibratedGravity = computed(() => {
   if (!currentTilt.value) return '--';
-  return getOrigCalibratedGravity(currentTilt.value.gravity);
+  return getOrigCalibratedGravity(currentTilt.value.raw_gravity);
 });
 
 const hasCurrentCalibration = computed(() => {

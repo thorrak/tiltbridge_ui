@@ -25,8 +25,10 @@ export const TiltColorHTML = [
 export class TiltDevice {
     color;
     temp;
+    raw_temp;
     temp_unit;
     gravity;
+    raw_gravity;
     weeks_on_battery;
     sends_battery = false;
     high_resolution = false;
@@ -35,7 +37,7 @@ export class TiltDevice {
     gsheets_name = "";
     gsheets_link = "";
 
-    constructor(color, temp, temp_unit, gravity, weeks_on_battery, sends_battery, high_resolution, fw_version, rssi, gsheets_name, gsheets_link) {
+    constructor(color, temp, temp_unit, gravity, weeks_on_battery, sends_battery, high_resolution, fw_version, rssi, gsheets_name, gsheets_link, raw_temp, raw_gravity) {
         this.color = color;
         this.temp = temp;
         this.temp_unit = temp_unit;
@@ -47,6 +49,8 @@ export class TiltDevice {
         this.rssi = rssi;
         this.gsheets_name = gsheets_name;
         this.gsheets_link = gsheets_link;
+        this.raw_temp = raw_temp;
+        this.raw_gravity = raw_gravity;
     }
 
     get colorHTML() {
