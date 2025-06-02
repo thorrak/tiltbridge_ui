@@ -71,7 +71,7 @@
           <div class="bg-gray-50 px-4 py-3 rounded-lg">
             <div class="text-sm font-medium text-gray-500">{{ $t('calibration.new_calibration_function') }}</div>
             <div class="flex items-center justify-between flex-wrap">
-              <div class="text-lg font-bold text-gray-900 flex-1 pr-4">{{ calibrationFunction }}</div>
+              <button @click="openManualCoefficientModal" class="text-lg font-bold text-gray-900 flex-1 pr-4 text-left hover:text-blue-600 cursor-pointer">{{ calibrationFunction }}</button>
               <button @click="saveCalibration" :disabled="!canSaveOrClear" class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded text-xs whitespace-nowrap">
                 {{ saveButtonLabel }}
               </button>
@@ -184,6 +184,15 @@
       @close="showAddPointModal = false"
       @saved="onPointSaved"
     />
+    
+    <!-- Manual Coefficient Modal -->
+    <ManualCoefficientModal
+      :is-visible="showManualCoefficientModal"
+      :initial-coefficients="getModalCoefficients()"
+      :current-raw-gravity="currentRawGravity"
+      @close="showManualCoefficientModal = false"
+      @save="saveManualCoefficients"
+    />
   </div>
 </template>
 
@@ -195,6 +204,7 @@ import { useTiltStore } from '@/stores/TiltStore';
 import { useCalibrationStore } from '@/stores/CalibrationStore';
 import { Line } from 'vue-chartjs';
 import AddCalibrationPointModal from './AddCalibrationPointModal.vue';
+import ManualCoefficientModal from './ManualCoefficientModal.vue';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -223,6 +233,7 @@ const tiltStore = useTiltStore();
 const calibrationStore = useCalibrationStore();
 
 const showAddPointModal = ref(false);
+const showManualCoefficientModal = ref(false);
 const selectedDegree = ref(1);
 let intervalObject = null;
 
@@ -452,6 +463,41 @@ async function deletePoint(rawGravity) {
 
 function openAddPointModal() {
   showAddPointModal.value = true;
+}
+
+function openManualCoefficientModal() {
+  showManualCoefficientModal.value = true;
+}
+
+function getModalCoefficients() {
+  if (calibrationStore.calibrationPoints.length === 0) {
+    return { x0: 0, x1: 1, x2: 0 };
+  }
+  
+  const tempCoeffs = calibrationStore.calculateCalibrationCoefficients(
+    calibrationStore.calibrationPoints, 
+    selectedDegree.value
+  );
+  
+  return tempCoeffs || { x0: 0, x1: 1, x2: 0 };
+}
+
+async function saveManualCoefficients(coefficients) {
+  // Save the manually entered coefficients to the device
+  await calibrationStore.saveCalibrationCoefficients(colorNumber.value, coefficients);
+  
+  // Clear any existing calibration points since we're using manual coefficients
+  calibrationStore.calibrationPoints = [];
+  
+  // Refresh the coefficients from the device to update the "original" coefficients
+  await calibrationStore.getCalibrationCoefficients(colorNumber.value).then((coeffs) => {
+    originalCoeffs.value = { ...coeffs };
+  });
+  
+  // Refresh tilts to apply new calibration
+  await tiltStore.getTilts();
+  
+  showManualCoefficientModal.value = false;
 }
 
 function getDegreeDisplayText(degree) {

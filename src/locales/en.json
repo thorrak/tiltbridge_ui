@@ -270,6 +270,17 @@
     "chart_calibration_points": "Calibration Points",
     "chart_current_calibration": "Current Calibration",
     "chart_new_calibration": "New Calibration",
-    "chart_placeholder_message": "Chart will be displayed as calibration points are added"
+    "chart_placeholder_message": "Chart will be displayed as calibration points are added",
+    "manual_coefficient_modal": {
+      "title": "Manual Coefficient Entry",
+      "description": "Enter calibration coefficients directly. The formula will be applied as: x0 + x1×(raw gravity) + x2×(raw gravity)²",
+      "x0_label": "x₀ (Constant)",
+      "x1_label": "x₁ (Linear)",
+      "x2_label": "x₂ (Quadratic)",
+      "preview_title": "Preview",
+      "raw_gravity": "Raw Gravity",
+      "formula": "Formula",
+      "calibrated_gravity": "Calibrated Gravity"
+    }
   }
 }
