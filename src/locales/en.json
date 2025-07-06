@@ -48,6 +48,41 @@
     "version": {
       "loading_version": "Loading build/version information...",
       "error_loading_version": "Error loading build/version information"
+    },
+    "reset_actions": {
+      "header": "Device Reset Actions",
+      "description": "These actions will reset parts of your TiltBridge configuration. Use with caution.",
+      "reset_wifi": {
+        "title": "Reset WiFi Settings",
+        "description": "Clear WiFi credentials and return to setup mode. The device will restart and create its own WiFi access point.",
+        "button": "Reset WiFi"
+      },
+      "reset_device": {
+        "title": "Reset Device",
+        "description": "Perform a complete factory reset. All settings (including WiFi settings) and calibration data will be lost.",
+        "button": "Reset Device"
+      },
+      "confirm_modal": {
+        "wifi": {
+          "title": "Confirm WiFi Reset",
+          "message": "Are you sure you want to reset the WiFi settings? The device will restart and you will need to reconnect to its setup network to reconfigure WiFi."
+        },
+        "device": {
+          "title": "Confirm Device Reset",
+          "message": "Are you sure you want to perform a factory reset? This will erase ALL settings, calibration data, and configuration. This action cannot be undone."
+        },
+        "confirm_button": "Yes, Reset"
+      },
+      "reset_modal": {
+        "wifi": {
+          "title": "Resetting WiFi...",
+          "message": "The device is resetting WiFi settings and will restart. You will need to connect to the TiltBridge setup network to reconfigure WiFi access."
+        },
+        "device": {
+          "title": "Resetting Device...",
+          "message": "The device is performing a factory reset and will restart. All settings and data have been erased. You will need to reconfigure the device (including WiFi access) from scratch."
+        }
+      }
     }
   },
   "device_config": {

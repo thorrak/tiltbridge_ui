@@ -502,6 +502,26 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function resetWifi() {
+        try {
+            const remote_api = mande("/api/actions/resetWifi/", genCSRFOptions());
+            const response = await remote_api.post({ ok: true });
+            return response && response.ok;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async function resetDevice() {
+        try {
+            const remote_api = mande("/api/actions/resetDevice/", genCSRFOptions());
+            const response = await remote_api.post({ ok: true });
+            return response && response.ok;
+        } catch (error) {
+            return false;
+        }
+    }
+
     return {
         mdnsID,
         guid,
@@ -575,6 +595,8 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateBrewstatusConfig,
         updateTaplistIoConfig,
         updateMQTTConfig,
-        updateGenericTargetConfig
+        updateGenericTargetConfig,
+        resetWifi,
+        resetDevice
     };
 });

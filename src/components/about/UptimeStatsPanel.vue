@@ -64,53 +64,48 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useUptimeStatsStore } from "@/stores/UptimeStatsStore";
 import { useVersionInfoStore } from "@/stores/VersionInfoStore.js";
 import { useHeapInfoStore } from "@/stores/HeapInfoStore";
 import { useResetReasonStore } from "@/stores/ResetReasonStore";
 
-export default {
-  name: "UptimeStatsPanel",
-  mounted() {
-    // Retrieve initial data
-    this.UptimeStatsStore.getUptimeStats();
-    this.VersionInfoStore.getVersionInfo();
-    this.HeapInfoStore.getHeapInfo();
-    this.ResetReasonStore.getResetReason();
+const UptimeStatsStore = useUptimeStatsStore();
+const VersionInfoStore = useVersionInfoStore();
+const HeapInfoStore = useHeapInfoStore();
+const ResetReasonStore = useResetReasonStore();
 
-    // Set up periodic refreshes
-    this.statsIntervalObject = window.setInterval(() => {
-      this.UptimeStatsStore.getUptimeStats();
-    }, 10000)
-    this.heapIntervalObject = window.setInterval(() => {
-      this.HeapInfoStore.getHeapInfo();
-    }, 9000)
-    this.resetIntervalObject = window.setInterval(() => {
-      this.ResetReasonStore.getResetReason();
-    }, 60000)
-  },
-  setup() {
-    return {
-      UptimeStatsStore: useUptimeStatsStore(),  // Updated in UptimeStatsPanel.vue
-      VersionInfoStore: useVersionInfoStore(),  // Updated in UptimeStatsPanel.vue
-      HeapInfoStore: useHeapInfoStore(),  // Updated in UptimeStatsPanel.vue
-      ResetReasonStore: useResetReasonStore(),  // Updated in UptimeStatsPanel.vue
-    }
-  },
-  data() {
-    return {
-      statsIntervalObject: null,
-      heapIntervalObject: null,
-      resetIntervalObject: null,
-    }
-  },
-  beforeUnmount() {
-    clearInterval(this.statsIntervalObject);
-    clearInterval(this.heapIntervalObject);
-    clearInterval(this.resetIntervalObject);
-  },
-}
+const statsIntervalObject = ref(null);
+const heapIntervalObject = ref(null);
+const resetIntervalObject = ref(null);
+
+onMounted(() => {
+  // Retrieve initial data
+  UptimeStatsStore.getUptimeStats();
+  VersionInfoStore.getVersionInfo();
+  HeapInfoStore.getHeapInfo();
+  ResetReasonStore.getResetReason();
+
+  // Set up periodic refreshes
+  statsIntervalObject.value = window.setInterval(() => {
+    UptimeStatsStore.getUptimeStats();
+  }, 10000);
+  
+  heapIntervalObject.value = window.setInterval(() => {
+    HeapInfoStore.getHeapInfo();
+  }, 9000);
+  
+  resetIntervalObject.value = window.setInterval(() => {
+    ResetReasonStore.getResetReason();
+  }, 60000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(statsIntervalObject.value);
+  clearInterval(heapIntervalObject.value);
+  clearInterval(resetIntervalObject.value);
+});
 </script>
 
 <style scoped>

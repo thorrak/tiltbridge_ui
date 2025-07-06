@@ -15,6 +15,7 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
     });
     const calibrationError = ref(false);
     const loaded = ref(false);
+    const pending_sync = ref(false);
 
     async function loadCalibrationPoints(color) {
         try {
@@ -226,11 +227,74 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
         return 0;
     }
 
+    async function syncCalToFT(color) {
+        try {
+            const remote_api = mande("/api/actions/syncCalToFT/", genCSRFOptions());
+            const response = await remote_api.post({
+                color: color.toLowerCase()
+            });
+            return response && response.ok;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async function syncCalFromFT(color) {
+        try {
+            pending_sync.value = true;
+            const remote_api = mande("/api/actions/syncCalFromFT/", genCSRFOptions());
+            const response = await remote_api.post({
+                color: color.toLowerCase()
+            });
+            return response && response.ok;
+        } catch (error) {
+            pending_sync.value = false;
+            return false;
+        }
+    }
+
+    async function deleteCal(color) {
+        try {
+            const remote_api = mande("/api/actions/deleteCal/", genCSRFOptions());
+            const response = await remote_api.post({
+                color: color.toLowerCase()
+            });
+            if (response && response.ok) {
+                calibrationPoints.value = [];
+                calibrationCoefficients.value = {
+                    x0: 0,
+                    x1: 1,
+                    x2: 0,
+                    x3: 0
+                };
+                return true;
+            }
+            return false;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async function getSyncStatus() {
+        try {
+            const remote_api = mande("/api/sync/status/");
+            const response = await remote_api.get();
+            if (response && typeof response.pending_sync === 'boolean') {
+                pending_sync.value = response.pending_sync;
+                return response.pending_sync;
+            }
+            return false;
+        } catch (error) {
+            return false;
+        }
+    }
+
     return {
         calibrationPoints,
         calibrationCoefficients,
         calibrationError,
         loaded,
+        pending_sync,
         
         loadCalibrationPoints,
         addCalibrationPoint,
@@ -240,6 +304,10 @@ export const useCalibrationStore = defineStore("CalibrationStore", () => {
         getCalibrationCoefficients,
         clearStore,
         clearCalibrationCoefficients,
-        imputeDegreeFromCoefficients
+        imputeDegreeFromCoefficients,
+        syncCalToFT,
+        syncCalFromFT,
+        deleteCal,
+        getSyncStatus
     };
 });
