@@ -24,18 +24,6 @@ const $loading = useLoading({
 });
 
 
-// const tabs = [
-//   { name: 'Fermentrack/BrewPi-Remix', route_name: 'FermentrackConfig' },
-//   { name: 'Google Sheets', route_name: 'GoogleSheetsConfig' },
-//   { name: 'Brewers Friend', route_name: 'FermentrackConfig' },
-//   { name: 'Brewfather', route_name: 'FermentrackConfig' },
-//   { name: 'Grainfather', route_name: 'FermentrackConfig' },
-//   { name: 'Brewstatus', route_name: 'FermentrackConfig' },
-//   { name: 'Taplist.io', route_name: 'FermentrackConfig' },
-//   { name: 'MQTT', route_name: 'FermentrackConfig' },
-//   { name: 'Generic Target', route_name: 'FermentrackConfig' },
-// ];
-
 let intervalObject = null;
 const configStore = useConfigStore();
 

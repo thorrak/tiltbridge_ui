@@ -80,6 +80,11 @@ const routes = [
                 name: 'MQTTConfig',
             },
             {
+                path: 'influxdb',
+                component: () => import('@/components/config/Targets/InfluxDB.vue'),
+                name: 'InfluxDBConfig',
+            },
+            {
                 path: 'generic',
                 component: () => import('@/components/config/Targets/GenericTarget.vue'),
                 name: 'GenericTargetConfig',

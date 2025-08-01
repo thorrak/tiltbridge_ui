@@ -244,6 +244,27 @@
       "generic_target_url_desc": "The URL to which to push a payload containing JSON data covering your Tilts",
       "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
       "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    },
+    "influxdb": {
+      "header": "Configure InfluxDB",
+      "about_header": "About InfluxDB Integration",
+      "about_text": "These settings control how TiltBridge sends data to InfluxDB v2. You'll need an InfluxDB v2 instance and an API token with write permissions to the specified bucket. To create a token, log into your InfluxDB instance and go to Data > API Tokens.",
+      "url": "InfluxDB URL",
+      "url_desc": "Full URL to your InfluxDB v2 server (e.g., https://us-west-2-1.aws.cloud2.influxdata.com)",
+      "token": "API Token",
+      "token_desc": "InfluxDB v2 API token with write permissions to the specified bucket",
+      "organization": "Organization",
+      "organization_desc": "InfluxDB organization name or ID",
+      "bucket": "Bucket",
+      "bucket_desc": "InfluxDB bucket name where Tilt data will be stored",
+      "push_frequency": "Push Frequency (seconds)",
+      "push_frequency_desc": "How often to send data to InfluxDB (recommended: 900 seconds / 15 minutes)",
+      "error_missing_url": "InfluxDB URL is required",
+      "error_missing_token": "API Token is required",
+      "error_missing_org": "Organization is required",
+      "error_missing_bucket": "Bucket is required",
+      "error_invalid_url": "Please enter a valid URL starting with http:// or https://",
+      "error_invalid_push_frequency": "Push frequency must be between 60 and 86400 seconds (1 minute to 24 hours)"
     }
   },
   "tilt_list": {

@@ -59,6 +59,13 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const have_lcd = ref(false);
     const have_led = ref(false);
 
+    // InfluxDB Settings
+    const influxdbURL = ref("");
+    const influxdbToken = ref("");
+    const influxdbOrg = ref("");
+    const influxdbBucket = ref("");
+    const influxdbPushEvery = ref(900);
+
     // Fermentrack Settings
     // Legacy Options
     const fermentrackUrl = ref("");
@@ -149,6 +156,13 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             have_lcd.value = response.have_lcd;
             have_led.value = response.have_led;
 
+            // InfluxDB Settings
+            influxdbURL.value = response.influxdbURL || "";
+            influxdbToken.value = response.influxdbToken || "";
+            influxdbOrg.value = response.influxdbOrg || "";
+            influxdbBucket.value = response.influxdbBucket || "";
+            influxdbPushEvery.value = response.influxdbPushEvery || 900;
+
             // We got a response. Parse the list of Tilts (which are sent by color)
             // for (const tiltColorsKey in TiltColors) {
             //     const tiltColor = TiltColors[tiltColorsKey];
@@ -219,6 +233,13 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mqttPushEvery.value = 0;
         have_lcd.value = false;
         have_led.value = false;
+
+        // InfluxDB Settings
+        influxdbURL.value = "";
+        influxdbToken.value = "";
+        influxdbOrg.value = "";
+        influxdbBucket.value = "";
+        influxdbPushEvery.value = 900;
 
         // Legacy Fermentrack
         fermentrackUrl.value = "";
@@ -502,6 +523,31 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
+    async function updateInfluxDBConfig(url, token, org, bucket, pushEvery) {
+        try {
+            const remote_api = mande("/api/settings/influxdb/", genCSRFOptions());
+            const response = await remote_api.put({
+                influxdbURL: url,
+                influxdbToken: token,
+                influxdbOrg: org,
+                influxdbBucket: bucket,
+                influxdbPushEvery: pushEvery,
+            });
+            if (response && response.success) {
+                influxdbURL.value = url;
+                influxdbToken.value = token;
+                influxdbOrg.value = org;
+                influxdbBucket.value = bucket;
+                influxdbPushEvery.value = pushEvery;
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
     async function resetWifi() {
         try {
             const remote_api = mande("/api/actions/resetWifi/", genCSRFOptions());
@@ -569,6 +615,11 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mqttPushEvery,
         have_lcd,
         have_led,
+        influxdbURL,
+        influxdbToken,
+        influxdbOrg,
+        influxdbBucket,
+        influxdbPushEvery,
         fermentrackUrl,
         fermentrackPushFrequency,
         fermentrackHostname,
@@ -596,6 +647,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         updateTaplistIoConfig,
         updateMQTTConfig,
         updateGenericTargetConfig,
+        updateInfluxDBConfig,
         resetWifi,
         resetDevice
     };
