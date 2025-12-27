@@ -98,7 +98,7 @@
     "smooth_factor_name": "Média de Gravidade Específica",
     "smooth_factor_desc": "O intervalo válido é de 0 a 99. A configuração afeta a constante de tempo do filtro de média móvel ponderada exponencialmente aplicado à leitura da gravidade específica. Em resposta a uma mudança abrupta, o valor filtrado deve atingir o estado estacionário após ~ 5 constantes de tempo. Uma configuração de 0 não oferece suavização (filtro desligado), enquanto valores mais altos significam mais suavização. Uma configuração de 60 dá uma constante de tempo de pouco mais de 5 segundos, enquanto 99 resulta em ~ 5 minutos.",
     "hardware_options_header": "Opções de Hardware",
-    "invert_tft_name": "Inverter Exibição TFT",
+    "invert_tft_name": "Inverter a exibição do TFT",
     "invert_tft_desc": " - Use se a tela estiver de cabeça para baixo",
     "errors": {
       "mdns_invalid_chars": "O ID mDNS só pode conter as letras a-z, hífens ou números, e não deve começar nem terminar com um hífen",
@@ -116,13 +116,13 @@
   "cloud_config": {
     "fermentrack": {
       "legacy_fermentrack_menu_item": "Legacy Fermentrack / BrewPi-Remix",
-      "header_legacy": "Configurar Configurações Legadas do Fermentrack",
+      "header_legacy": "Configurar Fermentrack legado",
       "legacy_desc": "Essas configurações são para Fermentrack 1.x. Se você estiver usando o Fermentrack 2, selecione 'Fermentrack 2 / Fermentrack.net' como o alvo na nuvem",
-      "header": "Configurar Configurações do Fermentrack",
-      "target_type": "Sistema Alvo",
+      "header": "Configurar Fermentrack",
+      "target_type": "Sistema de Destino",
       "target_type_desc": "Selecione o tipo de sistema para o qual deseja enviar os dados",
-      "url": "URL do Alvo",
-      "url_desc": "URL do sistema alvo",
+      "url": "URL de destino",
+      "url_desc": "URL do sistema de destino",
       "push_frequency": "Frequência de Envio",
       "push_frequency_desc": "Frequência para enviar dados (em segundos)",
       "push_frequency_out_of_range": "A frequência de envio deve ser um número entre 30 e 43200",
@@ -169,8 +169,8 @@
       "url_desc": "URL do script do Google alvo",
       "email": "Endereço de Email do Google Script",
       "email_desc": "Endereço de email usado para criar o script alvo",
-      "color_sheet_tilt_name": "{color} Nome da Planilha Tilt",
-      "color_sheet_tilt_name_desc": "O nome da planilha para colocar dados do tilt {color}"
+      "color_sheet_tilt_name": "{color} Nome da Planilha do Tilt",
+      "color_sheet_tilt_name_desc": "O nome da planilha onde serão colocados os dados do Tilt {color}"
     },
     "brewers_friend": {
       "header": "Configurar Brewers Friend",
@@ -218,7 +218,7 @@
       "about_header": "Sobre o MQTT",
       "about_text_1": "Essas configurações controlam como o TiltBridge publica dados em um Broker MQTT. Para desabilitar o envio para o broker MQTT, exclua o IP do Broker MQTT.",
       "about_text_hast": "A implementação do MQTT suporta a Descoberta Automática do Home Assistant para sensores de temperatura e gravidade específica.",
-      "about_text_payload_header": "A carga geral da mensagem é JSON e é formatada da seguinte forma",
+      "about_text_payload_header": "A carga (payload) da mensagem é JSON e é formatada da seguinte forma",
       "about_text_topic": "Tópico",
       "about_text_payload": "Carga",
       "broker_address": "Endereço do Broker MQTT",
@@ -293,10 +293,10 @@
     "homebrewtalk_thread": "tópico do HomeBrewTalk"
   },
   "calibration": {
-    "header": "Calibrando a inclinação {color}",
+    "header": "Calibrando o Tilt {color}",
     "chart_section_title": "Gráfico de Calibração",
     "current_values_title": "Valores Atuais",
-    "raw_tilt_gravity": "Gravidade bruta da inclinação",
+    "raw_tilt_gravity": "Gravidade bruta do Tilt",
     "current_calibration_function": "Função de Calibração Atual",
     "current_calibrated_gravity": "Gravidade Calibrada Atual",
     "polynomial_degree": "Grau do Polinômio",
@@ -306,7 +306,7 @@
     "clear_equation": "Limpar Equação",
     "calibration_points_title": "Pontos de Calibração",
     "add_calibration_point": "Adicionar Ponto de Calibração",
-    "table_raw_gravity": "Gravidade bruta da inclinação",
+    "table_raw_gravity": "Gravidade bruta do Tilt",
     "table_actual_gravity": "Gravidade Real",
     "table_current_calibrated": "Calibrado Atual",
     "table_new_calibrated": "Novo Calibrado",

@@ -48,6 +48,41 @@
     "version": {
       "loading_version": "Loading build/version information...",
       "error_loading_version": "Error loading build/version information"
+    },
+    "reset_actions": {
+      "header": "Device Reset Actions",
+      "description": "These actions will reset parts of your TiltBridge configuration. Use with caution.",
+      "reset_wifi": {
+        "title": "Reset WiFi Settings",
+        "description": "Clear WiFi credentials and return to setup mode. The device will restart and create its own WiFi access point.",
+        "button": "Reset WiFi"
+      },
+      "reset_device": {
+        "title": "Reset Device",
+        "description": "Perform a complete factory reset. All settings (including WiFi settings) and calibration data will be lost.",
+        "button": "Reset Device"
+      },
+      "confirm_modal": {
+        "wifi": {
+          "title": "Confirm WiFi Reset",
+          "message": "Are you sure you want to reset the WiFi settings? The device will restart and you will need to reconnect to its setup network to reconfigure WiFi."
+        },
+        "device": {
+          "title": "Confirm Device Reset",
+          "message": "Are you sure you want to perform a factory reset? This will erase ALL settings, calibration data, and configuration. This action cannot be undone."
+        },
+        "confirm_button": "Yes, Reset"
+      },
+      "reset_modal": {
+        "wifi": {
+          "title": "Resetting WiFi...",
+          "message": "The device is resetting WiFi settings and will restart. You will need to connect to the TiltBridge setup network to reconfigure WiFi access."
+        },
+        "device": {
+          "title": "Resetting Device...",
+          "message": "The device is performing a factory reset and will restart. All settings and data have been erased. You will need to reconfigure the device (including WiFi access) from scratch."
+        }
+      }
     }
   },
   "device_config": {
@@ -55,7 +90,7 @@
     "general_settings_header": "TiltBridge General Settings",
     "config_failed_error": "Configuration failed to load from TiltBridge. Try refreshing the page, or check your TiltBridge's connection to the network.",
     "mDNS_id_name": "mDNS ID",
-    "mDNS_id_desc": "Host name (the xxxx in http://xxxx.local/). Must be 8-31 characters.",
+    "mDNS_id_desc": "Host name (the xxxx in http://xxxx.local/). Must be 1-31 characters.",
     "tz_offset_name": "Time Zone Offset",
     "tz_offset_desc": "Time Zone Offset from GMT (in hours). Used for Google Sheets.",
     "temp_unit_name": "Default Temperature Units",
@@ -66,8 +101,8 @@
     "invert_tft_name": "Invert TFT Display",
     "invert_tft_desc": " - Use if the screen is upside-down",
     "errors": {
-      "mdns_invalid_chars": "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start with a hyphen",
-      "mdns_invalid_length": "mDNS ID must be between 8 and 31 characters",
+      "mdns_invalid_chars": "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start or end with a hyphen",
+      "mdns_invalid_length": "mDNS ID must be between 1 and 31 characters",
       "invalid_smoothing_factor": "Specific gravity smoothing factor must be between 0 and 99",
       "invalid_tz_offset": "Timezone offset must be between -12 and 14"
     },
@@ -151,7 +186,8 @@
       "about_text": "These settings control how TiltBridge talks to Brewfather. With a premium account, Brewfather supports logging from gravity sensors such as the Tilt Hydrometer. To find your API key, log into your Brewfather account and go to Settings > Custom Stream. Your Stream key will be a string of letters and numbers (not a URL).",
       "api_key": "Stream Key",
       "api_key_desc": "Stream key from your Brewfather account settings",
-      "error_missing_api_key": "Stream key cannot be empty"
+      "error_missing_api_key": "Stream key cannot be empty",
+      "error_invalid_stream_key": "Stream key is a series of letters and numbers - not a URL. Please check the key and try again."
     },
     "grainfather": {
       "header": "Configure Grainfather",
@@ -207,6 +243,27 @@
       "generic_target_url_desc": "The URL to which to push a payload containing JSON data covering your Tilts",
       "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
       "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    },
+    "influxdb": {
+      "header": "Configure InfluxDB",
+      "about_header": "About InfluxDB Integration",
+      "about_text": "These settings control how TiltBridge sends data to InfluxDB v2. You'll need an InfluxDB v2 instance and an API token with write permissions to the specified bucket. To create a token, log into your InfluxDB instance and go to Data > API Tokens.",
+      "url": "InfluxDB URL",
+      "url_desc": "Full URL to your InfluxDB v2 server (e.g., https://us-west-2-1.aws.cloud2.influxdata.com)",
+      "token": "API Token",
+      "token_desc": "InfluxDB v2 API token with write permissions to the specified bucket",
+      "organization": "Organization",
+      "organization_desc": "InfluxDB organization name or ID",
+      "bucket": "Bucket",
+      "bucket_desc": "InfluxDB bucket name where Tilt data will be stored",
+      "push_frequency": "Push Frequency (seconds)",
+      "push_frequency_desc": "How often to send data to InfluxDB (recommended: 900 seconds / 15 minutes)",
+      "error_missing_url": "InfluxDB URL is required",
+      "error_missing_token": "API Token is required",
+      "error_missing_org": "Organization is required",
+      "error_missing_bucket": "Bucket is required",
+      "error_invalid_url": "Please enter a valid URL starting with http:// or https://",
+      "error_invalid_push_frequency": "Push frequency must be between 60 and 86400 seconds (1 minute to 24 hours)"
     }
   },
   "tilt_list": {
@@ -234,5 +291,51 @@
     "issue_bug_feature_request": "issue, bug, or feature request",
     "homebrewtalk_link": "Get support or chat with other users on the {hbt_link}",
     "homebrewtalk_thread": "HomeBrewTalk thread"
+  },
+  "calibration": {
+    "header": "Calibrating {color} Tilt",
+    "chart_section_title": "Calibration Chart",
+    "current_values_title": "Current Values",
+    "raw_tilt_gravity": "Raw Tilt Gravity",
+    "current_calibration_function": "Current Calibration Function",
+    "current_calibrated_gravity": "Current Calibrated Gravity",
+    "polynomial_degree": "Polynomial Degree",
+    "new_calibration_function": "New Calibration Function",
+    "new_calibrated_gravity": "New Calibrated Gravity",
+    "save_equation": "Save Equation",
+    "clear_equation": "Clear Equation",
+    "calibration_points_title": "Calibration Points",
+    "add_calibration_point": "Add Calibration Point",
+    "table_raw_gravity": "Raw Tilt Gravity",
+    "table_actual_gravity": "Actual Gravity",
+    "table_current_calibrated": "Current Calibrated",
+    "table_new_calibrated": "New Calibrated",
+    "table_actions": "Actions",
+    "delete": "Delete",
+    "no_calibration_points": "No calibration points added yet",
+    "degree_constant_offset": "Constant Offset",
+    "degree_1st_polynomial": "1st Degree Polynomial",
+    "degree_2nd_polynomial": "2nd Degree Polynomial",
+    "degree_3rd_polynomial": "3rd Degree Polynomial",
+    "function_no_points": "No calibration points",
+    "function_calculation_error": "Calculation error",
+    "function_no_calibration": "No calibration applied",
+    "chart_raw_gravity_axis": "Raw Gravity",
+    "chart_actual_gravity_axis": "Actual Gravity",
+    "chart_calibration_points": "Calibration Points",
+    "chart_current_calibration": "Current Calibration",
+    "chart_new_calibration": "New Calibration",
+    "chart_placeholder_message": "Chart will be displayed as calibration points are added",
+    "manual_coefficient_modal": {
+      "title": "Manual Coefficient Entry",
+      "description": "Enter calibration coefficients directly. The formula will be applied as: x0 + x1×(raw gravity) + x2×(raw gravity)²",
+      "x0_label": "x₀ (Constant)",
+      "x1_label": "x₁ (Linear)",
+      "x2_label": "x₂ (Quadratic)",
+      "preview_title": "Preview",
+      "raw_gravity": "Raw Gravity",
+      "formula": "Formula",
+      "calibrated_gravity": "Calibrated Gravity"
+    }
   }
 }

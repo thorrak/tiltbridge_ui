@@ -36,36 +36,36 @@
   },
   "about": {
     "uptime": {
-      "version_and_uptime": "Versie & Uptime Informatie",
-      "firmware_version": "Firmware Versie",
+      "version_and_uptime": "Versie- en uptime-informatie",
+      "firmware_version": "Firmwareversie",
       "uptime_header": "Uptime",
       "uptime_print": "Dagen: {days}, Uren: {hours}, Minuten: {minutes}, Seconden: {seconds}",
-      "reset_header": "Reset Informatie",
+      "reset_header": "Resetinformatie",
       "reset_print": "Reden: {reason}, Beschrijving: {description}",
-      "heap_header": "Heap Informatie",
+      "heap_header": "Heap-informatie",
       "heap_print": "Vrije Heap: {free_heap}, Max: {max_heap}, Fragmenten: {frags}"
     },
     "version": {
-      "loading_version": "Laad build/versie informatie...",
-      "error_loading_version": "Fout bij het laden van build/versie informatie"
+      "loading_version": "Bezig met laden van build-/versie-informatie...",
+      "error_loading_version": "Fout bij het laden van build-/versie-informatie"
     },
     "reset_actions": {
-      "header": "Apparaat resetacties",
+      "header": "Resetacties voor apparaat",
       "description": "Deze acties zullen delen van uw TiltBridge-configuratie resetten. Gebruik met voorzichtigheid.",
       "reset_wifi": {
         "title": "WiFi-instellingen resetten",
-        "description": "Wis de WiFi-inloggegevens en ga terug naar de instelmodus. Het apparaat zal opnieuw opstarten en een eigen WiFi-toegangspunt aanmaken.",
+        "description": "Wis de WiFi-inloggegevens en zet het apparaat terug in de configuratiemodus. Het apparaat zal opnieuw opstarten en een eigen WiFi-toegangspunt aanmaken.",
         "button": "WiFi resetten"
       },
       "reset_device": {
         "title": "Apparaat resetten",
-        "description": "Voer een volledige fabrieksreset uit. Alle instellingen (inclusief WiFi-instellingen) en kalibratiegegevens zullen verloren gaan.",
+        "description": "Voer een volledige fabrieksreset uit. Alle instellingen (inclusief WiFi-instellingen) en kalibratiegegevens worden verwijderd.",
         "button": "Apparaat resetten"
       },
       "confirm_modal": {
         "wifi": {
           "title": "WiFi-reset bevestigen",
-          "message": "Weet u zeker dat u de WiFi-instellingen wilt resetten? Het apparaat zal opnieuw opstarten en u moet opnieuw verbinding maken met het instelnetwerk van het apparaat om WiFi opnieuw te configureren."
+          "message": "Weet u zeker dat u de WiFi-instellingen wilt resetten? Het apparaat zal opnieuw opstarten en u moet opnieuw verbinding maken met het configuratienetwerk van het apparaat om WiFi opnieuw te configureren."
         },
         "device": {
           "title": "Apparaatreset bevestigen",
@@ -76,11 +76,11 @@
       "reset_modal": {
         "wifi": {
           "title": "WiFi wordt opnieuw ingesteld...",
-          "message": "Het apparaat stelt de WiFi-instellingen opnieuw in en zal opnieuw opstarten. U moet verbinding maken met het TiltBridge-instelnetwerk om de WiFi-toegang opnieuw te configureren."
+          "message": "Het apparaat stelt de WiFi-instellingen opnieuw in en zal opnieuw opstarten. U moet verbinding maken met het TiltBridge-configuratienetwerk om de WiFi-toegang opnieuw te configureren."
         },
         "device": {
           "title": "Apparaat wordt gereset...",
-          "message": "Het apparaat voert een fabrieksreset uit en zal opnieuw opstarten. Alle instellingen en gegevens zijn gewist. U moet het apparaat opnieuw configureren (inclusief WiFi-toegang) vanaf nul."
+          "message": "Het apparaat voert een fabrieksreset uit en zal opnieuw opstarten. Alle instellingen en gegevens zijn gewist. U moet het apparaat vanaf nul opnieuw configureren (inclusief WiFi-toegang)."
         }
       }
     }
@@ -279,8 +279,8 @@
   },
   "help_page": {
     "header": "TiltBridge Ondersteuning",
-    "contact_text": "Voor vragen, opmerkingen en bugmeldingen, neem contact op met {lf_on_reddit} op Reddit, {thorrak_on_hbt} op de HomeBrewTalk forums, open een issue op {github}, of neem contact op via een van de links in deze {blog_post}.",
-    "blog_post": "blogbericht",
+    "contact_text": "Voor vragen, opmerkingen en het melden van bugs kunt u contact opnemen met {lf_on_reddit} op Reddit, met {thorrak_on_hbt} op het HomeBrewTalk-forum, een issue openen op {github}, of gebruikmaken van een van de links in deze {blog_post}.",
+    "blog_post": "blogpost",
     "tiltbridge_docs_intro": "Documentatie en ondersteuning voor TiltBridge zijn te vinden via de volgende links:",
     "tiltbridge_link": "Bezoek de {tb_homepage_link}",
     "tiltbridge_homepage": "TiltBridge-startpagina",
