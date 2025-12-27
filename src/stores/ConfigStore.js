@@ -269,9 +269,8 @@ export const useConfigStore = defineStore("ConfigStore", () => {
                 smoothFactor: smoothFactor,
                 invertTFT: invertTFT,
             });
-            if (response && response.message) {
-                // TODO - Check response.message
-                await getConfig();  // TODO - Decide if I want to await this here
+            if (response && response.status && response.status === "ok") {
+                await getConfig();
                 configUpdateError.value = false;
             } else {
                 // await clearConfig();
