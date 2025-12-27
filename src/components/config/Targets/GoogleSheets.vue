@@ -72,7 +72,7 @@
               <template #FieldDescription>{{ $t('cloud_config.google_sheets.color_sheet_tilt_name_desc', { color: $t('sitewide.tilt_colors.pink')}) }}</template>
             </TextField>
 
-            <FormErrorMsg :form_error_message="form_error_message" v-if="form_error_message.length > 0" />
+            <FormErrorMsg :form-error-message="form_error_message" v-if="form_error_message.length > 0" />
 
           </div>
 

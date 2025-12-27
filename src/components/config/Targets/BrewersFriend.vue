@@ -29,7 +29,7 @@
               <template #FieldDescription>{{ $t('cloud_config.brewers_friend.api_key_desc') }}</template>
             </TextField>
 
-            <FormErrorMsg :form_error_message="form_error_message" v-if="form_error_message.length > 0" />
+            <FormErrorMsg :form-error-message="form_error_message" v-if="form_error_message.length > 0" />
           </div>
 
           <!-- Card Footer -->

@@ -32,7 +32,7 @@
               </TextField>
             </div>
 
-            <FormErrorMsg :form_error_message="formErrorMessage" v-if="formErrorMessage.length > 0" />
+            <FormErrorMsg :form-error-message="formErrorMessage" v-if="formErrorMessage.length > 0" />
           </div>
 
           <div class="bg-white px-4 py-5 border-t border-gray-200 sm:px-6 sm:flex sm:flex-row-reverse">

@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-md bg-red-50 p-4" v-if="form_error_message">
+  <div class="rounded-md bg-red-50 p-4" v-if="formErrorMessage">
     <div class="flex">
       <div class="flex-shrink-0">
         <NoSymbolIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
@@ -10,7 +10,7 @@
         </h3>
         <div class="mt-2 text-sm text-red-700">
           <p>
-            {{ form_error_message }}
+            {{ formErrorMessage }}
           </p>
         </div>
       </div>
@@ -18,23 +18,13 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { NoSymbolIcon } from "@heroicons/vue/20/solid";
 
-export default {
-  name: "FormErrorMsg",
-  props: {
-    form_error_message: {
-      type: String,
-      required: true
-    }
-  },
-  components: {
-    NoSymbolIcon
+defineProps({
+  formErrorMessage: {
+    type: String,
+    required: true
   }
-}
+});
 </script>
-
-<style scoped>
-
-</style>
