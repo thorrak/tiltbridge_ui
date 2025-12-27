@@ -48,6 +48,41 @@
     "version": {
       "loading_version": "Carregando informações de versão/construção...",
       "error_loading_version": "Erro ao carregar informações de versão/construção"
+    },
+    "reset_actions": {
+      "header": "Ações de Reinicialização do Dispositivo",
+      "description": "Essas ações irão redefinir partes da configuração do seu TiltBridge. Use com cautela.",
+      "reset_wifi": {
+        "title": "Redefinir configurações de Wi-Fi",
+        "description": "Limpar as credenciais de Wi-Fi e voltar ao modo de configuração. O dispositivo será reiniciado e criará seu próprio ponto de acesso Wi-Fi.",
+        "button": "Redefinir Wi-Fi"
+      },
+      "reset_device": {
+        "title": "Redefinir Dispositivo",
+        "description": "Realizar uma restauração de fábrica completa. Todas as configurações (incluindo as de Wi-Fi) e os dados de calibração serão perdidos.",
+        "button": "Redefinir Dispositivo"
+      },
+      "confirm_modal": {
+        "wifi": {
+          "title": "Confirmar Redefinição do Wi-Fi",
+          "message": "Tem certeza de que deseja redefinir as configurações de Wi‑Fi? O dispositivo será reiniciado e você precisará reconectar-se à rede de configuração dele para reconfigurar o Wi‑Fi."
+        },
+        "device": {
+          "title": "Confirmar Redefinição do Dispositivo",
+          "message": "Tem certeza de que deseja realizar uma restauração de fábrica? Isso apagará TODAS as configurações, os dados de calibração e a configuração. Esta ação não pode ser desfeita."
+        },
+        "confirm_button": "Sim, Redefinir"
+      },
+      "reset_modal": {
+        "wifi": {
+          "title": "Redefinindo Wi‑Fi...",
+          "message": "O dispositivo está redefinindo as configurações de Wi‑Fi e será reiniciado. Você precisará conectar-se à rede de configuração do TiltBridge para reconfigurar o acesso Wi‑Fi."
+        },
+        "device": {
+          "title": "Redefinindo o Dispositivo...",
+          "message": "O dispositivo está realizando uma restauração de fábrica e será reiniciado. Todas as configurações e dados foram apagados. Você precisará reconfigurar o dispositivo (incluindo o acesso Wi‑Fi) do zero."
+        }
+      }
     }
   },
   "device_config": {
@@ -55,9 +90,9 @@
     "general_settings_header": "Configurações Gerais do TiltBridge",
     "config_failed_error": "Falha ao carregar a configuração do TiltBridge. Tente atualizar a página ou verifique a conexão do seu TiltBridge com a rede.",
     "mDNS_id_name": "ID mDNS",
-    "mDNS_id_desc": "Nome do host (o xxxx em http://xxxx.local/). Deve ter de 8 a 31 caracteres.",
-    "tz_offset_name": "Deslocamento de Fuso Horário",
-    "tz_offset_desc": "Deslocamento de fuso horário em relação ao GMT (em horas). Usado para Google Sheets.",
+    "mDNS_id_desc": "Nome do host (o xxxx em http://xxxx.local/). Deve ter de 1 a 31 caracteres.",
+    "tz_offset_name": "Deslocamento do Fuso Horário",
+    "tz_offset_desc": "Deslocamento do fuso horário em relação ao GMT (em horas). Usado para o Google Sheets.",
     "temp_unit_name": "Unidades de Temperatura Padrão",
     "temp_unit_desc": "Unidades de temperatura padrão a serem exibidas",
     "smooth_factor_name": "Média de Gravidade Específica",
@@ -66,8 +101,8 @@
     "invert_tft_name": "Inverter Exibição TFT",
     "invert_tft_desc": " - Use se a tela estiver de cabeça para baixo",
     "errors": {
-      "mdns_invalid_chars": "O ID mDNS pode consistir apenas nas letras a-z, um hífen ou números, e não deve começar com um hífen",
-      "mdns_invalid_length": "O ID mDNS deve ter entre 8 e 31 caracteres",
+      "mdns_invalid_chars": "O ID mDNS só pode conter as letras a-z, hífens ou números, e não deve começar nem terminar com um hífen",
+      "mdns_invalid_length": "O ID mDNS deve ter entre 1 e 31 caracteres",
       "invalid_smoothing_factor": "O fator de suavização da gravidade específica deve estar entre 0 e 99",
       "invalid_tz_offset": "O deslocamento de fuso horário deve estar entre -12 e 14"
     },
@@ -75,7 +110,7 @@
       "success_header": "Atualização Bem-Sucedida",
       "success_message": "TiltBridge atualizado com sucesso",
       "fail_header": "Atualização Falhou",
-      "fail_message": "Não foi possível conectar ao TiltBridge ou a atualização foi rejeitada. Por favor, verifique novamente as informações fornecidas e tente novamente."
+      "fail_message": "Não foi possível conectar ao TiltBridge ou a atualização foi rejeitada. Por favor, verifique as informações fornecidas e tente novamente."
     }
   },
   "cloud_config": {
@@ -151,7 +186,8 @@
       "about_text": "Essas configurações controlam como o TiltBridge se comunica com o Brewfather. Com uma conta premium, o Brewfather suporta registro a partir de sensores de gravidade, como o Tilt Hydrometer. Para encontrar sua chave API, faça login na sua conta do Brewfather e vá para Configurações > Stream Personalizado. Sua chave de Stream será uma sequência de letras e números (não uma URL).",
       "api_key": "Chave de Stream",
       "api_key_desc": "Chave de stream das configurações da sua conta do Brewfather",
-      "error_missing_api_key": "A chave de stream não pode estar vazia"
+      "error_missing_api_key": "A chave de stream não pode estar vazia",
+      "error_invalid_stream_key": "A chave de stream é uma sequência de letras e números - não uma URL. Por favor, verifique a chave e tente novamente."
     },
     "grainfather": {
       "header": "Configurar Grainfather",
@@ -207,6 +243,27 @@
       "generic_target_url_desc": "A URL para a qual enviar uma carga contendo dados JSON cobrindo seus Tilts",
       "push_frequency": "@:cloud_config.mqtt.mqtt_push_every",
       "push_frequency_desc": "@:cloud_config.mqtt.mqtt_push_every_desc"
+    },
+    "influxdb": {
+      "header": "Configurar InfluxDB",
+      "about_header": "Sobre a Integração com InfluxDB",
+      "about_text": "Essas configurações controlam como o TiltBridge envia dados para o InfluxDB v2. Você precisará de uma instância do InfluxDB v2 e de um token de API com permissões de escrita para o bucket especificado. Para criar um token, faça login na sua instância do InfluxDB e vá para Data > API Tokens.",
+      "url": "URL do InfluxDB",
+      "url_desc": "URL completa do seu servidor InfluxDB v2 (por exemplo, https://us-west-2-1.aws.cloud2.influxdata.com)",
+      "token": "Token da API",
+      "token_desc": "Token da API do InfluxDB v2 com permissão de escrita para o bucket especificado",
+      "organization": "Organização",
+      "organization_desc": "Nome ou ID da organização do InfluxDB",
+      "bucket": "Bucket",
+      "bucket_desc": "Nome do bucket do InfluxDB onde os dados do Tilt serão armazenados",
+      "push_frequency": "Frequência de Envio (segundos)",
+      "push_frequency_desc": "Com que frequência enviar dados para o InfluxDB (recomendado: 900 segundos / 15 minutos)",
+      "error_missing_url": "A URL do InfluxDB é obrigatória",
+      "error_missing_token": "O token da API é obrigatório",
+      "error_missing_org": "A organização é obrigatória",
+      "error_missing_bucket": "O bucket é obrigatório",
+      "error_invalid_url": "Por favor, insira uma URL válida começando com http:// ou https://",
+      "error_invalid_push_frequency": "A frequência de envio deve estar entre 60 e 86400 segundos (1 minuto a 24 horas)"
     }
   },
   "tilt_list": {
@@ -222,17 +279,63 @@
   },
   "help_page": {
     "header": "Suporte do TiltBridge",
-    "contact_text": "Para perguntas, preocupações e relatos de bugs, entre em contato com {lf_on_reddit} no Reddit, {thorrak_on_hbt} nos fóruns do HomeBrewTalk, abra um problema em {github}, ou entre em contato através de um dos links neste {blog_post}.",
+    "contact_text": "Para perguntas, dúvidas e relatos de bugs, entre em contato com {lf_on_reddit} no Reddit, {thorrak_on_hbt} nos fóruns do HomeBrewTalk, abra uma issue no {github}, ou entre em contato através de um dos links neste {blog_post}.",
     "blog_post": "post do blog",
-    "tiltbridge_docs_intro": "A documentação e suporte do TiltBridge podem ser encontrados nos seguintes links:",
+    "tiltbridge_docs_intro": "A documentação e o suporte do TiltBridge podem ser encontrados nos links a seguir:",
     "tiltbridge_link": "Visite a {tb_homepage_link}",
-    "tiltbridge_homepage": "Página Inicial do TiltBridge",
+    "tiltbridge_homepage": "Página inicial do TiltBridge",
     "documentation_link": "Leia a {tb_docs_link}",
     "documentation": "Documentação",
     "github_link": "Visite o projeto em {github_link}",
-    "report_issue_link": "Relate um {issue_link}",
+    "report_issue_link": "Reporte um {issue_link}",
     "issue_bug_feature_request": "problema, bug ou solicitação de recurso",
     "homebrewtalk_link": "Obtenha suporte ou converse com outros usuários no {hbt_link}",
     "homebrewtalk_thread": "tópico do HomeBrewTalk"
+  },
+  "calibration": {
+    "header": "Calibrando a inclinação {color}",
+    "chart_section_title": "Gráfico de Calibração",
+    "current_values_title": "Valores Atuais",
+    "raw_tilt_gravity": "Gravidade bruta da inclinação",
+    "current_calibration_function": "Função de Calibração Atual",
+    "current_calibrated_gravity": "Gravidade Calibrada Atual",
+    "polynomial_degree": "Grau do Polinômio",
+    "new_calibration_function": "Nova Função de Calibração",
+    "new_calibrated_gravity": "Nova Gravidade Calibrada",
+    "save_equation": "Salvar Equação",
+    "clear_equation": "Limpar Equação",
+    "calibration_points_title": "Pontos de Calibração",
+    "add_calibration_point": "Adicionar Ponto de Calibração",
+    "table_raw_gravity": "Gravidade bruta da inclinação",
+    "table_actual_gravity": "Gravidade Real",
+    "table_current_calibrated": "Calibrado Atual",
+    "table_new_calibrated": "Novo Calibrado",
+    "table_actions": "Ações",
+    "delete": "Excluir",
+    "no_calibration_points": "Nenhum ponto de calibração adicionado ainda",
+    "degree_constant_offset": "Deslocamento constante",
+    "degree_1st_polynomial": "Polinômio de 1º Grau",
+    "degree_2nd_polynomial": "Polinômio de 2º Grau",
+    "degree_3rd_polynomial": "Polinômio de 3º Grau",
+    "function_no_points": "Sem pontos de calibração",
+    "function_calculation_error": "Erro de cálculo",
+    "function_no_calibration": "Nenhuma calibração aplicada",
+    "chart_raw_gravity_axis": "Gravidade bruta",
+    "chart_actual_gravity_axis": "Gravidade real",
+    "chart_calibration_points": "Pontos de calibração",
+    "chart_current_calibration": "Calibração atual",
+    "chart_new_calibration": "Nova calibração",
+    "chart_placeholder_message": "O gráfico será exibido à medida que os pontos de calibração forem adicionados",
+    "manual_coefficient_modal": {
+      "title": "Entrada manual de coeficientes",
+      "description": "Insira os coeficientes de calibração diretamente. A fórmula será aplicada como: x0 + x1×(gravidade bruta) + x2×(gravidade bruta)²",
+      "x0_label": "x₀ (Constante)",
+      "x1_label": "x₁ (Linear)",
+      "x2_label": "x₂ (Quadrático)",
+      "preview_title": "Pré-visualização",
+      "raw_gravity": "Gravidade bruta",
+      "formula": "Fórmula",
+      "calibrated_gravity": "Gravidade Calibrada"
+    }
   }
 }
