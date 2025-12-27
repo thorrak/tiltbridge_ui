@@ -93,7 +93,7 @@ const updateSuccessful = ref(false);
 const alertOpen = ref(false);
 const configStore = useConfigStore();
 
-let form_error_message = "";
+let form_error_message = ref("");
 
 let mdnsID = configStore.mdnsID;
 let TZoffset = configStore.TZoffset;
@@ -113,26 +113,26 @@ function updateCachedSettings() {
 
 async function submitForm() {
   // Validate the information in the form
-  form_error_message = "";
-  let mdns_re = new RegExp("^[a-zA-Z0-9]+[-a-zA-Z0-9]*$");
+  form_error_message.value = "";
+  let mdns_re = new RegExp("^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$");
 
   if(!mdnsID.match(mdns_re)) {
-    form_error_message = i18n.global.t('device_config.errors.mdns_invalid_chars');
+    form_error_message.value = i18n.global.t('device_config.errors.mdns_invalid_chars');
     return;
   }
 
-  if(mdnsID.length > 31 || mdnsID.length < 8) {
-    form_error_message = i18n.global.t('device_config.errors.mdns_invalid_length');
+  if(mdnsID.length > 31 || mdnsID.length < 1) {
+    form_error_message.value = i18n.global.t('device_config.errors.mdns_invalid_length');
     return;
   }
 
   if(parseInt(smoothFactor) > 99 || parseInt(smoothFactor) < 0) {
-    form_error_message = i18n.global.t('device_config.errors.invalid_smoothing_factor');
+    form_error_message.value = i18n.global.t('device_config.errors.invalid_smoothing_factor');
     return;
   }
 
   if(parseInt(TZoffset) > 14 || parseInt(TZoffset) < -12) {
-    form_error_message = i18n.global.t('device_config.errors.invalid_tz_offset');
+    form_error_message.value = i18n.global.t('device_config.errors.invalid_tz_offset');
     return;
   }
 

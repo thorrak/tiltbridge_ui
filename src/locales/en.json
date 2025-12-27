@@ -90,7 +90,7 @@
     "general_settings_header": "TiltBridge General Settings",
     "config_failed_error": "Configuration failed to load from TiltBridge. Try refreshing the page, or check your TiltBridge's connection to the network.",
     "mDNS_id_name": "mDNS ID",
-    "mDNS_id_desc": "Host name (the xxxx in http://xxxx.local/). Must be 8-31 characters.",
+    "mDNS_id_desc": "Host name (the xxxx in http://xxxx.local/). Must be 1-31 characters.",
     "tz_offset_name": "Time Zone Offset",
     "tz_offset_desc": "Time Zone Offset from GMT (in hours). Used for Google Sheets.",
     "temp_unit_name": "Default Temperature Units",
@@ -101,8 +101,8 @@
     "invert_tft_name": "Invert TFT Display",
     "invert_tft_desc": " - Use if the screen is upside-down",
     "errors": {
-      "mdns_invalid_chars": "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start with a hyphen",
-      "mdns_invalid_length": "mDNS ID must be between 8 and 31 characters",
+      "mdns_invalid_chars": "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start or end with a hyphen",
+      "mdns_invalid_length": "mDNS ID must be between 1 and 31 characters",
       "invalid_smoothing_factor": "Specific gravity smoothing factor must be between 0 and 99",
       "invalid_tz_offset": "Timezone offset must be between -12 and 14"
     },

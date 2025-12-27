@@ -110,7 +110,7 @@ const updateSuccessful = ref(false);
 const alertOpen = ref(false);
 const configStore = useConfigStore();
 
-let form_error_message = "";
+let form_error_message = ref("");
 
 
 const gs_url = ref(configStore.scriptsURL);
@@ -139,7 +139,7 @@ function updateCachedSettings() {
 
 
 async function submitForm() {
-  form_error_message = "";
+  form_error_message.value = "";
 
   // TODO - Zero out sheet values if url/email are unset
 
