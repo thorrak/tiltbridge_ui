@@ -9,13 +9,13 @@ const routes = [
         component: TiltList,
     },
     {
-        path: "/config",
+        path: "/config/",
         name: "ConfigView",
         component: () => import('@/components/ConfigPage.vue'),
         redirect: {"name": "TiltBridgeConfig"},
         children: [
             {
-                path: 'tiltbridge',
+                path: 'tiltbridge/',
                 component: () => import('@/components/config/TiltBridge/DeviceConfig.vue'),
                 name: 'TiltBridgeConfig',
             },
@@ -29,80 +29,80 @@ const routes = [
         ],
     },
     {
-        path: "/target",
+        path: "/target/",
         name: "CloudConfigView",
         component: () => import('@/components/CloudConfigPage.vue'),
         redirect: {"name": "FermentrackConfig"},
         children: [
             {
-                path: 'legacy_fermentrack',
+                path: 'legacy_fermentrack/',
                 component: () => import('@/components/config/Targets/Fermentrack.vue'),
                 name: 'LegacyFermentrackConfig',
             },
             {
-                path: 'fermentrack',
+                path: 'fermentrack/',
                 component: () => import('@/components/config/Targets/Fermentrack2.vue'),
                 name: 'FermentrackConfig',
             },
             {
-                path: 'gsheets',
+                path: 'gsheets/',
                 component: () => import('@/components/config/Targets/GoogleSheets.vue'),
                 name: 'GoogleSheetsConfig',
             },
             {
-                path: 'brewersfriend',
+                path: 'brewersfriend/',
                 component: () => import('@/components/config/Targets/BrewersFriend.vue'),
                 name: 'BrewersFriendConfig',
             },
             {
-                path: 'brewfather',
+                path: 'brewfather/',
                 component: () => import('@/components/config/Targets/Brewfather.vue'),
                 name: 'BrewfatherConfig',
             },
             {
-                path: 'grainfather',
+                path: 'grainfather/',
                 component: () => import('@/components/config/Targets/Grainfather.vue'),
                 name: 'GrainfatherConfig',
             },
             {
-                path: 'brewstatus',
+                path: 'brewstatus/',
                 component: () => import('@/components/config/Targets/Brewstatus.vue'),
                 name: 'BrewstatusConfig',
             },
             {
-                path: 'taplistio',
+                path: 'taplistio/',
                 component: () => import('@/components/config/Targets/TaplistIO.vue'),
                 name: 'TaplistIOConfig',
             },
             {
-                path: 'mqtt',
+                path: 'mqtt/',
                 component: () => import('@/components/config/Targets/MQTT.vue'),
                 name: 'MQTTConfig',
             },
             {
-                path: 'influxdb',
+                path: 'influxdb/',
                 component: () => import('@/components/config/Targets/InfluxDB.vue'),
                 name: 'InfluxDBConfig',
             },
             {
-                path: 'generic',
+                path: 'generic/',
                 component: () => import('@/components/config/Targets/GenericTarget.vue'),
                 name: 'GenericTargetConfig',
             },
         ],
     },
     {
-        path: "/help",
+        path: "/help/",
         name: "Help",
         component: () => import('@/components/about/HelpPage.vue'),
     },
     {
-        path: "/about",
+        path: "/about/",
         name: "About",
         component: () => import('@/components/about/About.vue'),
     },
     {
-        path: "/calibrate/:color",
+        path: "/calibrate/:color/",
         name: "Calibration",
         component: () => import('@/components/calibration/CalibrationPanel.vue'),
         props: true
