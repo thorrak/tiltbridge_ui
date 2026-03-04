@@ -259,6 +259,21 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         configUpdateError.value = false;
     }
 
+    async function updateTargetConfig(payload, onSuccess) {
+        try {
+            const remote_api = mande("/api/settings/targets/", genCSRFOptions());
+            const response = await remote_api.put(payload);
+            if (response && response.status === "ok") {
+                onSuccess();
+                configUpdateError.value = false;
+            } else {
+                configUpdateError.value = true;
+            }
+        } catch (error) {
+            configUpdateError.value = true;
+        }
+    }
+
     async function updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT) {
         try {
             const remote_api = mande("/api/settings/controller/", genCSRFOptions());
@@ -284,287 +299,171 @@ export const useConfigStore = defineStore("ConfigStore", () => {
 
 
     async function updateLegacyFermentrackConfig(ft_url, pushFrequency) {
-        try {
-            const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
-            const response = await remote_api.put({
-                legacyFermentrackURL: ft_url,
-                legacyFermentrackPushEvery: pushFrequency
-            });
-            if (response && response.message) {
-                // TODO - Check response.message
-                fermentrackUrl.value = ft_url;
-                fermentrackPushFrequency.value = pushFrequency;
-                configUpdateError.value = false;
-            } else {
-                // await clearConfig();
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            await clearConfig();
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            legacyFermentrackURL: ft_url,
+            legacyFermentrackPushEvery: pushFrequency
+        }, () => {
+            fermentrackUrl.value = ft_url;
+            fermentrackPushFrequency.value = pushFrequency;
+        });
     }
 
     async function updateFermentrackConfig(ftHostname, ftPort, ftUser) {
-        try {
-            // Fermentrack and Fermentrack 2 are the same endpoint
-            const remote_api = mande("/api/settings/fermentrack/", genCSRFOptions());
-            const response = await remote_api.put({
-                fermentrackHostname: ftHostname,
-                fermentrackPort: ftPort,
-                fermentrackUsername: ftUser
-            });
-            if (response && response.status) {
-                // TODO - Check response.status
-                fermentrackHostname.value = ftHostname;
-                fermentrackPort.value = ftPort;
-                fermentrackUser.value = ftUser;
-                fermentrackRegistrationError.value = 8; // "Not attempted registration"
-                configUpdateError.value = false;
-            } else {
-                // await clearConfig();
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            await clearConfig();
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            fermentrackHostname: ftHostname,
+            fermentrackPort: ftPort,
+            fermentrackUsername: ftUser
+        }, () => {
+            fermentrackHostname.value = ftHostname;
+            fermentrackPort.value = ftPort;
+            fermentrackUser.value = ftUser;
+            fermentrackRegistrationError.value = 8; // "Not attempted registration"
+        });
     }
 
 
     async function updateGoogleSheetsConfig(gs_url, gs_email, red_name, green_name, black_name, purple_name, orange_name, blue_name, yellow_name, pink_name) {
-        try {
-            const remote_api = mande("/api/settings/googlesheets/", genCSRFOptions());
-            const response = await remote_api.put({
-                scriptsURL: gs_url,
-                scriptsEmail: gs_email,
-                sheetName_red: red_name,
-                sheetName_green: green_name,
-                sheetName_black: black_name,
-                sheetName_purple: purple_name,
-                sheetName_orange: orange_name,
-                sheetName_blue: blue_name,
-                sheetName_yellow: yellow_name,
-                sheetName_pink: pink_name,
-            });
-            if (response && response.message) {
-                // TODO - Check response.message
-                scriptsURL.value = gs_url;
-                scriptsEmail.value = gs_email;
-                scriptsRedSheetName.value = red_name;
-                scriptsGreenSheetName.value = green_name;
-                scriptsBlackSheetName.value = black_name;
-                scriptsPurpleSheetName.value = purple_name;
-                scriptsOrangeSheetName.value = orange_name;
-                scriptsBlueSheetName.value = blue_name;
-                scriptsYellowSheetName.value = yellow_name;
-                scriptsPinkSheetName.value = pink_name;
-
-                configUpdateError.value = false;
-            } else {
-                // await clearConfig();
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            await clearConfig();
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            scriptsURL: gs_url,
+            scriptsEmail: gs_email,
+            sheetName_red: red_name,
+            sheetName_green: green_name,
+            sheetName_black: black_name,
+            sheetName_purple: purple_name,
+            sheetName_orange: orange_name,
+            sheetName_blue: blue_name,
+            sheetName_yellow: yellow_name,
+            sheetName_pink: pink_name,
+        }, () => {
+            scriptsURL.value = gs_url;
+            scriptsEmail.value = gs_email;
+            scriptsRedSheetName.value = red_name;
+            scriptsGreenSheetName.value = green_name;
+            scriptsBlackSheetName.value = black_name;
+            scriptsPurpleSheetName.value = purple_name;
+            scriptsOrangeSheetName.value = orange_name;
+            scriptsBlueSheetName.value = blue_name;
+            scriptsYellowSheetName.value = yellow_name;
+            scriptsPinkSheetName.value = pink_name;
+        });
     }
 
     async function updateBrewersFriendConfig(brewersFriendApiKey) {
-        try {
-            const remote_api = mande("/api/settings/brewersfriend/", genCSRFOptions());
-            const response = await remote_api.put({
-                brewersFriendKey: brewersFriendApiKey,
-            });
-            if (response && response.message) {
-                brewersFriendKey.value = brewersFriendApiKey;
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            brewersFriendKey: brewersFriendApiKey,
+        }, () => {
+            brewersFriendKey.value = brewersFriendApiKey;
+        });
     }
 
     async function updateBrewfatherConfig(brewfather_key) {
-        try {
-            const remote_api = mande("/api/settings/brewfather/", genCSRFOptions());
-            const response = await remote_api.put({
-                brewfatherKey: brewfather_key,
-            });
-            if (response && response.message) {
-                brewfatherKey.value = brewfather_key;
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            brewfatherKey: brewfather_key,
+        }, () => {
+            brewfatherKey.value = brewfather_key;
+        });
     }
 
     async function updateGrainfatherUrls(grainfatherUrls) {
-        try {
-            const remote_api = mande('/api/settings/grainfather/', genCSRFOptions());
-            const response = await remote_api.put({
-                grainfatherURL_red: grainfatherUrls.Red,
-                grainfatherURL_green: grainfatherUrls.Green,
-                grainfatherURL_black: grainfatherUrls.Black,
-                grainfatherURL_purple: grainfatherUrls.Purple,
-                grainfatherURL_orange: grainfatherUrls.Orange,
-                grainfatherURL_blue: grainfatherUrls.Blue,
-                grainfatherURL_yellow: grainfatherUrls.Yellow,
-                grainfatherURL_pink: grainfatherUrls.Pink,
-            });
-            if (response && response.message) {
-                grainfatherRedURL.value = grainfatherUrls.Red;
-                grainfatherGreenURL.value = grainfatherUrls.Green;
-                grainfatherBlackURL.value = grainfatherUrls.Black;
-                grainfatherPurpleURL.value = grainfatherUrls.Purple;
-                grainfatherOrangeURL.value = grainfatherUrls.Orange;
-                grainfatherBlueURL.value = grainfatherUrls.Blue;
-                grainfatherYellowURL.value = grainfatherUrls.Yellow;
-                grainfatherPinkURL.value = grainfatherUrls.Pink;
-
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            grainfatherURL_red: grainfatherUrls.Red,
+            grainfatherURL_green: grainfatherUrls.Green,
+            grainfatherURL_black: grainfatherUrls.Black,
+            grainfatherURL_purple: grainfatherUrls.Purple,
+            grainfatherURL_orange: grainfatherUrls.Orange,
+            grainfatherURL_blue: grainfatherUrls.Blue,
+            grainfatherURL_yellow: grainfatherUrls.Yellow,
+            grainfatherURL_pink: grainfatherUrls.Pink,
+        }, () => {
+            grainfatherRedURL.value = grainfatherUrls.Red;
+            grainfatherGreenURL.value = grainfatherUrls.Green;
+            grainfatherBlackURL.value = grainfatherUrls.Black;
+            grainfatherPurpleURL.value = grainfatherUrls.Purple;
+            grainfatherOrangeURL.value = grainfatherUrls.Orange;
+            grainfatherBlueURL.value = grainfatherUrls.Blue;
+            grainfatherYellowURL.value = grainfatherUrls.Yellow;
+            grainfatherPinkURL.value = grainfatherUrls.Pink;
+        });
     }
 
     async function updateBrewstatusConfig(url, pushEvery) {
-        try {
-            const remote_api = mande('/api/settings/brewstatus/');
-            const response = await remote_api.put({
-                brewstatusURL: url,
-                brewstatusPushEvery: pushEvery,
-            });
-
-            if (response && response.message) {
-                brewstatusURL.value = url;
-                brewstatusPushEvery.value = pushEvery;
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            brewstatusURL: url,
+            brewstatusPushEvery: pushEvery,
+        }, () => {
+            brewstatusURL.value = url;
+            brewstatusPushEvery.value = pushEvery;
+        });
     }
 
     async function updateTaplistIoConfig(url, pushEvery) {
-        try {
-            const remote_api = mande('/api/settings/taplistio/');
-            const response = await remote_api.put({
-                taplistioURL: url,
-                taplistioPushEvery: pushEvery,
-            });
-
-            if (response && response.message) {
-                taplistioURL.value = url;
-                taplistioPushEvery.value = pushEvery;
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            taplistioURL: url,
+            taplistioPushEvery: pushEvery,
+        }, () => {
+            taplistioURL.value = url;
+            taplistioPushEvery.value = pushEvery;
+        });
     }
 
     async function updateMQTTConfig(host, port, username, password, topic, pushEvery) {
-        try {
-            const remote_api = mande('/api/settings/mqtt/', genCSRFOptions());
-            const response = await remote_api.put({
-                mqttBrokerHost: host,
-                mqttBrokerPort: port,
-                mqttUsername: username,
-                mqttPassword: password,
-                mqttTopic: topic,
-                mqttPushEvery: pushEvery,
-            });
-            if (response && response.message) {
-                mqttBrokerHost.value = host;
-                mqttBrokerPort.value = port;
-                mqttUsername.value = username;
-                mqttPassword.value = password;
-                mqttTopic.value = topic;
-                mqttPushEvery.value = pushEvery;
-
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            mqttBrokerHost: host,
+            mqttBrokerPort: port,
+            mqttUsername: username,
+            mqttPassword: password,
+            mqttTopic: topic,
+            mqttPushEvery: pushEvery,
+        }, () => {
+            mqttBrokerHost.value = host;
+            mqttBrokerPort.value = port;
+            mqttUsername.value = username;
+            mqttPassword.value = password;
+            mqttTopic.value = topic;
+            mqttPushEvery.value = pushEvery;
+        });
     }
 
     async function updateGenericTargetConfig(target_url) {
-        try {
-            const remote_api = mande("/api/settings/usertarget/", genCSRFOptions());
-            const response = await remote_api.put({
-                userTargetURL: target_url,
-            });
-            if (response && response.message) {
-                genericTargetURL.value = target_url;
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
-        } catch (error) {
-            configUpdateError.value = true;
-        }
+        await updateTargetConfig({
+            userTargetURL: target_url,
+        }, () => {
+            genericTargetURL.value = target_url;
+        });
     }
 
     async function updateInfluxDBConfig(url, token, org, bucket, pushEvery) {
+        await updateTargetConfig({
+            influxdbURL: url,
+            influxdbToken: token,
+            influxdbOrg: org,
+            influxdbBucket: bucket,
+            influxdbPushEvery: pushEvery,
+        }, () => {
+            influxdbURL.value = url;
+            influxdbToken.value = token;
+            influxdbOrg.value = org;
+            influxdbBucket.value = bucket;
+            influxdbPushEvery.value = pushEvery;
+        });
+    }
+
+    async function performAction(actionName) {
         try {
-            const remote_api = mande("/api/settings/influxdb/", genCSRFOptions());
-            const response = await remote_api.put({
-                influxdbURL: url,
-                influxdbToken: token,
-                influxdbOrg: org,
-                influxdbBucket: bucket,
-                influxdbPushEvery: pushEvery,
-            });
-            if (response && response.success) {
-                influxdbURL.value = url;
-                influxdbToken.value = token;
-                influxdbOrg.value = org;
-                influxdbBucket.value = bucket;
-                influxdbPushEvery.value = pushEvery;
-                configUpdateError.value = false;
-            } else {
-                configUpdateError.value = true;
-            }
+            const remote_api = mande("/api/actions/", genCSRFOptions());
+            const response = await remote_api.post({ action: actionName });
+            return response && response.status === "ok";
         } catch (error) {
-            configUpdateError.value = true;
+            return false;
         }
     }
 
     async function resetWifi() {
-        try {
-            const remote_api = mande("/api/actions/resetWifi/", genCSRFOptions());
-            const response = await remote_api.post({ ok: true });
-            return response && response.ok;
-        } catch (error) {
-            return false;
-        }
+        return performAction("resetWifi");
     }
 
     async function resetDevice() {
-        try {
-            const remote_api = mande("/api/actions/resetDevice/", genCSRFOptions());
-            const response = await remote_api.post({ ok: true });
-            return response && response.ok;
-        } catch (error) {
-            return false;
-        }
+        return performAction("resetDevice");
     }
 
     return {
