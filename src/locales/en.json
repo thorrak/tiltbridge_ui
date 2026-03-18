@@ -13,6 +13,9 @@
     "validation_error": "Validation Error",
     "celsius": "Celsius",
     "fahrenheit": "Fahrenheit",
+    "specific_gravity": "Specific Gravity",
+    "plato": "Plato",
+    "brix": "Brix",
     "translation_message": "This application is translated by users like you! If you see items that are not translated (or have suggestions for improvements!) please suggest improvements on GitHub.",
     "tab_container_sr_text": "Select a group of settings to edit",
     "sidebar_options": {
@@ -76,11 +79,19 @@
       "reset_modal": {
         "wifi": {
           "title": "Resetting WiFi...",
-          "message": "The device is resetting WiFi settings and will restart. You will need to connect to the TiltBridge setup network to reconfigure WiFi access."
+          "message": "The device is resetting WiFi settings and will restart. You will need to connect to the TiltBridge setup network to reconfigure WiFi access.",
+          "success_title": "WiFi Reset Sent",
+          "success_message": "The WiFi reset command was accepted. The device will restart shortly. You will need to connect to the TiltBridge setup network to reconfigure WiFi access.",
+          "failed_title": "WiFi Reset Failed",
+          "failed_message": "The WiFi reset command could not be sent. Please check your connection to the device and try again."
         },
         "device": {
           "title": "Resetting Device...",
-          "message": "The device is performing a factory reset and will restart. All settings and data have been erased. You will need to reconfigure the device (including WiFi access) from scratch."
+          "message": "The device is performing a factory reset and will restart. All settings and data have been erased. You will need to reconfigure the device (including WiFi access) from scratch.",
+          "success_title": "Device Reset Sent",
+          "success_message": "The factory reset command was accepted. The device will restart shortly. You will need to reconfigure the device (including WiFi access) from scratch.",
+          "failed_title": "Device Reset Failed",
+          "failed_message": "The factory reset command could not be sent. Please check your connection to the device and try again."
         }
       }
     }
@@ -95,6 +106,8 @@
     "tz_offset_desc": "Time Zone Offset from GMT (in hours). Used for Google Sheets.",
     "temp_unit_name": "Default Temperature Units",
     "temp_unit_desc": "Default temperature units to display",
+    "gravity_unit_name": "Gravity Units",
+    "gravity_unit_desc": "Units for displaying gravity readings",
     "smooth_factor_name": "Specific Gravity Averaging",
     "smooth_factor_desc": "Valid range is 0 to 99. Setting affects time constant of exponentially weighted moving average filter applied to specific gravity reading. In response to a step change, the filtered value should reach steady state after ~ 5 time constants. A setting of 0 gives no smoothing (filtering off) while higher values mean more smoothing.  A setting of 60 gives time constant of just over 5 seconds while 99 results in ~ 5 minutes.",
     "hardware_options_header": "Hardware Options",

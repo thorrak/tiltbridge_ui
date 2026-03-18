@@ -16,6 +16,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const TZoffset = ref(0);
     const tempUnit = ref("F");
     const smoothFactor = ref(0);
+    const gravityUnit = ref("SG");
     const applyCalibration = ref(false);
     const tempCorrect = ref(false);
 
@@ -104,6 +105,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             TZoffset.value = response.TZoffset;
             tempUnit.value = response.tempUnit;
             smoothFactor.value = response.smoothFactor;
+            gravityUnit.value = response.gravityUnit || "SG";
             applyCalibration.value = response.applyCalibration;
             tempCorrect.value = response.tempCorrect;
             fermentrackUrl.value = response.legacyFermentrackURL;
@@ -196,6 +198,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         TZoffset.value = 0;
         tempUnit.value = "F";
         smoothFactor.value = 0;
+        gravityUnit.value = "SG";
         applyCalibration.value = false;
         tempCorrect.value = false;
         brewstatusURL.value = "";
@@ -274,7 +277,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
-    async function updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT) {
+    async function updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT, gravityUnit) {
         try {
             const remote_api = mande("/api/settings/controller/", genCSRFOptions());
             const response = await remote_api.put({
@@ -283,6 +286,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
                 tempUnit: tempUnit,
                 smoothFactor: smoothFactor,
                 invertTFT: invertTFT,
+                gravityUnit: gravityUnit,
             });
             if (response && response.status && response.status === "ok") {
                 await getConfig();
@@ -478,6 +482,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         TZoffset,
         tempUnit,
         smoothFactor,
+        gravityUnit,
         applyCalibration,
         tempCorrect,
         brewstatusURL,

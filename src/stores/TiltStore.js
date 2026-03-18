@@ -7,6 +7,7 @@ import { TiltDevice, TiltColors } from "@/mixins/TiltDevice";
 export const useTiltStore = defineStore("TiltStore", () => {
 
     const tilts = ref([]);
+    const gravityUnit = ref("SG");
     const loaded = ref(false);
     const tiltsError = ref(false);
     const tiltUpdateError = ref(false);
@@ -16,10 +17,13 @@ export const useTiltStore = defineStore("TiltStore", () => {
         const response = await remote_api.get();
         if (response) {
             await clearTilts();
-            // We got a response. Parse the list of Tilts
-            // Response is a JSON Array. Loop over it.
-            for (const tiltKey in response) {
-                const tiltData = response[tiltKey];
+
+            // Response is { tilts: [...], gravityUnit: "SG"|"P"|"B" }
+            const tiltArray = response.tilts || response;
+            gravityUnit.value = response.gravityUnit || "SG";
+
+            for (const tiltKey in tiltArray) {
+                const tiltData = tiltArray[tiltKey];
                 // TODO - Fix this if I implement temperature calibration
                 const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.tempUnit, tiltData.calibratedGravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link, 0, tiltData.latestGravity);
                 tilts.value.push(tilt);
@@ -36,6 +40,7 @@ export const useTiltStore = defineStore("TiltStore", () => {
 
     async function clearTilts() {
         tilts.value = [];
+        gravityUnit.value = "SG";
         loaded.value = false;
         tiltUpdateError.value = false;
     }
@@ -61,6 +66,7 @@ export const useTiltStore = defineStore("TiltStore", () => {
 
     return {
         tilts,
+        gravityUnit,
         loaded,
         tiltsError,
         tiltUpdateError,
