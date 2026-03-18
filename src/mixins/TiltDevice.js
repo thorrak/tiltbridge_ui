@@ -62,4 +62,17 @@ export class TiltDevice {
         // Return a style string that can be used to set the background color of an element
         return "background-color: #" + this.colorHTML + ";";
     }
+
+    formattedGravity(gravityUnit) {
+        const sg = parseFloat(this.gravity);
+        if (gravityUnit === "P") {
+            const plato = -616.868 + 1111.14 * sg - 630.272 * sg * sg + 135.997 * sg * sg * sg;
+            return plato.toFixed(1) + " \u00B0P";
+        }
+        if (gravityUnit === "B") {
+            const brix = (261.1 * (sg - 1.0) + 1.0) / 1.04;
+            return brix.toFixed(1) + " \u00B0Bx";
+        }
+        return sg.toFixed(4);
+    }
 }

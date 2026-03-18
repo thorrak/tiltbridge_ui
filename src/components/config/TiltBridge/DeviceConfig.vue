@@ -37,6 +37,18 @@
             </SelectField>
 
 
+            <!-- Gravity Unit Selector -->
+            <SelectField v-model="gravityUnit">
+              <template #FieldName>{{ $t('device_config.gravity_unit_name') }}</template>
+              <template #FieldDescription>{{ $t('device_config.gravity_unit_desc') }}</template>
+              <template #FieldOptions>
+                <option value="SG">{{ $t('sitewide.specific_gravity') }}</option>
+                <option value="P">{{ $t('sitewide.plato') }}</option>
+                <!-- <option value="B">{{ $t('sitewide.brix') }}</option> -->
+              </template>
+            </SelectField>
+
+
             <!-- Specific Gravity Averaging Field -->
             <TextField v-model="smoothFactor" placeholder="60">
               <template #FieldName>{{ $t('device_config.smooth_factor_name') }}</template>
@@ -98,6 +110,7 @@ let form_error_message = ref("");
 let mdnsID = configStore.mdnsID;
 let TZoffset = configStore.TZoffset;
 let tempUnit = configStore.tempUnit;
+let gravityUnit = configStore.gravityUnit;
 let smoothFactor = configStore.smoothFactor;
 let invertTFT = configStore.invertTFT;
 
@@ -106,6 +119,7 @@ function updateCachedSettings() {
   mdnsID = configStore.mdnsID;
   TZoffset = configStore.TZoffset;
   tempUnit = configStore.tempUnit;
+  gravityUnit = configStore.gravityUnit;
   smoothFactor = configStore.smoothFactor;
   invertTFT = configStore.invertTFT;
 }
@@ -144,6 +158,7 @@ async function submitForm() {
     tempUnit,
     parseInt(smoothFactor),
     invertTFT,
+    gravityUnit,
   ).then(() => {
     updateCachedSettings();
     loader.hide();

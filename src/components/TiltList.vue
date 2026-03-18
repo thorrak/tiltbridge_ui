@@ -57,7 +57,7 @@
               <span v-if="tilt.sends_battery">{{ $t('tilt_list.battery_age_week_count', { weeks: tilt.weeks_on_battery}) }}</span>
               <span v-else>--</span>
             </td>
-            <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.gravity }}</td>
+            <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.formattedGravity(tiltStore.gravityUnit) }}</td>
             <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.temp }}&deg; {{ tilt.temp_unit }}</td>
 
   <!--          <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">-->
