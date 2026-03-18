@@ -275,7 +275,9 @@
     "gravity_column": "Soortelijk gewicht",
     "temperature_column": "Temperatuur",
     "battery_age_week_count": "{weeks} weken",
-    "no_tilts_detected": "Er zijn geen Tilts gedetecteerd"
+    "no_tilts_detected": "Er zijn geen Tilts gedetecteerd",
+    "last_received_column": "Laatst ontvangen",
+    "last_received_ago": "{seconds}s geleden"
   },
   "help_page": {
     "header": "TiltBridge Ondersteuning",

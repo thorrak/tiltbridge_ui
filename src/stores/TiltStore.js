@@ -25,7 +25,7 @@ export const useTiltStore = defineStore("TiltStore", () => {
             for (const tiltKey in tiltArray) {
                 const tiltData = tiltArray[tiltKey];
                 // TODO - Fix this if I implement temperature calibration
-                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.tempUnit, tiltData.calibratedGravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link, 0, tiltData.latestGravity);
+                const tilt = new TiltDevice(tiltData.color, tiltData.temp, tiltData.tempUnit, tiltData.calibratedGravity, tiltData.weeks_on_battery, tiltData.sends_battery, tiltData.high_resolution, tiltData.fw_version, tiltData.rssi, tiltData.gsheets_name, tiltData.gsheets_link, 0, tiltData.latestGravity, tiltData.lastReceived);
                 tilts.value.push(tilt);
             }
 

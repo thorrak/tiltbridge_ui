@@ -289,7 +289,9 @@
     "gravity_column": "Gravity",
     "temperature_column": "Temperature",
     "battery_age_week_count":"{weeks} weeks",
-    "no_tilts_detected": "No Tilts have been detected"
+    "no_tilts_detected": "No Tilts have been detected",
+    "last_received_column": "Last Received",
+    "last_received_ago": "{seconds}s ago"
   },
   "help_page": {
     "header": "TiltBridge Support",

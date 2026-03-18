@@ -36,8 +36,9 @@ export class TiltDevice {
     rssi;
     gsheets_name = "";
     gsheets_link = "";
+    lastReceived = 0;
 
-    constructor(color, temp, temp_unit, gravity, weeks_on_battery, sends_battery, high_resolution, fw_version, rssi, gsheets_name, gsheets_link, raw_temp, raw_gravity) {
+    constructor(color, temp, temp_unit, gravity, weeks_on_battery, sends_battery, high_resolution, fw_version, rssi, gsheets_name, gsheets_link, raw_temp, raw_gravity, lastReceived) {
         this.color = color;
         this.temp = temp;
         this.temp_unit = temp_unit;
@@ -51,6 +52,7 @@ export class TiltDevice {
         this.gsheets_link = gsheets_link;
         this.raw_temp = raw_temp;
         this.raw_gravity = raw_gravity;
+        this.lastReceived = lastReceived || 0;
     }
 
     get colorHTML() {

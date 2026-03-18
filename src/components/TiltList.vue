@@ -24,6 +24,7 @@
             <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">{{ $t('tilt_list.battery_age_column') }}</th>
             <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('tilt_list.gravity_column') }}</th>
             <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $t('tilt_list.temperature_column') }}</th>
+            <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">{{ $t('tilt_list.last_received_column') }}</th>
 
   <!--          <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>-->
           </tr>
@@ -59,13 +60,14 @@
             </td>
             <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.formattedGravity(tiltStore.gravityUnit) }}</td>
             <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ tilt.temp }}&deg; {{ tilt.temp_unit }}</td>
+            <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 hidden lg:table-cell">{{ $t('tilt_list.last_received_ago', { seconds: tilt.lastReceived }) }}</td>
 
   <!--          <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">-->
   <!--          </td>-->
           </tr>
 
           <tr v-if="tiltStore.tilts.length === 0">
-            <td class="relative px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" colspan="5">
+            <td class="relative px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" colspan="6">
               <div class="absolute inset-y-0 left-0 w-1.5 bg-red-500"></div>
               <ExclamationTriangleIcon class="h-5 w-5 inline text-red-500" /> {{ $t('tilt_list.no_tilts_detected') }}
             </td>

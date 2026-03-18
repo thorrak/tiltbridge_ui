@@ -275,7 +275,9 @@
     "gravity_column": "Spezifisches Gewicht",
     "temperature_column": "Temperatur",
     "battery_age_week_count": "{weeks} Wochen",
-    "no_tilts_detected": "Es wurden keine Tilt-Hydrometer erkannt"
+    "no_tilts_detected": "Es wurden keine Tilt-Hydrometer erkannt",
+    "last_received_column": "Zuletzt empfangen",
+    "last_received_ago": "vor {seconds}s"
   },
   "help_page": {
     "header": "TiltBridge-Unterstützung",
