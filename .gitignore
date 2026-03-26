@@ -27,4 +27,6 @@ package-lock.json
 
 # WIP translation tool
 translate/
+src/locales/tiebreaker_logs/
+
 
