@@ -8,6 +8,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
     const mdnsID = ref("");
     const guid = ref("");
     const invertTFT = ref(false);
+    const combineTilts = ref(false);
     const cloudEnabled = ref(false);
     const cloudURL = ref("");
     const cloudAppID = ref("");
@@ -97,6 +98,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
             mdnsID.value = response.mdnsID;
             guid.value = response.guid;
             invertTFT.value = response.invertTFT;
+            combineTilts.value = response.combineTilts;
             cloudEnabled.value = response.cloudEnabled;
             cloudURL.value = response.cloudURL;
             cloudAppID.value = response.cloudAppID;
@@ -190,6 +192,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mdnsID.value = "";
         guid.value = "";
         invertTFT.value = false;
+        combineTilts.value = false;
         cloudEnabled.value = false;
         cloudURL.value = "";
         cloudAppID.value = "";
@@ -277,7 +280,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         }
     }
 
-    async function updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT, gravityUnit) {
+    async function updateDeviceConfig(mdnsID, TZoffset, tempUnit, smoothFactor, invertTFT, gravityUnit, combineTilts) {
         try {
             const remote_api = mande("/api/settings/controller/", genCSRFOptions());
             const response = await remote_api.put({
@@ -287,6 +290,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
                 smoothFactor: smoothFactor,
                 invertTFT: invertTFT,
                 gravityUnit: gravityUnit,
+                combineTilts: combineTilts,
             });
             if (response && response.status && response.status === "ok") {
                 await getConfig();
@@ -474,6 +478,7 @@ export const useConfigStore = defineStore("ConfigStore", () => {
         mdnsID,
         guid,
         invertTFT,
+        combineTilts,
         cloudEnabled,
         cloudURL,
         cloudAppID,

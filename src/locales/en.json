@@ -113,6 +113,8 @@
     "hardware_options_header": "Hardware Options",
     "invert_tft_name": "Invert TFT Display",
     "invert_tft_desc": " - Use if the screen is upside-down",
+    "combine_tilts_name": "Combine Tilts of the same color",
+    "combine_tilts_desc": "Combines all readings received from Tilts of the same color, and overwrites their unique identifiers with the MAC address of this TiltBridge. Use this if you use Tilt \"repeaters\" to prevent duplication of the same Tilt.",
     "errors": {
       "mdns_invalid_chars": "mDNS ID can only consist of the letters a-z, a hyphen, or numbers, and must not start or end with a hyphen",
       "mdns_invalid_length": "mDNS ID must be between 1 and 31 characters",

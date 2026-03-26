@@ -65,6 +65,14 @@
               </CheckboxField>
             </fieldset>
 
+            <!-- Combine Tilts Checkbox -->
+            <fieldset class="space-y-5">
+              <CheckboxField v-model="combineTilts">
+                <template #FieldName>{{ $t('device_config.combine_tilts_name') }}</template>
+                <template #FieldDescription>{{ $t('device_config.combine_tilts_desc') }}</template>
+              </CheckboxField>
+            </fieldset>
+
             <FormErrorMsg :form-error-message="form_error_message" v-if="form_error_message.length > 0" />
 
           </div>
@@ -113,6 +121,7 @@ let tempUnit = configStore.tempUnit;
 let gravityUnit = configStore.gravityUnit;
 let smoothFactor = configStore.smoothFactor;
 let invertTFT = configStore.invertTFT;
+let combineTilts = configStore.combineTilts;
 
 
 function updateCachedSettings() {
@@ -122,6 +131,7 @@ function updateCachedSettings() {
   gravityUnit = configStore.gravityUnit;
   smoothFactor = configStore.smoothFactor;
   invertTFT = configStore.invertTFT;
+  combineTilts = configStore.combineTilts;
 }
 
 
@@ -159,6 +169,7 @@ async function submitForm() {
     parseInt(smoothFactor),
     invertTFT,
     gravityUnit,
+    combineTilts,
   ).then(() => {
     updateCachedSettings();
     loader.hide();
