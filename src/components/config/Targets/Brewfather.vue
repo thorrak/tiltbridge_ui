@@ -71,10 +71,10 @@ function updateCachedSettings() {
 async function submitForm() {
   form_error_message.value = "";
 
-  // if (!brewfatherKey.value) {
-  //   form_error_message.value = i18n.global.t('cloud_config.brewfather.error_missing_api_key');
-  //   return;
-  // }
+  if (brewfatherKey.value && brewfatherKey.value.length <= 5) {
+    form_error_message.value = i18n.global.t('cloud_config.brewfather.error_api_key_too_short');
+    return;
+  }
 
   // Check if brewfatherKey.value is a URL (starts with http:// or https://)
   if (brewfatherKey.value.match(/^https?:\/\//)) {

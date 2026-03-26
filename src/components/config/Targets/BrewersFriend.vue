@@ -75,10 +75,10 @@ function updateCachedSettings() {
 async function submitForm() {
   form_error_message.value = "";
 
-  // if (!brewersFriendKey.value) {
-  //   form_error_message.value = i18n.global.t('cloud_config.brewers_friend.error_missing_api_key');
-  //   return;
-  // }
+  if (brewersFriendKey.value && brewersFriendKey.value.length <= 12) {
+    form_error_message.value = i18n.global.t('cloud_config.brewers_friend.error_api_key_too_short');
+    return;
+  }
 
   let loader = $loading.show({});
 

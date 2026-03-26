@@ -192,7 +192,8 @@
       "about_text": "These settings control how TiltBridge talks to Brewer's Friend. With a premium account, Brewer's Friend supports logging from gravity sensors such as the Tilt Hydrometer. To find your API key, log into your Brewer's Friend account and go to Profile > Account. Your API key will be a string of letters and numbers (not a URL).",
       "api_key": "API Key",
       "api_key_desc": "API key from your Brewers Friend account settings",
-      "error_missing_api_key": "API key cannot be empty"
+      "error_missing_api_key": "API key cannot be empty",
+      "error_api_key_too_short": "API key must be greater than 12 characters"
     },
     "brewfather": {
       "header": "Configure Brewfather",
@@ -201,7 +202,8 @@
       "api_key": "Stream Key",
       "api_key_desc": "Stream key from your Brewfather account settings",
       "error_missing_api_key": "Stream key cannot be empty",
-      "error_invalid_stream_key": "Stream key is a series of letters and numbers - not a URL. Please check the key and try again."
+      "error_invalid_stream_key": "Stream key is a series of letters and numbers - not a URL. Please check the key and try again.",
+      "error_api_key_too_short": "Stream key must be greater than 5 characters"
     },
     "grainfather": {
       "header": "Configure Grainfather",
