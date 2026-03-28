@@ -9,6 +9,10 @@
           </h3>
         </div>
 
+        <div class="px-4 sm:px-6 pt-4">
+          <SendTargetErrorMsg target-key="google_sheets" />
+        </div>
+
         <form @submit.prevent="submitForm">
 
           <div class="px-4 py-5">
@@ -95,6 +99,7 @@
 
 <script setup>
 import FormErrorMsg from "@/components/generic/FormErrorMsg.vue";
+import SendTargetErrorMsg from "@/components/generic/SendTargetErrorMsg.vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
 import TextField from "@/components/config/form_elements/TextField.vue";

@@ -9,6 +9,10 @@
     </header>
     <main>
 
+      <div class="px-4 sm:px-6 lg:px-8 py-4" v-if="errorStore.loaded && errorStore.hasErrors()">
+        <SendTargetErrorBanner />
+      </div>
+
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
           {{ $t('tilt_list.detected_tilts') }}
@@ -83,6 +87,8 @@
 
 <script setup>
 import { useTiltStore } from "@/stores/TiltStore";
+import { useSendTargetErrorStore } from "@/stores/SendTargetErrorStore";
+import SendTargetErrorBanner from "@/components/generic/SendTargetErrorBanner.vue";
 // import { ExclamationTriangleIcon } from "@heroicons/vue/20/solid";
 import { DocumentChartBarIcon, ExclamationTriangleIcon, AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
 import { onMounted, onBeforeUnmount } from "vue";
@@ -90,15 +96,18 @@ import { useRouter } from "vue-router";
 
 let intervalObject = null;
 const tiltStore = useTiltStore();
+const errorStore = useSendTargetErrorStore();
 const router = useRouter();
 
 onMounted(() => {
   // Retrieve initial data
   tiltStore.getTilts();
+  errorStore.getErrors();
 
   // Set up periodic refreshes
   intervalObject = window.setInterval(() => {
     tiltStore.getTilts();
+    errorStore.getErrors();
   }, 15000)  // Tilts send data a bit faster than once per second, but we don't need to update that fast
 });
 

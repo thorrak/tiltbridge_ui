@@ -66,7 +66,7 @@
             </fieldset>
 
             <!-- Combine Tilts Checkbox -->
-            <fieldset class="space-y-5">
+            <fieldset class="space-y-5 mt-6">
               <CheckboxField v-model="combineTilts">
                 <template #FieldName>{{ $t('device_config.combine_tilts_name') }}</template>
                 <template #FieldDescription>{{ $t('device_config.combine_tilts_desc') }}</template>

@@ -312,6 +312,53 @@
     "homebrewtalk_link": "Get support or chat with other users on the {hbt_link}",
     "homebrewtalk_thread": "HomeBrewTalk thread"
   },
+  "send_errors": {
+    "banner_title": "One or more send targets are reporting errors",
+    "config_error_title": "Send Error",
+    "targets": {
+      "legacy_fermentrack": "Legacy Fermentrack",
+      "fermentrack": "Fermentrack",
+      "brewers_friend": "Brewer's Friend",
+      "brewfather": "Brewfather",
+      "user_target": "Generic Target",
+      "grainfather": "Grainfather",
+      "brew_status": "Brewstatus",
+      "taplistio": "Taplist.IO",
+      "google_sheets": "Google Sheets",
+      "mqtt": "MQTT",
+      "influxdb": "InfluxDB"
+    },
+    "error_short": {
+      "code_1": "Connection failed",
+      "code_2": "Authentication failed",
+      "code_3": "Target not found (404)",
+      "code_4": "Server error (5xx)",
+      "code_5": "Bad request / missing config",
+      "code_6": "Rate limited",
+      "code_7": "Other error",
+      "code_8": "MQTT broker disconnected",
+      "code_9": "Fermentrack: Invalid user or API key",
+      "code_10": "Fermentrack: Malformed registration",
+      "code_11": "Fermentrack: Registration invalid",
+      "code_12": "Fermentrack: No brewhouse",
+      "unknown": "Unknown error (code {code})"
+    },
+    "error_detail": {
+      "code_1": "TiltBridge was unable to connect to this target. This could be caused by a DNS resolution failure, the server being unreachable, a connection timeout, or the connection being refused. Check that the target address is correct and that the server is accessible from the TiltBridge's network.",
+      "code_2": "The target rejected the request due to invalid or missing credentials. Check that your API key, username, or password are correct and have not expired.",
+      "code_3": "The target URL was not found. Check that the URL is correct and the service is still available at that address.",
+      "code_4": "The target server encountered an internal error. This is usually a temporary issue on the target's side. If it persists, check the target service's status page.",
+      "code_5": "The target rejected the request or required configuration is missing. Check that all configuration fields are filled in correctly.",
+      "code_6": "The target is rate limiting requests from TiltBridge. Try increasing the push frequency interval in the settings.",
+      "code_7": "An unexpected error occurred while communicating with this target. Check the target service's documentation or status page for details.",
+      "code_8": "TiltBridge was disconnected from the MQTT broker. Check that the broker address and port are correct, the broker is running, and any authentication credentials are valid.",
+      "code_9": "The configured username or API key was rejected by Fermentrack. Check that the username and API key are correct and match a valid account on the target Fermentrack install.",
+      "code_10": "The registration request sent to Fermentrack was malformed. This usually means the TiltBridge firmware or the Fermentrack version is out of date. Try updating both and re-registering.",
+      "code_11": "The device registration with Fermentrack is no longer valid. Try resetting the device ID on the Fermentrack configuration page to re-register.",
+      "code_12": "The configured Fermentrack user does not have a brewhouse. Complete the brewhouse setup in Fermentrack before connecting TiltBridge.",
+      "unknown": "An unexpected error occurred (code {code}). Check the settings for this target and ensure both TiltBridge and the target are up to date."
+    }
+  },
   "calibration": {
     "header": "Calibrating {color} Tilt",
     "chart_section_title": "Calibration Chart",

@@ -9,6 +9,10 @@
           </h3>
         </div>
 
+        <div class="px-4 sm:px-6 pt-4">
+          <SendTargetErrorMsg target-key="fermentrack" />
+        </div>
+
         <form @submit.prevent="submitForm">
 
           <div :class="[selectedSettingSet.value === 0 ? 'pt-5 pb-72' : 'py-5', 'px-4']">
@@ -301,6 +305,7 @@
 
 <script setup>
 import FormErrorMsg from "@/components/generic/FormErrorMsg.vue";
+import SendTargetErrorMsg from "@/components/generic/SendTargetErrorMsg.vue";
 import { useConfigStore } from "@/stores/ConfigStore";
 import { useLoading } from 'vue-loading-overlay'
 import UpdateSuccessfulModal from "@/components/config/UpdateSuccessfulModal.vue";

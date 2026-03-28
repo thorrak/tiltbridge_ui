@@ -9,6 +9,10 @@
           </h3>
         </div>
 
+        <div class="px-4 sm:px-6 pt-4">
+          <SendTargetErrorMsg target-key="mqtt" />
+        </div>
+
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h4 class="text-lg leading-6 font-medium text-gray-900">
             {{ $t('cloud_config.mqtt.about_header') }}
@@ -91,6 +95,7 @@ import { ref } from 'vue';
 import { useConfigStore } from '@/stores/ConfigStore';
 import TextField from '@/components/config/form_elements/TextField.vue';
 import FormErrorMsg from '@/components/generic/FormErrorMsg.vue';
+import SendTargetErrorMsg from "@/components/generic/SendTargetErrorMsg.vue";
 import UpdateSuccessfulModal from '@/components/config/UpdateSuccessfulModal.vue';
 import { useLoading } from 'vue-loading-overlay';
 
